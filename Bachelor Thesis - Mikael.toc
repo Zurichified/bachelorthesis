@@ -1,8 +1,30 @@
 \babel@toc {english}{}
 \contentsline {chapter}{\numberline {1}Introduction}{1}% 
+\contentsline {section}{\numberline {1.1}Software microbenchmarks}{1}% 
+\contentsline {section}{\numberline {1.2}Benchmark variability}{1}% 
+\contentsline {section}{\numberline {1.3}Golang}{2}% 
 \contentsline {chapter}{\numberline {2}Related Work}{3}% 
 \contentsline {chapter}{\numberline {3}Methodology}{5}% 
+\contentsline {section}{\numberline {3.1}Calculating variabilities}{5}% 
+\contentsline {subsection}{\numberline {3.1.1}Data set}{5}% 
+\contentsline {subsection}{\numberline {3.1.2}Metrics as the variability indicators}{5}% 
+\contentsline {subsection}{\numberline {3.1.3}Python coding}{5}% 
+\contentsline {section}{\numberline {3.2}Extracting source code properties}{6}% 
+\contentsline {subsection}{\numberline {3.2.1}Decision on source code properties}{6}% 
+\contentsline {subsection}{\numberline {3.2.2}Golang coding}{6}% 
+\contentsline {section}{\numberline {3.3}Finding correlations}{6}% 
+\contentsline {subsection}{\numberline {3.3.1}First analysis - Second analysis}{6}% 
+\contentsline {subsection}{\numberline {3.3.2}Regression model}{6}% 
 \contentsline {chapter}{\numberline {4}Results}{7}% 
+\contentsline {section}{\numberline {4.1}Variabilities of benchmarks}{7}% 
+\contentsline {section}{\numberline {4.2}Source code properties}{7}% 
+\contentsline {section}{\numberline {4.3}Correlation between variabilities and source code properties}{7}% 
 \contentsline {chapter}{\numberline {5}Discussion}{9}% 
+\contentsline {section}{\numberline {5.1}Chosen properties}{9}% 
+\contentsline {section}{\numberline {5.2}Static analysis}{9}% 
+\contentsline {section}{\numberline {5.3}Size of data set}{9}% 
 \contentsline {chapter}{\numberline {6}Threats to the validity}{11}% 
+\contentsline {section}{\numberline {6.1}Number of projects}{11}% 
+\contentsline {section}{\numberline {6.2}Chosen properties}{11}% 
+\contentsline {section}{\numberline {6.3}Analysis of the unknown}{11}% 
 \contentsline {chapter}{\numberline {7}Conclusion}{13}% 

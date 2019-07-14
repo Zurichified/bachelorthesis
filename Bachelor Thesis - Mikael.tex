@@ -40,39 +40,125 @@
 \mainmatter
 
 \chapter{Introduction}
-The importance of testing software systems for performance has grown in recent years.
+The importance of testing software systems for performance has grown in recent years. \\
+\\
+\\
+\\
+Rest of this thesis is structured as follows: I give an introduction to related topics about this thesis in Introduction section. Secondly, I present some of the works that has been done before about benchmark variability in the Related Work section. In the Methodology section, I explain the three steps I take to do the analytic part of this thesis. I present the results of the steps in the Results section. Next comes the Discussion section where I discuss about the methodology and the results of this thesis. In the Threats to the validity section I present some of the possible threats to this thesis and conclude with the Conclusion section.
+\section{Software microbenchmarks} 
+- What are software microbenchmarks \\
+- Why are they used \\
+- How are they used \\
+\\
 Software developers can analyze the performance of parts of their software with software
 microbenchmarks, which can be defined as unit tests for performance of a software.
 Executing microbenchmarks for a defined time period, one can sample an average execution
 time of the benchmark, as well as the data points as the results of multiple iterations.
+
+
+\section{Benchmark variability}
+- Explaining data points as the result of iterations \\
+- Defining term "benchmark variability" \\
+- Factors that play a role in the variability of benchmarks\\
+- Why is it important to find out / predict the variability causes \\
+\\
 The variability of these results may depend on a lot of factors such as the execution platform,
 the hardware the benchmarks are executed on, or even the programming language of the
 software itself. It is important to predict the variability of these results to select the stable
 benchmarks to be run, because executing performance tests of a software is usually a long,
 time consuming process. Moreover, by predicting the variability, the stability of benchmarks can
-be estimated. By understanding the root causes for benchmark variability and being able topredict these, we could support developers to write better benchmarks. One of the ways to predict the variability might be through analyzing source code properties of the software. This
-can on one hand help the developers identify the cause of slowdowns in a newer version for
-example, on the other hand help them understand which source code property affects the
+be estimated. By understanding the root causes for benchmark variability and being able to predict these, we could support developers to write better benchmarks. One of the ways to predict the variability might be through analyzing source code properties of the software. This can on one hand help the developers identify the cause of slowdowns in a newer version for example, on the other hand help them understand which source code property affects the
 results in which way.
+
+\section{Golang}
+- Some information about the programming language \\
+- How is a benchmark defined in Go language, with examples and how can we execute these? \\
+- Data points acquired from a previous study from Laaber et al. \\
 
 
 \chapter{Related Work}
-Here comes the literature research about benchmark variability. While some papers look at the benchmark variability causes, some of them try to predict the performance regressions based on different versions of a software by analyzing different commits and mining source code.
+Here comes the literature research about benchmark variability. While some papers look at the benchmark variability causes, some of them try to predict the performance regressions based on different versions of a software by analyzing different commits and mining source code. \\
+\\
+To the best of my knowledge, there exist no study analyzing benchmark variability of software microbechmarks written in Go by trying to find a correlation with the used source code metrics in these benchmarks.
 
 \chapter{Methodology}
-Here comes the methodology we use during this project. This includes the categorization of benchmarks of 228 projects written in Go by looking at the total executions, the mean, coefficient of variation and relative confidence interval width with 95\% and 99\% confidence intervals. Secondly, we introduce the methodology we used to extract source code properties from in the first place chosen benchmarks. Thirdly, comparing the source code properties with the variabilities of benchmarks by using regression models to achieve the results.
+In this section, I present the methodologies I followed to get to the results. As the project consists of 3 main steps, these steps are explained respectively.
+\section{Calculating variabilities}
+First part of the study involved doing a qualitative analysis by analyzing the given data set. From this data set, I firstly had to extract the valid projects, i. e. choose the projects that have a positive average benchmark score. Secondly, I calculated some metrics for each of benchmark that indicate the variability. The results follow in the first point of Results section.
+\subsection{Data set}
+The starting point was a data set that was acquired by Laaber et. al from a previous study? (Ask for details) \\
+\\
+Out of 482 projects, 230 of the projects qualified because they had a score bigger than -1 in the main file of data set. ...
+\\
+ This includes the categorization of benchmarks of 228 projects written in Go by looking at the total executions, the mean, coefficient of variation and relative confidence interval width with 95\% and 99\% confidence intervals. Secondly, we introduce the methodology we used to extract source code properties from in the first place chosen benchmarks. Thirdly, comparing the source code properties with the variabilities of benchmarks by using regression models to achieve the results.
+ 
+\subsection{Metrics as the variability indicators}
+For calculating the variabilities of benchmarks, I oriented myself at 3 main metrics. First metric is "Coefficient of Variation" (CV), which is a metric used often in statistics to calculate variability of a data set. ...
+
+\subsection{Python coding}
+How I coded the calculations and created the visualizations. \\
+Which library I used for creating the visualization? \\
+How I used the pa-tool to get the RCIW95 and RCIW99 values \\
+
+\section{Extracting source code properties}
+Second part of the study was to extract the source code properties of benchmarks written in Go. This also had 2 parts. Results of this part are to be found in second part of the Results section.
+
+\subsection{Decision on source code properties}
+Which steps I took at deciding for the source code properties
+
+\subsection{Golang coding}
+- How I coded in Go to extract the properties? (Also get into detail about AST's in Go and giving code examples) \\
+- Which libraries or other tools I used (Callgraph tool, cyclomatic complexity tool) ? \\
+
+\section{Finding correlations}
+Third and last part of the study was to find correlations between source code properties of benchmarks and their variability. In this last part, I used a regression model on some chosen benchmarks to find correlations. Results of this part are to be found in the third part of Results section.
+\subsection{First analysis - Second analysis}
+- Which dependent and independent variables do I have for the comparison?
+\subsection{Regression model}
+- Which regression model I used for the results, how did I get the correlations results?
 
 \chapter{Results}
-In this section, we present the results from this project. Hopefully there will be  significant, interesting and appliable results that contribute to science.
+In this section, we present the results from the 3 parts of this study. 
+\section{Variabilities of benchmarks}
+After calculating the variability metrics of benchmarks from the projects, I categorized the variabilities in 10 percent buckets starting from 0 o 100 percent. All the benchmarks that have a variability higher than 100 percent fall into one final bucket. ...
+
+\section{Source code properties}
+For every project that I was able to analyze by using the tool introduced in second part of methodology section, I was able to collect the source code properties. CSV? ...
+
+\section{Correlation between variabilities and source code properties}
+- Yes \\
+- No \\
+- Not really? \\
+- Can't really say \\
+
+
 
 \chapter{Discussion}
 In this section, we discuss the results that we obtained and how relevant these are.
+\section{Chosen properties}
+Do the chosen properties make sense? \\
+Why did I choose these properties and how could these affect the benchmark variability? \\
+
+\section{Static analysis}
+This study involved doing a static analysis for the source code of project written in Go. What pros and cons does this have? Why doing a dynamic analysis would make more sense?
+
+\section{Size of data set}
+Coming from 482 open source projects written in Go, down to 228 that I could analyze. Is the size of data set small or big enough to acknowledge the results?
 
 \chapter{Threats to the validity}
-If needed, there can be this section about the threats to the validity of this bachelor thesis report. Maybe we did something wrong whilst analyzing the data, maybe the variabilities are not realistic?
+There are threats to the validity of this study.
+
+\section{Number of projects}
+There are probably thousands of projects written with Go. These can be with or without benchmarks, however, I was limited to a number of projects for the outcome of this study and the number might not reflect the truth.
+
+\section{Chosen properties}
+I presented my chosen properties for this analysis, however, are these enough for this study? There may be other metrics that might be very relevant to this study, which I haven't discovered whilst searching.
+
+\section{Analysis of the unknown}
+Since the analysis is made statically for the second part of the methodology, this can be a threat to the validity since we don't actually know which nodes in the cyclomatic complexity are visited.
 
 \chapter{Conclusion}
-We finally conclude with what we have done with this project: How we started, which steps we took and which results we achieved.
+I finally conclude with what we have done with this project: How we started, which steps we took and which results we achieved.
 
 
 \backmatter
