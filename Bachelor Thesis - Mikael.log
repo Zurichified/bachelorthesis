@@ -1,7 +1,7 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7000 64-bit) (preloaded format=pdflatex 2019.4.29)  14 JUL 2019 18:55
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7000 64-bit) (preloaded format=pdflatex 2019.4.29)  14 JUL 2019 19:02
 entering extended mode
-**./example_thesis.tex
-(example_thesis.tex
+**"./Bachelor Thesis - Mikael.tex"
+("Bachelor Thesis - Mikael.tex"
 LaTeX2e <2018-12-01>
 (seal_thesis.cls
 Document Class: seal_thesis 2011/09/16 v3.0e seal LaTeX thesis class
@@ -177,8 +177,8 @@ s
 \f@nch@O@orf=\skip51
 )
 \normaltopmargin=\skip52
-) (example_thesis.aux)
-\openout1 = `example_thesis.aux'.
+) ("Bachelor Thesis - Mikael.aux")
+\openout1 = `"Bachelor Thesis - Mikael.aux"'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 18.
 LaTeX Font Info:    ... okay on input line 18.
@@ -333,25 +333,25 @@ LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <32> not available
 
 
 ]
-(example_thesis.toc)
+("Bachelor Thesis - Mikael.toc")
 \tf@toc=\write3
-\openout3 = `example_thesis.toc'.
+\openout3 = `"Bachelor Thesis - Mikael.toc"'.
 
  [7]
 LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <17.28> not available
 (Font)              Font shape `T1/phv/b/n' tried instead on input line 36.
- (example_thesis.lof)
+ ("Bachelor Thesis - Mikael.lof")
 \tf@lof=\write4
-\openout4 = `example_thesis.lof'.
+\openout4 = `"Bachelor Thesis - Mikael.lof"'.
 
- (example_thesis.lot)
+
+("Bachelor Thesis - Mikael.lot")
 \tf@lot=\write5
-\openout5 = `example_thesis.lot'.
+\openout5 = `"Bachelor Thesis - Mikael.lot"'.
 
-
-(example_thesis.lol)
+ ("Bachelor Thesis - Mikael.lol")
 \tf@lol=\write6
-\openout6 = `example_thesis.lol'.
+\openout6 = `"Bachelor Thesis - Mikael.lol"'.
 
 LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <9> not available
 (Font)              Font shape `T1/phv/b/n' tried instead on input line 40.
@@ -397,29 +397,29 @@ Chapter 6.
 Chapter 7.
 [13] [14
 
-] (example_thesis.bbl
+] ("Bachelor Thesis - Mikael.bbl"
 
 LaTeX Warning: Empty `thebibliography' environment on input line 3.
 
 ) [15
 
 
-] (example_thesis.aux) ) 
+] ("Bachelor Thesis - Mikael.aux") ) 
 Here is how much of TeX's memory you used:
  4071 strings out of 492897
- 57881 string characters out of 3123287
+ 58085 string characters out of 3123287
  309266 words of memory out of 3000000
  7896 multiletter control sequences out of 15000+200000
  50692 words of font info for 49 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 41i,11n,45p,564b,272s stack positions out of 5000i,500n,10000p,200000b,50000s
-{C:/Users/Mikael/AppData/Local/Programs/MiKTeX 2.9/font
-s/enc/dvips/base/8r.enc}<C:/Users/Mikael/AppData/Local/Programs/MiKTeX 2.9/font
-s/type1/urw/helvetic/uhvb8a.pfb><C:/Users/Mikael/AppData/Local/Programs/MiKTeX 
-2.9/fonts/type1/urw/helvetic/uhvr8a.pfb><C:/Users/Mikael/AppData/Local/Programs
-/MiKTeX 2.9/fonts/type1/urw/palatino/uplb8a.pfb><C:/Users/Mikael/AppData/Local/
-Programs/MiKTeX 2.9/fonts/type1/urw/palatino/uplr8a.pfb>
-Output written on example_thesis.pdf (27 pages, 109543 bytes).
+ 41i,11n,45p,576b,272s stack positions out of 5000i,500n,10000p,200000b,50000s
+{C:/Users/Mikael/AppData/Local/Programs/MiK
+TeX 2.9/fonts/enc/dvips/base/8r.enc}<C:/Users/Mikael/AppData/Local/Programs/MiK
+TeX 2.9/fonts/type1/urw/helvetic/uhvb8a.pfb><C:/Users/Mikael/AppData/Local/Prog
+rams/MiKTeX 2.9/fonts/type1/urw/helvetic/uhvr8a.pfb><C:/Users/Mikael/AppData/Lo
+cal/Programs/MiKTeX 2.9/fonts/type1/urw/palatino/uplb8a.pfb><C:/Users/Mikael/Ap
+pData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/palatino/uplr8a.pfb>
+Output written on "Bachelor Thesis - Mikael.pdf" (27 pages, 109543 bytes).
 PDF statistics:
  130 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
