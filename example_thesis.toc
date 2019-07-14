@@ -1,0 +1,8 @@
+\babel@toc {english}{}
+\contentsline {chapter}{\numberline {1}Introduction}{1}% 
+\contentsline {chapter}{\numberline {2}Related Work}{3}% 
+\contentsline {chapter}{\numberline {3}Methodology}{5}% 
+\contentsline {chapter}{\numberline {4}Results}{7}% 
+\contentsline {chapter}{\numberline {5}Discussion}{9}% 
+\contentsline {chapter}{\numberline {6}Threats to the validity}{11}% 
+\contentsline {chapter}{\numberline {7}Conclusion}{13}% 
