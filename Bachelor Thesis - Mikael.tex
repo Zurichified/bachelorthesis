@@ -40,18 +40,24 @@
 \mainmatter
 
 \chapter{Introduction}
-The importance of testing software systems for performance has grown in recent years. \\
+
+Creating bug-free and stable software was one of the main goals of software engineering for many years. Stakeholders of a software system could probably be easily satisfied if the system did what it promised to do. Although this does not imply that performance was not an important aspect of software, it was still not the number one priority of the time.\\
 \\
+With the evolution of software engineering over the years, and the constantly advancing technology that makes software engineering possible, the importance of performance has grown. Having a performant system nowadays is not only the wish of customers or stakeholders, but also one of the goals of software developers when developing software. A better performance is important for many reasons. To give some examples: With better performance, a data driven application  will load the data faster, a calculation will result quicker, or an interactive software will be more responsive. All these examples show that more or same amount of work can be done in less time, with better performance.\\
 \\
+The usual way of testing software against bugs has been usage of test suites that include unit tests, which test specific parts of the software to assess their completeness. These are supported with integration and end-to-end tests, which go into a deeper level. For the performance testing of a software, there used to be no specific way of doing until the occurrence of performance testing frameworks, which have been getting more and more popular in the recent years. With early adoption of these frameworks in the development phase of a project, performance regressions can be detected and taken care of pre release.\\
 \\
-Rest of this thesis is structured as follows: I give an introduction to related topics about this thesis in Introduction section. Secondly, I present some of the works that has been done before about benchmark variability in the Related Work section. In the Methodology section, I explain the three steps I take to do the analytic part of this thesis. I present the results of the steps in the Results section. Next comes the Discussion section where I discuss about the methodology and the results of this thesis. In the Threats to the validity section I present some of the possible threats to this thesis and conclude with the Conclusion section.
-\section{Software microbenchmarks} 
+Rest of this thesis is structured as follows: I give an introduction to related topics about this thesis in the rest of the \textbf{Introduction} section. Next, I present some of the works that has been done before about benchmark variability in the \textbf{Related Work} section. In the \textbf{Methodology} section, I explain the three steps I take to do the analytic part of this thesis. I present the results of these steps in the \textbf{Results} section. Next comes the \textbf{Discussion} section where I discuss about the methodology and the results of this thesis. In the \textbf{Threats to the Validity} section I present some of the possible threats to this thesis and conclude with the \textbf{Conclusion} section.
+
+\section{Software microbenchmarks}
+- Different kinds of benchmarks found on literature \\
 - What are software microbenchmarks \\
 - Why are they used \\
 - How are they used \\
 \\
-Software developers can analyze the performance of parts of their software with software
-microbenchmarks, which can be defined as unit tests for performance of a software.
+Different kinds of benchmarks are found in the literature. While sometimes benchmarks refer to a standardization of a measure, other benchmarks are here to assess the performance of the underlying system. For example, there are different benchmark programs to measure the performance of hardware such as Central Processing Unit(CPU), to be able to compare their performance with others of its kind. Another example can be the benchmark function of a game, which gives the average FPS score of the game run on a hardware.\\
+\\
+Software developers can analyze the performance of parts of their software with the so called software microbenchmarks, which can be defined as unit tests for performance of a software. These benchmarks, unlike other benchmarks that test a whole system for the performance, test only a small fraction of the software, such as one or multiple little functions.
 Executing microbenchmarks for a defined time period, one can sample an average execution
 time of the benchmark, as well as the data points as the results of multiple iterations.
 
@@ -68,7 +74,10 @@ software itself. It is important to predict the variability of these results to 
 benchmarks to be run, because executing performance tests of a software is usually a long,
 time consuming process. Moreover, by predicting the variability, the stability of benchmarks can
 be estimated. By understanding the root causes for benchmark variability and being able to predict these, we could support developers to write better benchmarks. One of the ways to predict the variability might be through analyzing source code properties of the software. This can on one hand help the developers identify the cause of slowdowns in a newer version for example, on the other hand help them understand which source code property affects the
-results in which way.
+results in which way.\\
+\\
+The goal of this thesis is to study the variability of results of performance tests on a large scale with many projects written in Go. For this, the reason for the high/low distribution of benchmark results of these Go Projects will be investigated based on their source code properties such as File IO, HTTP Calls, Loops, User IO and Memory Management, which can affect the performance rigorously.
+
 
 \section{Golang}
 - Some information about the programming language \\
@@ -118,7 +127,7 @@ Third and last part of the study was to find correlations between source code pr
 - Which regression model I used for the results, how did I get the correlations results?
 
 \chapter{Results}
-In this section, we present the results from the 3 parts of this study. 
+In this section, I present the results from the 3 parts of this study. 
 \section{Variabilities of benchmarks}
 After calculating the variability metrics of benchmarks from the projects, I categorized the variabilities in 10 percent buckets starting from 0 o 100 percent. All the benchmarks that have a variability higher than 100 percent fall into one final bucket. ...
 
@@ -134,7 +143,7 @@ For every project that I was able to analyze by using the tool introduced in sec
 
 
 \chapter{Discussion}
-In this section, we discuss the results that we obtained and how relevant these are.
+In this section, I discuss the results that I obtained and how relevant these are.
 \section{Chosen properties}
 Do the chosen properties make sense? \\
 Why did I choose these properties and how could these affect the benchmark variability? \\
@@ -158,7 +167,7 @@ I presented my chosen properties for this analysis, however, are these enough fo
 Since the analysis is made statically for the second part of the methodology, this can be a threat to the validity since we don't actually know which nodes in the cyclomatic complexity are visited.
 
 \chapter{Conclusion}
-I finally conclude with what we have done with this project: How we started, which steps we took and which results we achieved.
+I finally conclude with what I have done with this project: How I started, which steps I took and which results I achieved.
 
 
 \backmatter
