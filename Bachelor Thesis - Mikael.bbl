@@ -1,11 +1,9 @@
-\begin{thebibliography}{LL18}
+\begin{thebibliography}{1}
 
-\bibitem[LL18]{Laaber:2018:EOS:3196398.3196407}
-Christoph Laaber and Philipp Leitner.
-\newblock An evaluation of open-source software microbenchmark suites for
-  continuous performance assessment.
-\newblock In {\em Proceedings of the 15th International Conference on Mining
-  Software Repositories}, MSR '18, pages 119--130, New York, NY, USA, 2018.
-  ACM.
+\bibitem{Laaber:2018:EOS:3196398.3196407}
+C.~Laaber and P.~Leitner, ``An evaluation of open-source software
+  microbenchmark suites for continuous performance assessment,'' in {\em
+  Proceedings of the 15th International Conference on Mining Software
+  Repositories}, MSR '18, (New York, NY, USA), pp.~119--130, ACM, 2018.
 
 \end{thebibliography}

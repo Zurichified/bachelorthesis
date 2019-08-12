@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7000 64-bit) (preloaded format=pdflatex 2019.4.29)  12 AUG 2019 15:30
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7000 64-bit) (preloaded format=pdflatex 2019.4.29)  12 AUG 2019 16:07
 entering extended mode
 **"./Bachelor Thesis - Mikael.tex"
 ("Bachelor Thesis - Mikael.tex"
@@ -512,10 +512,10 @@ Chapter 6.
 
 ] ("Bachelor Thesis - Mikael.aux") ) 
 Here is how much of TeX's memory you used:
- 4078 strings out of 492897
- 58183 string characters out of 3123287
+ 4082 strings out of 492897
+ 58229 string characters out of 3123287
  317266 words of memory out of 3000000
- 7900 multiletter control sequences out of 15000+200000
+ 7904 multiletter control sequences out of 15000+200000
  54975 words of font info for 53 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  41i,11n,45p,1147b,272s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -526,7 +526,7 @@ rams/MiKTeX 2.9/fonts/type1/urw/helvetic/uhvr8a.pfb><C:/Users/Mikael/AppData/Lo
 cal/Programs/MiKTeX 2.9/fonts/type1/urw/palatino/uplb8a.pfb><C:/Users/Mikael/Ap
 pData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/palatino/uplr8a.pfb><C:/Users/M
 ikael/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/palatino/uplri8a.pfb>
-Output written on "Bachelor Thesis - Mikael.pdf" (29 pages, 140802 bytes).
+Output written on "Bachelor Thesis - Mikael.pdf" (29 pages, 141102 bytes).
 PDF statistics:
  140 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
