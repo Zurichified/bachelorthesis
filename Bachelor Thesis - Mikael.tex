@@ -45,21 +45,23 @@ Creating bug-free and stable software was one of the main goals of software engi
 \\
 With the evolution of software engineering over the years, and the constantly advancing technology that makes software engineering possible, the importance of performance has grown. Having a performant system nowadays is not only the wish of customers or stakeholders, but also one of the goals of software developers when developing software. A better performance is important for many reasons. To give some examples: With better performance, a data driven application  will load the data faster, a calculation will result quicker, or an interactive software will be more responsive. All these examples show that more or same amount of work can be done in less time, with better performance.\\
 \\
-The usual way of testing software against bugs has been usage of test suites that include unit tests, which test specific parts of the software to assess their completeness. These are supported with integration and end-to-end tests, which go into a deeper level. For the performance testing of a software, there used to be no specific way of doing until the occurrence of performance testing frameworks, which have been getting more and more popular in the recent years. With early adoption of these frameworks in the development phase of a project, performance regressions can be detected and taken care of pre release.\\
+The usual way of testing software against bugs has been usage of test suites that include unit tests, which test specific parts of the software to assess their completeness. These are complemented with integration and end-to-end tests, which go into a deeper level. Shortly, integration tests help assess the completeness of multiple software modules combined, and end-to-end tests report whether the whole software works without bugs. For the performance testing of a software however, there used to be no specific way of doing until the occurrence of performance testing frameworks, which have been getting more and more popular in the recent years. With early adoption of these frameworks in the development phase of a project, performance regressions can be detected and taken care of pre release.\\
 \\
+There are different kinds of performance testing found in the literature. One of them is stress testing, which tests the software system for the stability while putting it under extreme workloads to detect its breaking point. The longer the system holds, the more stable the system is. Another type of performance test is load testing, which tests the software system with high loads to find out about performance bottlenecks. These types of performance tests are useful for when one wants to assess the general performance of a complete software system before it goes into production. Testing with a deeper level of granularity involves the  software microbenchmarks, with which one can test modular functions of a software system and measure their performance. This thesis is oriented to this kind of performance tests.\\
+\\ 
 Rest of this thesis is structured as follows: I give an introduction to related topics about this thesis in the rest of the \textbf{Introduction} section. Next, I present some of the works that has been done before about benchmark variability in the \textbf{Related Work} section. In the \textbf{Methodology} section, I explain the three steps I take to do the analytic part of this thesis. I present the results of these steps in the \textbf{Results} section. Next comes the \textbf{Discussion} section where I discuss about the methodology and the results of this thesis. In the \textbf{Threats to the Validity} section I present some of the possible threats to this thesis and conclude with the \textbf{Conclusion} section.
 
 \section{Software microbenchmarks}
 - Different kinds of benchmarks found on literature \\
 - What are software microbenchmarks \\
-- Why are they used \\
 - How are they used \\
+- Why are they used \\
 \\
-Different kinds of benchmarks are found in the literature. While sometimes benchmarks refer to a standardization of a measure, other benchmarks are here to assess the performance of the underlying system. For example, there are different benchmark programs to measure the performance of hardware such as Central Processing Unit(CPU), to be able to compare their performance with others of its kind. Another example can be the benchmark function of a game, which gives the average FPS score of the game run on a hardware.\\
+Different kinds of benchmarks are found in the literature. While sometimes benchmarks refer to a standardization of a measure, other benchmarks assess the performance of the underlying system. For example, there are different benchmark programs to measure the performance of hardware such as Central Processing Unit(CPU), to be able to compare their performance with others of its kind. Another example can be the benchmark function of a game, which gives the average FPS score of the game run on a hardware.\\
 \\
-Software developers can analyze the performance of parts of their software with the so called software microbenchmarks, which can be defined as unit tests for performance of a software. These benchmarks, unlike other benchmarks that test a whole system for the performance, test only a small fraction of the software, such as one or multiple little functions.
-Executing microbenchmarks for a defined time period, one can sample an average execution
-time of the benchmark, as well as the data points as the results of multiple iterations.
+Software developers can analyze the performance of parts of their software with the so called software microbenchmarks, which can be defined as unit tests for performance of a software. These benchmarks, unlike other benchmarks that test a whole system for the performance, test only a small fraction of the software, such as one or multiple little functions. Executing microbenchmarks for a defined time period, one can sample an average execution time of the benchmark, as well as the data points as the results of multiple iterations.\\
+\\
+Depending on the underlying testing framework, developers can choose to run a benchmark for a limited time to see how many iterations can happen in this pre defined time, or also choose to run the benchmark for a specific amount of iterations to see how long it takes the functions within the benchmark to result in average. Such frameworks are especially useful for when determining whether a new introduced feature in the system causes performance regressions. Furthermore, these regressions can be detected early whilst still being in the development stage of the software, and according changes to the code can be scheduled before the changes go to production, which ensures the stability for the performance in the evolution of the software.
 
 
 \section{Benchmark variability}
@@ -68,21 +70,26 @@ time of the benchmark, as well as the data points as the results of multiple ite
 - Factors that play a role in the variability of benchmarks\\
 - Why is it important to find out / predict the variability causes \\
 \\
-The variability of these results may depend on a lot of factors such as the execution platform,
-the hardware the benchmarks are executed on, or even the programming language of the
-software itself. It is important to predict the variability of these results to select the stable
-benchmarks to be run, because executing performance tests of a software is usually a long,
-time consuming process. Moreover, by predicting the variability, the stability of benchmarks can
-be estimated. By understanding the root causes for benchmark variability and being able to predict these, we could support developers to write better benchmarks. One of the ways to predict the variability might be through analyzing source code properties of the software. This can on one hand help the developers identify the cause of slowdowns in a newer version for example, on the other hand help them understand which source code property affects the
+When a benchmark is run, it executes the underlying code for a certain time period over and over, giving two data types as a result: The first one can be explained as a collection of execution times for each iteration, whereas the second one is the average of this collection, hence, the average execution time of the benchmark. Execution times of a benchmark are usually expressed in nanoseconds. In this thesis, the term benchmark variability refers to the variability of a benchmark's resulting execution times. It is basically computed by measuring how far the single executions fall from the average value. In this manner, if the executions are in the close neighborhood of the average value, the benchmark is considered as stable and it's predicted that another execution would take same or similar amount of nanoseconds as the average value. If however, the points are distributed on a broader scale, it means that the benchmark is rather unstable, i.e., it cannot be predicted how long another execution of the benchmark will take.\\
+\\
+The variability of a benchmark may depend on a lot of factors such as the execution platform, the hardware the benchmarks are executed on, or, even the programming language of the software itself. For example, the same benchmark can deliver different average values on different CPUs, as one CPU may perform much more operations in a second than the other one. Similarly, the same benchmark can have a different average for the execution in a personal computer than the average in a cloud-based machine. A factor that may play a role in the variability of a benchmark can be the source code properties that the benchmark has. To this end, a source code property can affect the result of a benchmark. In this thesis, my aim is to find whether there is a correlation between the source code and the result of a benchmark.\\
+\\
+Executing performance tests of a software is usually a long, time consuming process. If a developer can rely on the microbenchmarks of the software, this can help reduce the time spent on performance tests for the whole project. 
+
+It is important to predict the variability of these results to select the stable benchmarks to be run, because executing performance tests of a software is usually a long, time consuming process. Moreover, by predicting the variability, the stability of benchmarks can be estimated. By understanding the root causes for benchmark variability and being able to predict these, we could support developers to write better benchmarks. One of the ways to predict the variability might be through analyzing source code properties of the software. This can on one hand help the developers identify the cause of slowdowns in a newer version for example, on the other hand help them understand which source code property affects the
 results in which way.\\
 \\
 The goal of this thesis is to study the variability of results of performance tests on a large scale with many projects written in Go. For this, the reason for the high/low distribution of benchmark results of these Go Projects will be investigated based on their source code properties such as File IO, HTTP Calls, Loops, User IO and Memory Management, which can affect the performance rigorously.
 
 
-\section{Golang}
+\section{Go}
 - Some information about the programming language \\
 - How is a benchmark defined in Go language, with examples and how can we execute these? \\
 - Data points acquired from a previous study from Laaber et al. \\
+\\
+Go is a statically typed, compiled programming language, designed at Google and was released in November 2009. Some of its innovational features include built-in data structures for advanced concurrent programming, Goroutines as lightweight processes and built-in performance benchmarking/testing frameworks. While still being quite a new language among other languages, Go is the forth most active programming language in Github, and third-most highly language globally, according to Stack Overflow Developer Survey 2019.\\
+\\
+
 
 
 \chapter{Related Work}
