@@ -41,17 +41,35 @@
 
 \chapter{Introduction}
 
-Creating bug-free and stable software was one of the main goals of software engineering for many years. Stakeholders of a software system could probably be easily satisfied if the system did what it promised to do. Although this does not imply that performance was not an important aspect of software, it was still not the number one priority of the time.\\
+
+Performance is one of the compelling qualities of a software system \cite{Woodside:2007:FSP:1253532.1254717} and it shapes the way developers build elements of the software. It is affected by lots of factors such as the software itself, the operating system the software is run on, the middleware, the hardware or even the underlying communication networks\cite{Woodside:2007:FSP:1253532.1254717}. Better performance is important for many reasons. To give some examples: With better performance, a data driven application  will load the data faster, a calculation will result quicker, or an interactive software will be more responsive. All these examples show that more or same amount of work can be done in less time, with better performance. Being an important software quality factor, it can also play a big role on the profitableness of a company\cite{Nguyen:2014:ICS:2597073.2597092}.\\
 \\
-With the evolution of software engineering over the years, and the constantly advancing technology that makes software engineering possible, the importance of performance has grown. Having a performant system nowadays is not only the wish of customers or stakeholders, but also one of the goals of software developers when developing software. A better performance is important for many reasons. To give some examples: With better performance, a data driven application  will load the data faster, a calculation will result quicker, or an interactive software will be more responsive. All these examples show that more or same amount of work can be done in less time, with better performance.\\
+Having a performant system nowadays is not only the wish of customers or stakeholders, but also one of the goals of software developers when developing software. Till late 2000s, there has not been a lot of research on the field of software performance testing\cite{weyuker2000experience}. With the evolution of software engineering over the years, and the constantly advancing technology that drives software engineering further, the importance of performance has grown. However, the primary problems encountered in the field of software engineering are often related to the performance regressions\cite{weyuker2000experience}.\\
 \\
-The usual way of testing software against bugs has been usage of test suites that include unit tests, which test specific parts of the software to assess their completeness. These are complemented with integration and end-to-end tests, which go into a deeper level. Shortly, integration tests help assess the completeness of multiple software modules combined, and end-to-end tests report whether the whole software works without bugs. For the performance testing of a software however, there used to be no specific way of doing until the occurrence of performance testing frameworks, which have been getting more and more popular in the recent years. With early adoption of these frameworks in the development phase of a project, performance regressions can be detected and taken care of pre release.\\
+A performance regression is to be found when a new version of the software gives a worse user experience in terms of performance, such as having longer response times, or consuming extra resources such as RAM or CPU while giving the same user experience\cite{Nguyen:2014:ICS:2597073.2597092}. Solutions to these kinds of problems include supply of more hardware, which comes costly and is not applicable for large software systems \cite{Nguyen:2014:ICS:2597073.2597092} or finding out the regression causes in the software by testing.\\
 \\
-There are different kinds of performance testing found in the literature. One of them is stress testing, which tests the software system for the stability while putting it under extreme workloads to detect its breaking point. The longer the system holds, the more stable the system is. Another type of performance test is load testing, which tests the software system with high loads to find out about performance bottlenecks. These types of performance tests are useful for when one wants to assess the general performance of a complete software system before it goes into production. Testing with a deeper level of granularity involves the  software microbenchmarks, with which one can test modular functions of a software system and measure their performance. This thesis is oriented to this kind of performance tests.\\
+To assess the performance of the system and improve it, Software Performance Engineering (SPE) activites are needed \cite{Woodside:2007:FSP:1253532.1254717}. There are two general approaches found in the literature: first one is called measurement-based SPE, which stands for experimental performance calculations made on the software to report about the performance, second one is called model-based, which refers to creating performance models while developing to meet the performance requirements\cite{Woodside:2007:FSP:1253532.1254717}. \\ 
+\\
+There are different kinds of performance testing belonging to measurement-based SPE found in the literature. One of them is stress testing, which tests the software system for the stability while putting it under extreme workloads to detect its breaking point. The longer the system holds, the more stable the system is. Another type of performance test is load testing, which tests the software system with high loads to find out about performance bottlenecks. These types of performance tests are useful for when one wants to assess the general performance of a complete software system before it goes into production. They are, however, quite complex in terms of setups, manual configurations and mostly important, having long execution times \cite{Nguyen:2014:ICS:2597073.2597092}. This complexness makes it hard to find performance regressions as fast as possible, causing delay in Continuos Deployment (CD) architectures \cite{Laaber:2018:EOS:3196398.3196407}.\\
+\\
+There exist another type of performance testing, which is with the so called software microbenchmarks. These are adopted as performance evaluation strategy for rather small and library-like projects\cite{laaber2019software} and can test modular functions of a software system and measure their performance. With early adoption of these tests, developers can find out about performance regressions whilst developing, and find solutions before they become bigger performance issues, which one would first realize at the time of analyzing results of bigger performance tests such as stress or load tests. A challenge with testing using microbenchmarks is the non-deterministicity of the results, which means a certain variability exist for the results of a benchmark executed\cite{Laaber:2018:EOS:3196398.3196407}.\\
+\\
+In this thesis, I am studying the variability of results of performance tests on a large scale with many projects written in Go. For this, I am investigating the reason for the high/low distribution of benchmark results of these Go Projects based on their source code properties such as signature properties, body related features, other source code metrics, and usage of Go's standard libraries which can affect the performance rigorously.\\
+\\
+To this end, I want to answer the following research questions: \\
+\textbf{RQ1: How variable are microbenchmark results of Go projects?}\\
+\textbf{RQ2: Which source code properties contribute to the stability of benchmark results and how?}\\
+\\
+My hypothesis for the the first research question is: I expect the benchmarks to be quite variable, having a normalized distribution between 1\% to 100\% of variation scores. To answer my first research question, I get all the projects benchmarks, calculate their variability with different measurement metrics such as Coefficient of Variation (CV) and Relative Confidence Interval Width (RCIW) and report the variabilities of benchmarks for 228 projects, having in total 4589 benchmarks.\\
+\\
+My hypothesis for the second research question is: I expect to see significant effects of body related features and Go's standard library usages to the variation of benchmark results. In particular, I suppose that cyclomatic complexity, file IO, http calls and loops have a direct impact on the variability. For the second research question, I download all the projects from Github, fetch their dependencies for the according commit, from which the benchmark results are from. Then I run my parser program which collects the source code properties from all the functions and make a callgraph analysis for the benchmarks to collect all the visited functions' properties, resulting into properties of the benchmark.\\
+\\
+For the "how" part of RQ2, I do a correlation analysis with the collected properties of each benchmark. [final is yet to come]\\
 \\ 
-Rest of this thesis is structured as follows: I give an introduction to related topics and work about this thesis in the \textbf{Background and Related Work} section. In the \textbf{Methodology} section, I explain the three steps I take to do the analytic part of this thesis and elaborate on the threads to the validity of the methodology. I present the results of these steps in the \textbf{Results} section and present some ideas for the future work. Next comes the \textbf{Discussion} section where I discuss about the methodology and the results of this thesis. I conclude with the \textbf{Conclusion} section.
+Rest of this thesis is structured as follows: I give an introduction to related topics and background about this thesis in the \ref{Background and Related Work}. Chapter. In the \ref{Methodology}. Chapter, I explain the three steps I take to do the analytic part of this thesis and elaborate on the threads to the validity of the methodology. I present the results of these steps in the \ref{Results}. Chapter. Next comes the \ref{Discussion}. Chapter where I discuss about the methodology and the results of this thesis and present some ideas for the future work. I conclude with the \ref{Conclusion}. Chapter.
 
 \chapter{Background and Related Work}
+\label{Background and Related Work}
 
 \section{Background}
 
@@ -83,7 +101,7 @@ Executing performance tests of a software is usually a long, time consuming proc
 One of the ways to predict the variability might be through analyzing source code properties of the software. This can on one hand help the developers identify the cause of slowdowns in a newer version for example, on the other hand help them understand which source code property affects the
 results in which way.\\
 \\
-The goal of this thesis is to study the variability of results of performance tests on a large scale with many projects written in Go. For this, the reason for the high/low distribution of benchmark results of these Go Projects are investigated based on their source code properties such as File IO, HTTP Calls, Loops, User IO and Memory Management, which can affect the performance rigorously.
+
 
 
 \subsection{Go}
@@ -105,9 +123,10 @@ To the best of my knowledge, there exist no study analyzing benchmark variabilit
 \cite{Laaber:2018:EOS:3196398.3196407}
 
 \chapter{Methodology}
+\label{Methodology}
 In this section, I present the methodologies I followed to get to the results. As the project consists of 3 main steps, these steps are explained respectively.
 \section{Calculating variabilities}
-First part of the study involved doing a qualitative analysis by analyzing the given data set. From this data set, I firstly had to extract the valid projects, i. e. choose the projects that have a positive average benchmark score. Secondly, I calculated some metrics for each of benchmark that indicate the variability. The results follow in the first point of Results section.
+First part of the study involved doing a quantitive analysis by analyzing the given data set. From this data set, I firstly had to extract the valid projects, i. e. choose the projects that have a positive average benchmark score. Secondly, I calculated some metrics for each of benchmark that indicate the variability. The results follow in the first point of Results section.
 \subsection{Data set}
 The starting point was a data set that was acquired by Laaber et. al from a previous study? (Ask for details) \\
 \\
@@ -152,7 +171,8 @@ I presented my chosen properties for this analysis, however, are these enough fo
 Since the analysis is made statically for the second part of the methodology, this can be a threat to the validity since we don't actually know which nodes in the cyclomatic complexity are visited.
 
 
-\chapter{Results and Future Work}
+\chapter{Results}
+\label{Results}
 In this section, I present the results from the 3 parts of this study. 
 \section{Variabilities of benchmarks}
 After calculating the variability metrics of benchmarks from the projects, I categorized the variabilities in 10 percent buckets starting from 0 o 100 percent. All the benchmarks that have a variability higher than 100 percent fall into one final bucket. ...
@@ -166,11 +186,9 @@ For every project that I was able to analyze by using the tool introduced in sec
 - Not really? \\
 - Can't really say \\
 
-\section{Future Work}
-What could be done with the results in this thesis in the future?
-
 
 \chapter{Discussion}
+\label{Discussion}
 In this section, I discuss the results that I obtained and how relevant these are.
 \section{Chosen properties}
 Do the chosen properties make sense? \\
@@ -182,7 +200,11 @@ This study involved doing a static analysis for the source code of project writt
 \section{Size of data set}
 Coming from 482 open source projects written in Go, down to 228 that I could analyze. Is the size of data set small or big enough to acknowledge the results?
 
+\section{Future Work}
+What could be done with the results in this thesis in the future?
+
 \chapter{Conclusion}
+\label{Conclusion}
 I finally conclude with what I have done with this project: How I started, which steps I took and which results I achieved.
 
 

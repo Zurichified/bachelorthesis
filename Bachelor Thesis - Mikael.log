@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7000 64-bit) (preloaded format=pdflatex 2019.4.29)  12 AUG 2019 16:07
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7000 64-bit) (preloaded format=pdflatex 2019.4.29)  28 AUG 2019 14:50
 entering extended mode
 **"./Bachelor Thesis - Mikael.tex"
 ("Bachelor Thesis - Mikael.tex"
@@ -362,22 +362,57 @@ LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <18> not available
 LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <28> not available
 (Font)              Font shape `T1/phv/b/n' tried instead on input line 42.
 
-Underfull \hbox (badness 10000) in paragraph at lines 44--53
+Underfull \hbox (badness 10000) in paragraph at lines 45--70
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 44--53
+Underfull \hbox (badness 10000) in paragraph at lines 45--70
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 44--53
+Underfull \hbox (badness 10000) in paragraph at lines 45--70
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 44--53
+Underfull \hbox (badness 10000) in paragraph at lines 45--70
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 45--70
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 45--70
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 45--70
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 45--70
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 45--70
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 45--70
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 45--70
 
  []
 
@@ -388,44 +423,49 @@ Underfull \hbox (badness 10000) in paragraph at lines 44--53
 ] [2]
 Chapter 2.
 LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <14.4> not available
-(Font)              Font shape `T1/phv/b/n' tried instead on input line 58.
+(Font)              Font shape `T1/phv/b/n' tried instead on input line 76.
 
-Underfull \hbox (badness 10000) in paragraph at lines 59--69
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 59--69
+Underfull \hbox (badness 10000) in paragraph at lines 77--87
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 59--69
+Underfull \hbox (badness 10000) in paragraph at lines 77--87
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 72--87
+Underfull \hbox (badness 10000) in paragraph at lines 77--87
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 72--87
+Underfull \hbox (badness 10000) in paragraph at lines 90--104
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 72--87
+Underfull \hbox (badness 10000) in paragraph at lines 90--104
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 72--87
+Underfull \hbox (badness 10000) in paragraph at lines 90--104
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 72--87
+Underfull \hbox (badness 10000) in paragraph at lines 90--104
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 90--104
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 90--104
 
  []
 
@@ -433,25 +473,22 @@ Underfull \hbox (badness 10000) in paragraph at lines 72--87
 
 
 ]
-Underfull \hbox (badness 10000) in paragraph at lines 90--98
+Underfull \hbox (badness 10000) in paragraph at lines 108--116
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 90--98
+Underfull \hbox (badness 10000) in paragraph at lines 108--116
+
+ []
+
+[4]
+Underfull \hbox (badness 10000) in paragraph at lines 119--124
 
  []
 
 
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [4]
-Underfull \hbox (badness 10000) in paragraph at lines 101--106
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 101--106
+Underfull \hbox (badness 10000) in paragraph at lines 119--124
 
  []
 
@@ -461,17 +498,17 @@ Underfull \hbox (badness 10000) in paragraph at lines 101--106
 ]
 Chapter 3.
 
-Underfull \hbox (badness 10000) in paragraph at lines 112--117
+Underfull \hbox (badness 10000) in paragraph at lines 131--136
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 122--125
+Underfull \hbox (badness 10000) in paragraph at lines 141--144
 
  []
 
 [7]
-Underfull \hbox (badness 10000) in paragraph at lines 133--135
+Underfull \hbox (badness 10000) in paragraph at lines 152--154
 
  []
 
@@ -481,12 +518,12 @@ Underfull \hbox (badness 10000) in paragraph at lines 133--135
 ]
 Chapter 4.
 
-Overfull \hbox (16.24596pt too wide) in paragraph at lines 163--163
+Overfull \hbox (16.24596pt too wide) in paragraph at lines 183--183
 []\T1/phv/b/n/17.28 Correlation be-tween vari-abil-i-ties and source code
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 164--168
+Underfull \hbox (badness 10000) in paragraph at lines 184--188
 
  []
 
@@ -496,7 +533,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 164--168
 ]
 Chapter 5.
 
-Underfull \hbox (badness 10000) in paragraph at lines 176--178
+Underfull \hbox (badness 10000) in paragraph at lines 194--196
 
  []
 
@@ -512,10 +549,10 @@ Chapter 6.
 
 ] ("Bachelor Thesis - Mikael.aux") ) 
 Here is how much of TeX's memory you used:
- 4082 strings out of 492897
- 58229 string characters out of 3123287
- 317266 words of memory out of 3000000
- 7904 multiletter control sequences out of 15000+200000
+ 4091 strings out of 492897
+ 58415 string characters out of 3123287
+ 318266 words of memory out of 3000000
+ 7913 multiletter control sequences out of 15000+200000
  54975 words of font info for 53 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  41i,11n,45p,1147b,272s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -526,7 +563,7 @@ rams/MiKTeX 2.9/fonts/type1/urw/helvetic/uhvr8a.pfb><C:/Users/Mikael/AppData/Lo
 cal/Programs/MiKTeX 2.9/fonts/type1/urw/palatino/uplb8a.pfb><C:/Users/Mikael/Ap
 pData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/palatino/uplr8a.pfb><C:/Users/M
 ikael/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/palatino/uplri8a.pfb>
-Output written on "Bachelor Thesis - Mikael.pdf" (29 pages, 141102 bytes).
+Output written on "Bachelor Thesis - Mikael.pdf" (29 pages, 148670 bytes).
 PDF statistics:
  140 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)

@@ -1,9 +1,31 @@
 \begin{thebibliography}{1}
 
+\bibitem{Woodside:2007:FSP:1253532.1254717}
+M.~Woodside, G.~Franks, and D.~C. Petriu, ``The future of software performance
+  engineering,'' in {\em 2007 Future of Software Engineering}, FOSE '07,
+  (Washington, DC, USA), pp.~171--187, IEEE Computer Society, 2007.
+
+\bibitem{Nguyen:2014:ICS:2597073.2597092}
+T.~H.~D. Nguyen, M.~Nagappan, A.~E. Hassan, M.~Nasser, and P.~Flora, ``An
+  industrial case study of automatically identifying performance
+  regression-causes,'' in {\em Proceedings of the 11th Working Conference on
+  Mining Software Repositories}, MSR 2014, (New York, NY, USA), pp.~232--241,
+  ACM, 2014.
+
+\bibitem{weyuker2000experience}
+E.~J. Weyuker and F.~I. Vokolos, ``Experience with performance testing of
+  software systems: issues, an approach, and case study,'' {\em IEEE
+  transactions on software engineering}, vol.~26, no.~12, pp.~1147--1156, 2000.
+
 \bibitem{Laaber:2018:EOS:3196398.3196407}
 C.~Laaber and P.~Leitner, ``An evaluation of open-source software
   microbenchmark suites for continuous performance assessment,'' in {\em
   Proceedings of the 15th International Conference on Mining Software
   Repositories}, MSR '18, (New York, NY, USA), pp.~119--130, ACM, 2018.
+
+\bibitem{laaber2019software}
+C.~Laaber, J.~Scheuner, and P.~Leitner, ``Software microbenchmarking in the
+  cloud. how bad is it really?,'' {\em Empirical Software Engineering},
+  pp.~1--40, 2019.
 
 \end{thebibliography}
