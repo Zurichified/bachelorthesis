@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7000 64-bit) (preloaded format=pdflatex 2019.4.29)  28 AUG 2019 14:50
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7000 64-bit) (preloaded format=pdflatex 2019.4.29)  1 SEP 2019 03:36
 entering extended mode
 **"./Bachelor Thesis - Mikael.tex"
 ("Bachelor Thesis - Mikael.tex"
@@ -177,22 +177,68 @@ s
 \f@nch@O@orf=\skip51
 )
 \normaltopmargin=\skip52
+)
+("C:\Users\Mikael\AppData\Local\Programs\MiKTeX 2.9\tex/latex/caption\caption.s
+ty"
+Package: caption 2019/08/29 v3.3b Customizing captions (AR)
+
+("C:\Users\Mikael\AppData\Local\Programs\MiKTeX 2.9\tex/latex/caption\caption3.
+sty"
+Package: caption3 2018/09/12 v1.8c caption3 kernel (AR)
+Package caption3 Info: TeX engine: e-TeX on input line 64.
+\captionmargin=\dimen111
+\captionmargin@=\dimen112
+\captionwidth=\dimen113
+\caption@tempdima=\dimen114
+\caption@indent=\dimen115
+\caption@parindent=\dimen116
+\caption@hangindent=\dimen117
+Package caption Info: Unknown document class (or package),
+(caption)             standard defaults will be used.
+)
+
+Package caption Warning: Unsupported document class (or package) detected,
+(caption)                usage of the caption package is not recommended.
+See the caption package documentation for explanation.
+
+Package caption Info: \@makecaption = \long macro:#1#2->\vskip \abovecaptionski
+p \sbox \@tempboxa {{\phvbold {\small #1}}: \sffamily {\small #2}}\ifdim \wd \@
+tempboxa >\hsize {\phvbold {\small #1}}: {\sffamily {\small #2}}\par \else \glo
+bal \@minipagefalse \hb@xt@ \hsize {\box \@tempboxa \hfil }\fi \vskip \belowcap
+tionskip .
+\c@caption@flags=\count99
+\c@ContinuedFloat=\count100
+Package caption Info: listings package is loaded.
+)
+("C:\Users\Mikael\AppData\Local\Programs\MiKTeX 2.9\tex/latex/caption\subcaptio
+n.sty"
+Package: subcaption 2018/05/13 v1.2 Sub-captions (AR)
+\c@subfigure=\count101
+\c@subtable=\count102
+)
+("C:\Users\Mikael\AppData\Local\Programs\MiKTeX 2.9\tex/latex/float\float.sty"
+Package: float 2001/11/08 v1.3d Float enhancements (AL)
+\c@float@type=\count103
+\float@exts=\toks18
+\float@box=\box29
+\@float@everytoks=\toks19
+\@floatcapt=\box30
 ) ("Bachelor Thesis - Mikael.aux")
 \openout1 = `"Bachelor Thesis - Mikael.aux"'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 18.
-LaTeX Font Info:    ... okay on input line 18.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 18.
-LaTeX Font Info:    ... okay on input line 18.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 18.
-LaTeX Font Info:    ... okay on input line 18.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 18.
-LaTeX Font Info:    ... okay on input line 18.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 18.
-LaTeX Font Info:    ... okay on input line 18.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 18.
-LaTeX Font Info:    ... okay on input line 18.
-LaTeX Font Info:    Try loading font information for T1+ppl on input line 18.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Try loading font information for T1+ppl on input line 21.
 
 ("C:\Users\Mikael\AppData\Local\Programs\MiKTeX 2.9\tex/latex/psnfss\t1ppl.fd"
 File: t1ppl.fd 2001/06/04 font definitions for T1/ppl.
@@ -200,17 +246,17 @@ File: t1ppl.fd 2001/06/04 font definitions for T1/ppl.
 ("C:\Users\Mikael\AppData\Local\Programs\MiKTeX 2.9\tex/context/base/mkii\supp-
 pdf.mkii"
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count99
-\scratchdimen=\dimen111
-\scratchbox=\box29
-\nofMPsegments=\count100
-\nofMParguments=\count101
-\everyMPshowfont=\toks18
-\MPscratchCnt=\count102
-\MPscratchDim=\dimen112
-\MPnumerator=\count103
-\makeMPintoPDFobject=\count104
-\everyMPtoPDFconversion=\toks19
+\scratchcounter=\count104
+\scratchdimen=\dimen118
+\scratchbox=\box31
+\nofMPsegments=\count105
+\nofMParguments=\count106
+\everyMPshowfont=\toks20
+\MPscratchCnt=\count107
+\MPscratchDim=\dimen119
+\MPnumerator=\count108
+\makeMPintoPDFobject=\count109
+\everyMPtoPDFconversion=\toks21
 )
 ("C:\Users\Mikael\AppData\Local\Programs\MiKTeX 2.9\tex/latex/oberdiek\epstopdf
 -base.sty"
@@ -270,27 +316,30 @@ Package grfext Info: Graphics extension search list:
 G,.JBIG2,.JB2,.eps]
 (grfext)             \AppendGraphicsExtensions on input line 456.
 )
-\c@lstlisting=\count105
-LaTeX Font Info:    Try loading font information for T1+phv on input line 19.
+\c@lstlisting=\count110
+Package caption Info: Begin \AtBeginDocument code.
+Package caption Info: float package is loaded.
+Package caption Info: End \AtBeginDocument code.
+LaTeX Font Info:    Try loading font information for T1+phv on input line 22.
 
 ("C:\Users\Mikael\AppData\Local\Programs\MiKTeX 2.9\tex/latex/psnfss\t1phv.fd"
 File: t1phv.fd 2001/06/04 scalable font definitions for T1/phv.
 )
 LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <40> not available
-(Font)              Font shape `T1/phv/b/n' tried instead on input line 19.
+(Font)              Font shape `T1/phv/b/n' tried instead on input line 22.
 LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <20> not available
-(Font)              Font shape `T1/phv/b/n' tried instead on input line 19.
+(Font)              Font shape `T1/phv/b/n' tried instead on input line 22.
 LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <10> not available
-(Font)              Font shape `T1/phv/b/n' tried instead on input line 19.
+(Font)              Font shape `T1/phv/b/n' tried instead on input line 22.
 <logo_uzh.pdf, id=1, 154.5775pt x 49.18375pt>
 File: logo_uzh.pdf Graphic file (type pdf)
 <use logo_uzh.pdf>
-Package pdftex.def Info: logo_uzh.pdf  used on input line 19.
+Package pdftex.def Info: logo_uzh.pdf  used on input line 22.
 (pdftex.def)             Requested size: 128.0374pt x 40.74292pt.
 <seal_bw.pdf, id=2, 161.60374pt x 67.25125pt>
 File: seal_bw.pdf Graphic file (type pdf)
 <use seal_bw.pdf>
-Package pdftex.def Info: seal_bw.pdf  used on input line 19.
+Package pdftex.def Info: seal_bw.pdf  used on input line 22.
 (pdftex.def)             Requested size: 99.58464pt x 41.44186pt.
 [1
 
@@ -301,24 +350,24 @@ Package pdftex.def Info: seal_bw.pdf  used on input line 19.
 ]
 File: logo_uzh.pdf Graphic file (type pdf)
 <use logo_uzh.pdf>
-Package pdftex.def Info: logo_uzh.pdf  used on input line 19.
+Package pdftex.def Info: logo_uzh.pdf  used on input line 22.
 (pdftex.def)             Requested size: 128.0374pt x 40.74292pt.
 File: seal_bw.pdf Graphic file (type pdf)
 <use seal_bw.pdf>
-Package pdftex.def Info: seal_bw.pdf  used on input line 19.
+Package pdftex.def Info: seal_bw.pdf  used on input line 22.
 (pdftex.def)             Requested size: 99.58464pt x 41.44186pt.
  [3]
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line 19.
+(Font)              <7> on input line 22.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <5> on input line 19.
+(Font)              <5> on input line 22.
 LaTeX Font Info:    Font shape `T1/ppl/bx/n' in size <10> not available
-(Font)              Font shape `T1/ppl/b/n' tried instead on input line 19.
+(Font)              Font shape `T1/ppl/b/n' tried instead on input line 22.
  [4
 
 ]
 LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <32> not available
-(Font)              Font shape `T1/phv/b/n' tried instead on input line 23.
+(Font)              Font shape `T1/phv/b/n' tried instead on input line 26.
  [1
 
 
@@ -333,13 +382,15 @@ LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <32> not available
 
 
 ]
-("Bachelor Thesis - Mikael.toc")
+("Bachelor Thesis - Mikael.toc" [7])
 \tf@toc=\write3
 \openout3 = `"Bachelor Thesis - Mikael.toc"'.
 
- [7]
+LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <9> not available
+(Font)              Font shape `T1/phv/b/n' tried instead on input line 39.
+ [8]
 LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <17.28> not available
-(Font)              Font shape `T1/phv/b/n' tried instead on input line 36.
+(Font)              Font shape `T1/phv/b/n' tried instead on input line 39.
  ("Bachelor Thesis - Mikael.lof")
 \tf@lof=\write4
 \openout4 = `"Bachelor Thesis - Mikael.lof"'.
@@ -353,119 +404,85 @@ LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <17.28> not available
 \tf@lol=\write6
 \openout6 = `"Bachelor Thesis - Mikael.lol"'.
 
-LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <9> not available
-(Font)              Font shape `T1/phv/b/n' tried instead on input line 40.
- [8]
+ [9] [10
+
+]
 Chapter 1.
 LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <18> not available
-(Font)              Font shape `T1/phv/b/n' tried instead on input line 42.
+(Font)              Font shape `T1/phv/b/n' tried instead on input line 45.
 LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <28> not available
-(Font)              Font shape `T1/phv/b/n' tried instead on input line 42.
+(Font)              Font shape `T1/phv/b/n' tried instead on input line 45.
 
-Underfull \hbox (badness 10000) in paragraph at lines 45--70
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 45--70
+Underfull \hbox (badness 10000) in paragraph at lines 48--63
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 45--70
+Underfull \hbox (badness 10000) in paragraph at lines 48--63
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 45--70
+Underfull \hbox (badness 10000) in paragraph at lines 48--63
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 45--70
+Underfull \hbox (badness 10000) in paragraph at lines 48--63
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 45--70
+Underfull \hbox (badness 10000) in paragraph at lines 48--63
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 45--70
+Underfull \hbox (badness 10000) in paragraph at lines 48--63
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 45--70
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 45--70
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 45--70
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 45--70
+Underfull \hbox (badness 10000) in paragraph at lines 48--63
 
  []
 
 [1
 
 
+]
+Underfull \hbox (badness 10000) in paragraph at lines 68--75
 
-] [2]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 68--75
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 68--75
+
+ []
+
+[2]
 Chapter 2.
 LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <14.4> not available
-(Font)              Font shape `T1/phv/b/n' tried instead on input line 76.
+(Font)              Font shape `T1/phv/b/n' tried instead on input line 83.
+LaTeX Font Info:    Font shape `T1/ppl/bx/it' in size <10> not available
+(Font)              Font shape `T1/ppl/b/it' tried instead on input line 89.
 
-Underfull \hbox (badness 10000) in paragraph at lines 77--87
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 77--87
+Underfull \hbox (badness 10000) in paragraph at lines 85--90
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 77--87
+Underfull \hbox (badness 10000) in paragraph at lines 85--90
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 90--104
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 90--104
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 90--104
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 90--104
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 90--104
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 90--104
+Underfull \hbox (badness 10000) in paragraph at lines 85--90
 
  []
 
@@ -473,67 +490,125 @@ Underfull \hbox (badness 10000) in paragraph at lines 90--104
 
 
 ]
-Underfull \hbox (badness 10000) in paragraph at lines 108--116
+<JMHBenchmark.png, id=84, 1018.55531pt x 554.07pt>
+File: JMHBenchmark.png Graphic file (type png)
+<use JMHBenchmark.png>
+Package pdftex.def Info: JMHBenchmark.png  used on input line 94.
+(pdftex.def)             Requested size: 426.79134pt x 232.16673pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 104--109
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 108--116
+Underfull \hbox (badness 10000) in paragraph at lines 104--109
 
  []
 
-[4]
-Underfull \hbox (badness 10000) in paragraph at lines 119--124
+[4 <./JMHBenchmark.png>]
+<10percentvariance.png, id=91, 462.528pt x 346.896pt>
+File: 10percentvariance.png Graphic file (type png)
+<use 10percentvariance.png>
+Package pdftex.def Info: 10percentvariance.png  used on input line 114.
+(pdftex.def)             Requested size: 213.39566pt x 160.05048pt.
+<60percentvariance.png, id=92, 462.528pt x 346.896pt>
+File: 60percentvariance.png Graphic file (type png)
+<use 60percentvariance.png>
+Package pdftex.def Info: 60percentvariance.png  used on input line 120.
+(pdftex.def)             Requested size: 213.39566pt x 160.05048pt.
 
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 119--124
-
- []
-
-[5] [6
-
-
-]
-Chapter 3.
-
-Underfull \hbox (badness 10000) in paragraph at lines 131--136
+Underfull \hbox (badness 10000) in paragraph at lines 128--137
 
  []
 
 
+Underfull \hbox (badness 10000) in paragraph at lines 128--137
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 128--137
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 128--137
+
+ []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [5 <./10percentvariance.png> <./60percentvariance.png>]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [6]
 Underfull \hbox (badness 10000) in paragraph at lines 141--144
 
  []
 
+
+("C:\Users\Mikael\AppData\Local\Programs\MiKTeX 2.9\tex/latex/listings\lstlang1
+.sty"
+File: lstlang1.sty 2019/02/27 1.8b listings language file
+)
+("C:\Users\Mikael\AppData\Local\Programs\MiKTeX 2.9\tex/latex/listings\lstlang2
+.sty"
+File: lstlang2.sty 2019/02/27 1.8b listings language file
+)
+("C:\Users\Mikael\AppData\Local\Programs\MiKTeX 2.9\tex/latex/listings\lstlang3
+.sty"
+File: lstlang3.sty 2019/02/27 1.8b listings language file
+)
+LaTeX Font Info:    Try loading font information for T1+pcr on input line 146.
+
+("C:\Users\Mikael\AppData\Local\Programs\MiKTeX 2.9\tex/latex/psnfss\t1pcr.fd"
+File: t1pcr.fd 2001/06/04 font definitions for T1/pcr.
+)
+LaTeX Font Info:    Font shape `T1/pcr/bx/n' in size <9> not available
+(Font)              Font shape `T1/pcr/b/n' tried instead on input line 147.
 [7]
-Underfull \hbox (badness 10000) in paragraph at lines 152--154
+Underfull \hbox (badness 10000) in paragraph at lines 203--210
 
  []
 
-[8] [9] [10
+
+Underfull \hbox (badness 10000) in paragraph at lines 203--210
+
+ []
+
+[8]
+Chapter 3.
+
+Underfull \hbox (badness 10000) in paragraph at lines 217--222
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 227--230
+
+ []
+
+[9
+
+
+]
+Underfull \hbox (badness 10000) in paragraph at lines 238--240
+
+ []
+
+[10] [11] [12
 
 
 ]
 Chapter 4.
 
-Overfull \hbox (16.24596pt too wide) in paragraph at lines 183--183
+Overfull \hbox (16.24596pt too wide) in paragraph at lines 269--269
 []\T1/phv/b/n/17.28 Correlation be-tween vari-abil-i-ties and source code
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 184--188
-
- []
-
-[11] [12
-
-
-]
-Chapter 5.
-
-Underfull \hbox (badness 10000) in paragraph at lines 194--196
+Underfull \hbox (badness 10000) in paragraph at lines 270--274
 
  []
 
@@ -541,31 +616,57 @@ Underfull \hbox (badness 10000) in paragraph at lines 194--196
 
 
 ]
-Chapter 6.
+Chapter 5.
+
+Underfull \hbox (badness 10000) in paragraph at lines 280--282
+
+ []
+
 [15] [16
 
-] ("Bachelor Thesis - Mikael.bbl") [17
+
+]
+Chapter 6.
+[17] [18
 
 
-] ("Bachelor Thesis - Mikael.aux") ) 
+]
+Appendix A.
+[19] [20
+
+] ("Bachelor Thesis - Mikael.bbl"
+Underfull \hbox (badness 10000) in paragraph at lines 63--66
+[]\T1/ppl/m/n/10 ``OpenJDK: Java mi-crobench-mark har-ness.'' https://openjdk.j
+ava.net/projects/code-
+ []
+
+[21
+
+
+]) [22] ("Bachelor Thesis - Mikael.aux") ) 
 Here is how much of TeX's memory you used:
- 4091 strings out of 492897
- 58415 string characters out of 3123287
- 318266 words of memory out of 3000000
- 7913 multiletter control sequences out of 15000+200000
- 54975 words of font info for 53 fonts, out of 3000000 for 9000
+ 5826 strings out of 492897
+ 86316 string characters out of 3123287
+ 349156 words of memory out of 3000000
+ 9614 multiletter control sequences out of 15000+200000
+ 60672 words of font info for 63 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 41i,11n,45p,1147b,272s stack positions out of 5000i,500n,10000p,200000b,50000s
-{C:/Users/Mikael/AppData/Local/Programs/MiK
-TeX 2.9/fonts/enc/dvips/base/8r.enc}<C:/Users/Mikael/AppData/Local/Programs/MiK
-TeX 2.9/fonts/type1/urw/helvetic/uhvb8a.pfb><C:/Users/Mikael/AppData/Local/Prog
-rams/MiKTeX 2.9/fonts/type1/urw/helvetic/uhvr8a.pfb><C:/Users/Mikael/AppData/Lo
-cal/Programs/MiKTeX 2.9/fonts/type1/urw/palatino/uplb8a.pfb><C:/Users/Mikael/Ap
-pData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/palatino/uplr8a.pfb><C:/Users/M
-ikael/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/palatino/uplri8a.pfb>
-Output written on "Bachelor Thesis - Mikael.pdf" (29 pages, 148670 bytes).
+ 41i,12n,45p,2131b,1783s stack positions out of 5000i,500n,10000p,200000b,50000s
+{C:/Users/Mikael/AppData/Local/Progra
+ms/MiKTeX 2.9/fonts/enc/dvips/base/8r.enc}<C:/Users/Mikael/AppData/Local/Progra
+ms/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy5.pfb><C:/Users/Mikael/AppData
+/Local/Programs/MiKTeX 2.9/fonts/type1/urw/courier/ucrb8a.pfb><C:/Users/Mikael/
+AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/courier/ucrr8a.pfb><C:/Users/
+Mikael/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/helvetic/uhvb8a.pfb><C
+:/Users/Mikael/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/helvetic/uhvr8
+a.pfb><C:/Users/Mikael/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/palati
+no/uplb8a.pfb><C:/Users/Mikael/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/ur
+w/palatino/uplbi8a.pfb><C:/Users/Mikael/AppData/Local/Programs/MiKTeX 2.9/fonts
+/type1/urw/palatino/uplr8a.pfb><C:/Users/Mikael/AppData/Local/Programs/MiKTeX 2
+.9/fonts/type1/urw/palatino/uplri8a.pfb>
+Output written on "Bachelor Thesis - Mikael.pdf" (36 pages, 310635 bytes).
 PDF statistics:
- 140 PDF objects out of 1000 (max. 8388607)
+ 185 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 11 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 26 words of extra memory for PDF output out of 10000 (max. 10000000)
 

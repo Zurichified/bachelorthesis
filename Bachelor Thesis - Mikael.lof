@@ -1,6 +1,9 @@
 \babel@toc {english}{}
 \addvspace {10\p@ }
 \addvspace {10\p@ }
+\contentsline {figure}{\numberline {2.1}{\ignorespaces Execution of a microbenchmark in JMH, taken from \cite {costa2019}.\relax }}{4}% 
+\contentsline {figure}{\numberline {2.2}{\ignorespaces Example for a low and high variance microbenchmark\relax }}{5}% 
+\addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }

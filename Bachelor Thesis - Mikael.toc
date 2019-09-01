@@ -3,31 +3,32 @@
 \contentsline {chapter}{\numberline {2}Background and Related Work}{3}% 
 \contentsline {section}{\numberline {2.1}Background}{3}% 
 \contentsline {subsection}{\numberline {2.1.1}Software microbenchmarks}{3}% 
-\contentsline {subsection}{\numberline {2.1.2}Benchmark variability}{3}% 
-\contentsline {subsection}{\numberline {2.1.3}Go}{4}% 
-\contentsline {section}{\numberline {2.2}Related Work}{5}% 
-\contentsline {chapter}{\numberline {3}Methodology}{7}% 
-\contentsline {section}{\numberline {3.1}Calculating variabilities}{7}% 
-\contentsline {subsection}{\numberline {3.1.1}Data set}{7}% 
-\contentsline {subsection}{\numberline {3.1.2}Metrics as the variability indicators}{7}% 
-\contentsline {subsection}{\numberline {3.1.3}Python coding}{7}% 
-\contentsline {section}{\numberline {3.2}Extracting source code properties}{8}% 
-\contentsline {subsection}{\numberline {3.2.1}Decision on source code properties}{8}% 
-\contentsline {subsection}{\numberline {3.2.2}Golang coding}{8}% 
-\contentsline {section}{\numberline {3.3}Finding correlations}{8}% 
-\contentsline {subsection}{\numberline {3.3.1}First analysis - Second analysis}{8}% 
-\contentsline {subsection}{\numberline {3.3.2}Regression model}{8}% 
-\contentsline {section}{\numberline {3.4}Threats to the validity}{8}% 
-\contentsline {subsection}{\numberline {3.4.1}Number of projects}{8}% 
-\contentsline {subsection}{\numberline {3.4.2}Chosen properties}{8}% 
-\contentsline {subsection}{\numberline {3.4.3}Analysis of the unknown}{9}% 
-\contentsline {chapter}{\numberline {4}Results}{11}% 
-\contentsline {section}{\numberline {4.1}Variabilities of benchmarks}{11}% 
-\contentsline {section}{\numberline {4.2}Source code properties}{11}% 
-\contentsline {section}{\numberline {4.3}Correlation between variabilities and source code properties}{11}% 
-\contentsline {chapter}{\numberline {5}Discussion}{13}% 
-\contentsline {section}{\numberline {5.1}Chosen properties}{13}% 
-\contentsline {section}{\numberline {5.2}Static analysis}{13}% 
-\contentsline {section}{\numberline {5.3}Size of data set}{13}% 
-\contentsline {section}{\numberline {5.4}Future Work}{13}% 
-\contentsline {chapter}{\numberline {6}Conclusion}{15}% 
+\contentsline {subsection}{\numberline {2.1.2}Microbenchmark variability}{4}% 
+\contentsline {subsection}{\numberline {2.1.3}Go}{7}% 
+\contentsline {section}{\numberline {2.2}Related Work}{8}% 
+\contentsline {chapter}{\numberline {3}Methodology}{9}% 
+\contentsline {section}{\numberline {3.1}Calculating variabilities}{9}% 
+\contentsline {subsection}{\numberline {3.1.1}Data set}{9}% 
+\contentsline {subsection}{\numberline {3.1.2}Metrics as the variability indicators}{9}% 
+\contentsline {subsection}{\numberline {3.1.3}Python coding}{9}% 
+\contentsline {section}{\numberline {3.2}Extracting source code properties}{10}% 
+\contentsline {subsection}{\numberline {3.2.1}Decision on source code properties}{10}% 
+\contentsline {subsection}{\numberline {3.2.2}Golang coding}{10}% 
+\contentsline {section}{\numberline {3.3}Finding correlations}{10}% 
+\contentsline {subsection}{\numberline {3.3.1}First analysis - Second analysis}{10}% 
+\contentsline {subsection}{\numberline {3.3.2}Regression model}{10}% 
+\contentsline {section}{\numberline {3.4}Threats to the validity}{10}% 
+\contentsline {subsection}{\numberline {3.4.1}Number of projects}{10}% 
+\contentsline {subsection}{\numberline {3.4.2}Chosen properties}{10}% 
+\contentsline {subsection}{\numberline {3.4.3}Analysis of the unknown}{11}% 
+\contentsline {chapter}{\numberline {4}Results}{13}% 
+\contentsline {section}{\numberline {4.1}Variabilities of benchmarks}{13}% 
+\contentsline {section}{\numberline {4.2}Source code properties}{13}% 
+\contentsline {section}{\numberline {4.3}Correlation between variabilities and source code properties}{13}% 
+\contentsline {chapter}{\numberline {5}Discussion}{15}% 
+\contentsline {section}{\numberline {5.1}Chosen properties}{15}% 
+\contentsline {section}{\numberline {5.2}Static analysis}{15}% 
+\contentsline {section}{\numberline {5.3}Size of data set}{15}% 
+\contentsline {section}{\numberline {5.4}Future Work}{15}% 
+\contentsline {chapter}{\numberline {6}Conclusion}{17}% 
+\contentsline {chapter}{\numberline {A}First Append}{19}% 

@@ -1,4 +1,17 @@
-\begin{thebibliography}{1}
+\begin{thebibliography}{10}
+
+\bibitem{costa2019}
+D.~Costa, C.-P. Bezemer, P.~Leitner, and A.~Andrzejak, ``What's wrong with my
+  benchmark results? studying bad practices in jmh benchmarks,'' {\em IEEE
+  Transactions on Software Engineering}, 06 2019.
+
+\bibitem{ironsmile/nedomi}
+``ironsmile/nedomi.'' https://github.com/ironsmile/nedomi.
+\newblock [Online; accessed 2019-08-30].
+
+\bibitem{tidwall/buntdb}
+``tidwall/buntdb.'' https://github.com/tidwall/buntdb.
+\newblock [Online; accessed 2019-08-30].
 
 \bibitem{Woodside:2007:FSP:1253532.1254717}
 M.~Woodside, G.~Franks, and D.~C. Petriu, ``The future of software performance
@@ -27,5 +40,68 @@ C.~Laaber and P.~Leitner, ``An evaluation of open-source software
 C.~Laaber, J.~Scheuner, and P.~Leitner, ``Software microbenchmarking in the
   cloud. how bad is it really?,'' {\em Empirical Software Engineering},
   pp.~1--40, 2019.
+
+\bibitem{Stefan:2017:UTP:3030207.3030226}
+P.~Stefan, V.~Horky, L.~Bulej, and P.~Tuma, ``Unit testing performance in java
+  projects: Are we there yet?,'' in {\em Proceedings of the 8th ACM/SPEC on
+  International Conference on Performance Engineering}, ICPE '17, (New York,
+  NY, USA), pp.~401--412, ACM, 2017.
+
+\bibitem{Horky:2015:UPU:2668930.2688051}
+V.~Hork\'{y}, P.~Libi\v{c}, L.~Marek, A.~Steinhauser, and P.~T\r{u}ma,
+  ``Utilizing performance unit tests to increase performance awareness,'' in
+  {\em Proceedings of the 6th ACM/SPEC International Conference on Performance
+  Engineering}, ICPE '15, (New York, NY, USA), pp.~289--300, ACM, 2015.
+
+\bibitem{rodriguez2016automatic}
+M.~Rodriguez-Cancio, B.~Combemale, and B.~Baudry, ``Automatic microbenchmark
+  generation to prevent dead code elimination and constant folding,'' in {\em
+  2016 31st IEEE/ACM International Conference on Automated Software Engineering
+  (ASE)}, pp.~132--143, IEEE, 2016.
+
+\bibitem{JMH}
+``{OpenJDK}: Java microbenchmark harness.''
+  https://openjdk.java.net/projects/code-tools/jmh/.
+\newblock [Online; accessed 2019-08-30].
+
+\bibitem{Leitner:2016:PCS:2926746.2885497}
+P.~Leitner and J.~Cito, ``Patterns in the chaos\&mdash;a study of performance
+  variation and predictability in public iaas clouds,'' {\em ACM Trans.
+  Internet Technol.}, vol.~16, pp.~15:1--15:23, Apr. 2016.
+
+\bibitem{davison_hinkley_1997}
+A.~C. Davison and D.~V. Hinkley, {\em Bootstrap Methods and their Application}.
+\newblock Cambridge Series in Statistical and Probabilistic Mathematics,
+  Cambridge University Press, 1997.
+
+\bibitem{hierach_data_2010}
+S.~Ren, H.~Lai, W.~Tong, M.~Aminzadeh, X.~Hou, and S.~Lai, ``Nonparametric
+  bootstrapping for hierarchical data,'' {\em Journal of Applied Statistics},
+  vol.~37, no.~9, pp.~1487--1498, 2010.
+
+\bibitem{deckarep/golang-set}
+``deckarep/golang-set.'' https://github.com/deckarep/golang-set.
+\newblock [Online; accessed 2019-08-30].
+
+\bibitem{segmentio/objconv}
+``segmentio/objconv.'' https://github.com/segmentio/objconv.
+\newblock [Online; accessed 2019-08-30].
+
+\bibitem{laaber2018performance}
+C.~Laaber, J.~Scheuner, and P.~Leitner, ``Performance testing in the cloud. how
+  bad is it really?,'' {\em PeerJ PrePrints}, vol.~6, p.~e3507v1, 2018.
+
+\bibitem{go}
+``Go programming language.'' https://golang.org/.
+\newblock [Online; accessed 2019-08-30].
+
+\bibitem{stackoverflowdev}
+``Stackoverflow developer survey 2019.''
+  https://insights.stackoverflow.com/survey/2019.
+\newblock [Online; accessed 2019-08-30].
+
+\bibitem{gobench}
+``Package testing in go.'' https://golang.org/pkg/testing/.
+\newblock [Online; accessed 2019-08-30].
 
 \end{thebibliography}
