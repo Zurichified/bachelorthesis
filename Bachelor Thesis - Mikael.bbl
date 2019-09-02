@@ -104,4 +104,37 @@ C.~Laaber, J.~Scheuner, and P.~Leitner, ``Performance testing in the cloud. how
 ``Package testing in go.'' https://golang.org/pkg/testing/.
 \newblock [Online; accessed 2019-08-30].
 
+\bibitem{patool}
+``pa-tool.'' https://bitbucket.org/sealuzh/pa/src/master/.
+\newblock [Online; accessed 2019-08-30].
+
+\bibitem{pythonsta}
+``statistics — mathematical statistics functions.''
+  https://docs.python.org/3/library/statistics.html.
+\newblock [Online; accessed 2019-08-30].
+
+\bibitem{mesos/mesos-go}
+``mesos/mesos-go.'' https://github.com/mesos/mesos-go.
+\newblock [Online; accessed 2019-08-30].
+
+\bibitem{go-gl/mathgl}
+``go-gl/mathgl.'' https://github.com/go-gl/mathgl.
+\newblock [Online; accessed 2019-08-30].
+
+\bibitem{nsqio/nsq}
+``nsqio/nsq.'' https://github.com/nsqio/nsq.
+\newblock [Online; accessed 2019-08-30].
+
+\bibitem{uber/tchannel-go}
+``uber/tchannel-go.'' https://github.com/uber/tchannel-go.
+\newblock [Online; accessed 2019-08-30].
+
+\bibitem{Matplotlib}
+``Matplotlib.'' https://matplotlib.org/.
+\newblock [Online; accessed 2019-08-30].
+
+\bibitem{qjpcu/sesh}
+``qjpcu/sesh.'' https://github.com/qjpcu/sesh.
+\newblock [Online; accessed 2019-08-30].
+
 \end{thebibliography}

@@ -2,6 +2,7 @@
 \usepackage{caption}
 \usepackage{subcaption}
 \usepackage{float}
+\usepackage[table,xcdraw]{xcolor}
 
 \thesisType{Bachelor Thesis}
 \date{\today}
@@ -100,6 +101,7 @@ Microbenchmarks usually test for only a small fraction of the software, such as 
 
 
 \subsection{Microbenchmark variability}
+\label{Microbenchmark variability}
 
 Unless otherwise configured, when a microbenchmark is run, it executes the underlying code for a certain time period (e.g., 1s) over and over for each benchmark iteration and returns a collection of average execution times for each benchmark iteration\cite{laaber2019software}. Execution times of a benchmark are usually expressed in nanoseconds \cite{laaber2019software} \cite{costa2019}. In this thesis, the term microbenchmark variability refers to the variability of a microbenchmark's resulting collection of execution times. It is basically computed by measuring how far the single execution times fall from the average execution time. In this manner, if the executions times are in the close neighborhood of the average value, the benchmark is considered as stable and it's predicted that another execution would take same or similar amount of nanoseconds as the average value. If, however, the points are distributed on a broader scale, it means that the benchmark is rather unstable, i.e., it cannot be predicted how long another execution of the benchmark will take.\\
 \\
@@ -112,16 +114,16 @@ Regarding calculations of these metrics: CV is calculated by dividing the standa
 	\begin{subfigure}{.5\textwidth}
 		\centering
 		\includegraphics[width=\linewidth]{10percentvariance}
-		\caption{Execution results of a microbenchmark with a RCIW99 of 10.28}
+		\caption{Execution results of a microbenchmark with a RCIW99 of 10.28.}
 		\label{fig:10percentvariance}
 	\end{subfigure}%
 	\begin{subfigure}{.5\textwidth}
 		\centering
 		\includegraphics[width=\linewidth]{60percentvariance}
-		\caption{Execution results of a microbenchmark with a RCIW99 of 64.18}
+		\caption{Execution results of a microbenchmark with a RCIW99 of 64.18.}
 		\label{fig:60percentvariance}
 	\end{subfigure}
-	\caption{Example for a low and high variance microbenchmark}
+	\caption{Example for a low and high variance microbenchmark.}
 	\label{fig:variances}
 \end{figure}
 
@@ -143,7 +145,7 @@ Go is a statically typed, compiled programming language, designed at Google and 
 Go comes with a great built-in package for testing and benchmarking, which makes it easier for developers to unit test their code while still developing, or measure the performance of their functions\cite{gobench}. To create a benchmark function, the only thing one has to write is a function beginning with the name \textbf{"Benchmark"} and give a parameter \textbf{*testing.B}. These functions are typically defined in files ending with the \textbf{\_test.go} suffix, and the collection of all the benchmarks within a project build its microbenchmarking suite. Listing \ref{BenchmarkSrc} shows the example benchmark \textit{BenchmarkHash} from project \textbf{ironsmile/nedomi} \cite{ironsmile/nedomi}.
 
 
-\begin{lstlisting}[caption=An example benchmark from \cite{ironsmile/nedomi}, label={BenchmarkSrc}, language=Go]
+\begin{lstlisting}[caption=An example benchmark from \cite{ironsmile/nedomi}., label={BenchmarkSrc}, language=Go, frame=single]
 func BenchmarkHash(b *testing.B) {
 	var m = buildMapHash(id, count)
 	for i := 0; b.N > i; i++ {
@@ -162,7 +164,7 @@ func BenchmarkHash(b *testing.B) {
 
 Go also supports these built-in packages with a CLI flag called "test", with which a developer can execute all the tests of a project on a single command. Executing all benchmarks takes an additional flag "bench", which executes all the benchmarks found in the current directory(package) of a project. An example run of a microbenchmark suite from \textbf{tidwall/buntdb} \cite{tidwall/buntdb} can be seen in Listing \ref{testbench}. The first column is the name of the benchmark, the second column is the amount of executions and the third column is the execution time per execution \cite{gobench}.
 
-\begin{lstlisting}[caption=Example microbenchmark suite execution from \cite{tidwall/buntdb}, label={testbench}]
+\begin{lstlisting}[caption=Example microbenchmark suite execution from \cite{tidwall/buntdb}., label={testbench}, frame=single]
 mikael@mikael-VirtualBox:~/Desktop/BenchmarkProjects/tidwall/buntdb/src-
 /github.com/tidwall/buntdb$ go test -bench=.
 goos: linux
@@ -210,23 +212,88 @@ At the time of writing this thesis, most of the existing work is on the research
 
 \chapter{Methodology}
 \label{Methodology}
-In this section, I present the methodologies I followed to get to the results. As the project consists of 3 main steps, these steps are explained respectively.
+In this section, I present the methodologies I followed to get to the results. As the project consists of 3 main steps, these steps are explained respectively. To shortly illustrate, Figure \ref{fig:Methodology} show the steps along with the programming/scripting languages involved in this thesis. In the first step, I analyze given dataset of microbenchmark results with help of Python and create a .csv file containing all the individual microbenchmarks along with their mean, CV, RCIW95 and RCIW99 values. In the second step, I download all the projects that have an entry in the previous .csv file and run a parser tool written in Go that collects source code properties for each of the benchmarks found in the projects. In the final step, I do a correlation analysis using the variabilities of individual benchmarks as independent variables and their properties as dependent variables. The outcomes of each step are presented in the \ref{Results}. Section.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\linewidth]{Methodology}
+	\caption{3 main steps of the methodology.}
+	\label{fig:Methodology}
+\end{figure}
+
 \section{Calculating variabilities}
-First part of the study involved doing a quantitive analysis by analyzing the given data set. From this data set, I firstly had to extract the valid projects, i. e. choose the projects that have a positive average benchmark score. Secondly, I calculated some metrics for each of benchmark that indicate the variability. The results follow in the first point of Results section.
-\subsection{Data set}
-The starting point was a data set that was acquired by Laaber et. al from a previous study? (Ask for details) \\
+\label{Calculating variabilities}
+
+First part of this thesis involves doing a quantitive analysis by analyzing the given data set. From this data set, I firstly extract the valid projects, i. e. choose the projects that have a positive number of individual benchmark results. Secondly, I calculate CV, RCIW95 and RCIW99 for each of benchmarks found in the dataset. For RCIW95 and RCIW99, I use a helper tool, called "pa tool", which helps me use the bootstrapping technique with randomly sampling, described in Section \ref{Microbenchmark variability}. The outcome of this part is explained in detail in Section \ref{Variabilities of benchmarks}
+
+\subsection{Dataset}
+
+The dataset to analyze the variations from was given me from my supervisor Christoph Laaber. This dataset with a size of 43.8 MB contains \textbf{go-results.csv}, \textbf{go-results-2.csv} and 4 folders \textbf{cumulus-1 to cumulus-4}. In the \textbf{go-results-2.csv}, I find which project's result is on which relative path (which are in cumulus folders) and has how many individual results. \textbf{go-results.csv} differs from this file in having no commit of the projects. That's why, I start by analyzing \textbf{go-results-2.csv} in particular. In this file, I look for the column named "c1\_results": if the value in this column is above 0 (i.e., it is not -1), it means that there are results for that specific project on the special commit, which is found in the column "c1\_commit". From a total of 481 entries in this file, I get 230 projects which have individual results and filter them out. In the next step, I map the relative filepath of the project's result file to the name and commit of the project by querying the \textbf{go-projects.csv} file, which is to be found in every cumulus folder. In the end, I have all the valid projects with their results file.\\
 \\
-Out of 482 projects, 230 of the projects qualified because they had a score bigger than -1 in the main file of data set. ...
-\\
- This includes the categorization of benchmarks of 228 projects written in Go by looking at the total executions, the mean, coefficient of variation and relative confidence interval width with 95\% and 99\% confidence intervals. Secondly, we introduce the methodology we used to extract source code properties from in the first place chosen benchmarks. Thirdly, comparing the source code properties with the variabilities of benchmarks by using regression models to achieve the results.
+Results file of a projects looks like in Figure \ref{fig:exampleresults}. In this file, the middle part in the first column specifies the number of run, the second column specifies the benchmark including the relative path and file where the benchmark is located in, the forth column reports the execution time in nanoseconds, the fifth and sixth column are related to memory performance, bytes/operation and allocations/operation respectively.
+ 
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\linewidth]{exampleresults}
+	\caption{Example results file from \cite{ironsmile/nedomi}.}
+	\label{fig:exampleresults}
+\end{figure}
  
 \subsection{Metrics as the variability indicators}
-For calculating the variabilities of benchmarks, I oriented myself at 3 main metrics. First metric is "Coefficient of Variation" (CV), which is a metric used often in statistics to calculate variability of a data set. ...
+
+As described in Section \ref{Variabilities of benchmarks}, I orient myself at 3 main metrics to calculate the variabilities of the benchmarks. These are CV, RCIW95 and RCIW99 respectively. In this thesis, I'm only interested in the execution times, hence, I only take the forth column of the results file for each benchmark into consideration. To calculate the CV, I firstly find the standard derivation and mean of the execution times of each benchmark. Dividing the standard derivation by the mean gives me the CV.\\
+\\
+For the RCIW part, I use a tool by Christoph Laaber, called "pa-tool" \cite{patool}. This tool works in the following way: For a given benchmark with all its execution times, it randomly samples a subset of the execution times and saves the mean of this new subset. This process is repeated for a considerable amount of time, e.g., 1000 times (number of bootstrap simulations), which guarantees that the new collection of means of the initial benchmark's execution times is now normalized. Finally, the tool gives a confidence interval of the new collection of means with a default significance level of 0.05. Listing \ref{lst:patool} illustrates an example output of pa-tool, showing the confidence interval of each benchmark in project ironsmile/nedomi after bootstrapping 10.000 times with the 0.01 significance level \cite{ironsmile/nedomi}.
+
+\begin{lstlisting}[caption=Example pa-tool results of \cite{ironsmile/nedomi}., label={lst:patool}, frame=single, breaklines=true, basicstyle=\small]
+C:\Users\Mikael\pa>pa -bs 10000 -sig 0.01
+"C:\Users\Mikael\go-calculation\pa_input_projects\1&ironsmile&nedomi_benchmarks.csv"
+#Execute CIs:
+# cmd = CI
+# number of cores = 8
+# bootstrap simulations = 10000
+# significance level = 0.01
+# statistic = Mean
+# invocation sampling = Mean
+# files 1 = [C:\Users\Mikael\go-calculation\pa_input_projects\1&ironsmile&nedomi_benchmarks.csv]
+# files 2 = []
+
+/app/request_id_test.go/BenchmarkNewIDFor;;;1.372879e+02;1.396515e+02;0.99
+/cache/lru/lru_bench_test.go/BenchmarkFilling;;;2.950686e+09;2.982955e+09;0.99
+/cache/lru/lru_bench_test.go/BenchmarkLookupAndRemove;;;1.527660e+04;1.532752e+04;0.99
+/cache/lru/lru_bench_test.go/BenchmarkResizeByQuater;;;2.239956e+08;2.292164e+08;0.99
+/cache/lru/lru_bench_test.go/BenchmarkResizeInHalf;;;3.551978e+08;4.518111e+08;0.99
+/cache/lru/lru_bench_test.go/BenchmarkResizeInQuater;;;3.811996e+08;5.008146e+08;0.99
+/types/bench_test.go/BenchmarkHash;;;1.813582e+02;1.834179e+02;0.99
+/types/bench_test.go/BenchmarkHashStr;;;1.634015e+03;1.637060e+03;0.99
+/upstream/balancing/bench_test.go/BenchmarkKetama;;;2.185776e+03;2.194403e+03;0.99
+/upstream/balancing/bench_test.go/BenchmarkLegacyKetama;;;2.233333e+03;2.242545e+03;0.99
+/upstream/balancing/bench_test.go/BenchmarkRandom;;;2.160121e+03;2.165439e+03;0.99
+/upstream/balancing/bench_test.go/BenchmarkRendezvous;;;2.340515e+03;2.347833e+03;0.99
+/upstream/balancing/bench_test.go/BenchmarkUnweightedRandom;;;2.157939e+03;2.164152e+03;0.99
+/upstream/balancing/bench_test.go/BenchmarkUnweightedRoundRobin;;;2.123652e+03;2.130727e+03;0.99
+/utils/throttle/throttled_writer_bench_test.go/BenchmarkThrottledWriter;;;4.030817e+09;4.036552e+09;0.99
+/utils/throttle/throttled_writer_bench_test.go/BenchmarkThrottledWriterWithReadFrom;;;4.038926e+09;4.040731e+09;0.99
+/utils/throttle/timers_test.go/BenchmarkParallelSleepWithPooledTimer;;;6.253588e+07;6.261951e+07;0.99
+/utils/throttle/timers_test.go/BenchmarkParallelSleepWithSTD;;;6.182706e+07;6.191619e+07;0.99
+#Total execution took 1.1923061s
+	
+\end{lstlisting}
+
 
 \subsection{Python coding}
-How I coded the calculations and created the visualizations. \\
-Which library I used for creating the visualization? \\
-How I used the pa-tool to get the RCIW95 and RCIW99 values \\
+\label{Python coding}
+
+Pa-tool requires the benchmarks of a project to be sorted in alphabetical order, along with its number of run and the execution time. After I have all the valid projects with their results file, I firstly create input csv files for the pa-tool to function accordingly. In the next step, I iterate through input files for pa-tool and run the pa-tool for each project 2 times, once with the significance level of 0.05 and once with 0.01, both having 10.000 bootstrap simulations. From the boundaries of the confidence interval acquired from the pa-tool, I calculate RCIW values by substracting the left boundary from the right boundary. As a result, I get RCIW95 for the results with 0.05 significance leve, and RCIW99 for the results with 0.01 significance level. For the CV part of each benchmark, I use \textit{mean()} and \textit{stddev()} from Python's \textit{statistics} module\cite{pythonsta}.\\
+\\
+Within the end of calculating CV, RCIW95 and RCIW99 of each benchmark, I write all the benchmarks into the \textbf{final.csv} file, which shows the name of the project, the specific benchmark, number of executions, and mean, CV, RCIW95 and RCIW99 of the benchmark respectively. Listing \ref{fig:finalcsv} shows the first lines of \textbf{final.csv}.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\linewidth]{finalcsvexample}
+	\caption{First lines from the final.csv file involving variability values for \cite{ironsmile/nedomi}.}
+	\label{fig:finalcsv}
+\end{figure}
 
 \section{Extracting source code properties}
 Second part of the study was to extract the source code properties of benchmarks written in Go. This also had 2 parts. Results of this part are to be found in second part of the Results section.
@@ -259,9 +326,83 @@ Since the analysis is made statically for the second part of the methodology, th
 
 \chapter{Results}
 \label{Results}
-In this section, I present the results from the 3 parts of this study. 
+In this section, I present the results from the 3 parts of this study. First results correspond to the variability of benchmarks and in the first section I present some statistics regarding the distribution of benchmarks' variabilities. [will be continued]
+
 \section{Variabilities of benchmarks}
-After calculating the variability metrics of benchmarks from the projects, I categorized the variabilities in 10 percent buckets starting from 0 o 100 percent. All the benchmarks that have a variability higher than 100 percent fall into one final bucket. ...
+\label{Variabilities of benchmarks}
+
+In Section \ref{Calculating variabilities}, I show which steps I go through to get variabilities of benchmarks, and in Section \ref{Python coding} I show the structure of \textbf{final.csv}, which lists all the benchmarks from 230 projects. In total, there are 4802 benchmarks resulting from 230 projects. A quick investigation of this data shows that there are 204 benchmarks with only 1 execution, i.e. having only the average execution time of 1 benchmark iteration. Under these benchmarks lay all the benchmarks of \textbf{mesos/mesos-go} \cite{mesos/mesos-go} and \textbf{go-gl/mathgl} \cite{go-gl/mathgl}, as well as benchmarks \textit{BenchmarkProtocolV2Sub128k} and \textit{BenchmarkCallsConcurrentServer} of projects \textbf{nsqio/nsq} \cite{nsqio/nsq} and \textbf{uber/tchannel-go} \cite{uber/tchannel-go}, respectively. Furthermore, there are in total 9 benchmarks, which, although having more than 1 executions, have a mean of 0, which in further investigation shows that all their execution times are 0 ns. Since having only 1 execution of a benchmark and having 0 ns as a mean execution time lead to not being able to calculate the standard derivation and RCIW values, I drop these benchmarks out of the \textbf{final.csv} file, having left with 4589 benchmarks in total.\\
+\\
+For a general view of data, I create a histograms of benchmarks using Matplotlib library \cite{Matplotlib}, which is a library for Python used often for visualizing data. For looking at the results in project basis, I create tables for projects and report how many of projects fall into which bucket in terms of distribution of variabilities.
+
+\subsection{Variabilities in benchmark level}
+
+Figure \ref{fig:benchmark0-100} shows the histogram across all benchmarks and distributions of their variabilities in 10 percent buckets, taking all 3 metrics into consideration. According to the distribution, (CV) 97.50\% (4474/4589), (RCIW95) 98.48\% (4519/4589) and (RCIW99) 98.17\% (4505/4589) of all benchmarks have a variation between 0 and 10. These are quite high percentages to tell that most of the benchmarks are very stable. Note that last bucket is for all the benchmarks that have a variation equal or higher than 100.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\linewidth]{benchmarks0-100}
+	\caption{Distribution of benchmarks' variabilities 0-100 in 10\% buckets.}
+	\label{fig:benchmark0-100}
+\end{figure}
+
+\noindent This result pushes me to further analyze the benchmarks in the 0-10\% bucket, and I create a second histogram showing the distribution of benchmarks' variabilities in the 0-10\% bucket. Figure \ref{fig:benchmark0-10} exposes this variation. Most of the benchmarks fall into the bucket 0-1\%, building (CV) 81.74\% (3657/4474), (RCIW95) 89.20\% (4035/4519) and (RCIW99) 87.70\% (3951/4505) of the projects that are in the 1-10\% bucket. Although not as high in percentage as in 0-10\% bucket, most of the benchmarks can still be described as very stable, having a variation between 0 and 1. Note that last bucket in this figure represents the bucket 9-10\%.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\linewidth]{benchmarks0-10}
+	\caption{Distribution of benchmarks' variabilities 0-10 in 1\% buckets.}
+	\label{fig:benchmark0-10}
+\end{figure}
+
+\subsection{Variabilities in project level}
+
+Since I eliminated 2 projects because they have 1 execution for each of their benchmarks, following statistical data is based on a total of 228 projects. Table \ref{table:table1}'s header shows \textbf{Percentages} as buckets for the benchmarks' RCIW99 values. Following two rows show how many distinct projects fall into this group (i.e., having at least one benchmark in this bucket), and how many of the total projects this makes in percentage. As one can see, 225 out of 228 projects have benchmarks that have at least one benchmark that has a RCIW99 score. Analyzing the 0-1\% bucket further shows that there are in total 283 benchmarks from 68 projects which have a RCIW99 score of 0.0. This makes 6.16\% of total benchmarks.
+
+\begin{table}[H]
+	\caption{Number of distinct projects, whose benchmarks’ RCIW99 lay between 1-10\% in 1\% buckets and between 10-100\% in 10\% buckets}
+	\label{table:table1}
+	\begin{tabular}{lllllllllll}
+		\hline
+		\rowcolor[HTML]{FFFC9E} 
+		\multicolumn{1}{|l|}{\cellcolor[HTML]{FFFC9E}Percentages} & \multicolumn{1}{l|}{\cellcolor[HTML]{FFFC9E}0-1\%}   & \multicolumn{1}{l|}{\cellcolor[HTML]{FFFC9E}1-2\%}   & \multicolumn{1}{l|}{\cellcolor[HTML]{FFFC9E}2-3\%}   & \multicolumn{1}{l|}{\cellcolor[HTML]{FFFC9E}3-4\%}   & \multicolumn{1}{l|}{\cellcolor[HTML]{FFFC9E}4-5\%}   & \multicolumn{1}{l|}{\cellcolor[HTML]{FFFC9E}5-6\%}   & \multicolumn{1}{l|}{\cellcolor[HTML]{FFFC9E}6-7\%}   & \multicolumn{1}{l|}{\cellcolor[HTML]{FFFC9E}7-8\%}   & \multicolumn{1}{l|}{\cellcolor[HTML]{FFFC9E}8-9\%}    & \multicolumn{1}{l|}{\cellcolor[HTML]{FFFC9E}9-10\%}              \\ \hline
+		\multicolumn{1}{|l|}{\#projects}                          & \multicolumn{1}{l|}{225}                             & \multicolumn{1}{l|}{75}                              & \multicolumn{1}{l|}{48}                              & \multicolumn{1}{l|}{30}                              & \multicolumn{1}{l|}{17}                              & \multicolumn{1}{l|}{15}                              & \multicolumn{1}{l|}{8}                               & \multicolumn{1}{l|}{6}                               & \multicolumn{1}{l|}{4}                                & \multicolumn{1}{l|}{5}                                           \\ \hline
+		\multicolumn{1}{|l|}{\#projects \%}                       & \multicolumn{1}{l|}{99\%}                            & \multicolumn{1}{l|}{33\%}                            & \multicolumn{1}{l|}{21\%}                            & \multicolumn{1}{l|}{13\%}                            & \multicolumn{1}{l|}{7\%}                             & \multicolumn{1}{l|}{7\%}                             & \multicolumn{1}{l|}{4\%}                             & \multicolumn{1}{l|}{3\%}                             & \multicolumn{1}{l|}{2\%}                              & \multicolumn{1}{l|}{2\%}                                         \\ \hline
+		&                                                      &                                                      &                                                      &                                                      &                                                      &                                                      &                                                      &                                                      &                                                       &                                                                  \\ \hline
+		\rowcolor[HTML]{FFFC9E} 
+		\multicolumn{1}{|l|}{\cellcolor[HTML]{FFFC9E}Percentages} & \multicolumn{1}{l|}{\cellcolor[HTML]{FFFC9E}10-20\%} & \multicolumn{1}{l|}{\cellcolor[HTML]{FFFC9E}20-30\%} & \multicolumn{1}{l|}{\cellcolor[HTML]{FFFC9E}30-40\%} & \multicolumn{1}{l|}{\cellcolor[HTML]{FFFC9E}40-50\%} & \multicolumn{1}{l|}{\cellcolor[HTML]{FFFC9E}50-60\%} & \multicolumn{1}{l|}{\cellcolor[HTML]{FFFC9E}60-70\%} & \multicolumn{1}{l|}{\cellcolor[HTML]{FFFC9E}70-80\%} & \multicolumn{1}{l|}{\cellcolor[HTML]{FFFC9E}80-90\%} & \multicolumn{1}{l|}{\cellcolor[HTML]{FFFC9E}90-100\%} & \multicolumn{1}{l|}{\cellcolor[HTML]{FFFC9E}\textgreater{}100\%} \\ \hline
+		\multicolumn{1}{|l|}{\#projects}                          & \multicolumn{1}{l|}{18}                              & \multicolumn{1}{l|}{9}                               & \multicolumn{1}{l|}{6}                               & \multicolumn{1}{l|}{4}                               & \multicolumn{1}{l|}{4}                               & \multicolumn{1}{l|}{2}                               & \multicolumn{1}{l|}{1}                               & \multicolumn{1}{l|}{0}                               & \multicolumn{1}{l|}{3}                                & \multicolumn{1}{l|}{6}                                           \\ \hline
+		\multicolumn{1}{|l|}{\#projects \%}                       & \multicolumn{1}{l|}{8\%}                             & \multicolumn{1}{l|}{4\%}                             & \multicolumn{1}{l|}{3\%}                             & \multicolumn{1}{l|}{2\%}                             & \multicolumn{1}{l|}{2\%}                             & \multicolumn{1}{l|}{1\%}                             & \multicolumn{1}{l|}{0\%}                             & \multicolumn{1}{l|}{0\%}                             & \multicolumn{1}{l|}{1\%}                              & \multicolumn{1}{l|}{3\%}                                         \\ \hline
+	\end{tabular}
+\end{table}
+
+\noindent Table \ref{table:table2} similarly shows the number of projects and their percentages across all projects, whose benchmarks have an RCIW99 score of more than the one provided in the \textbf{Percentage} header. One thing that attracts attention is that in the first row, there are 227 projects which have at least one benchmark that has a RCIW99 score bigger than 0. This is because one of the projects, qjpcu/sesh \cite{qjpcu/sesh}, only has 2 benchmarks, of which both have 0.0 as RCIW99 score.
+
+\begin{table}[H]
+	\caption{Number of distinct projects, whose benchmarks’ RCIW99 lay more than the percent value}
+	\label{table:table2}
+	\begin{tabular}{lllllllllll}
+		\hline
+		\rowcolor[HTML]{FFCCC9} 
+		\multicolumn{1}{|l|}{\cellcolor[HTML]{FFCCC9}Percentage} & \multicolumn{1}{l|}{\cellcolor[HTML]{FFCCC9}0\%}  & \multicolumn{1}{l|}{\cellcolor[HTML]{FFCCC9}1\%}  & \multicolumn{1}{l|}{\cellcolor[HTML]{FFCCC9}2\%}  & \multicolumn{1}{l|}{\cellcolor[HTML]{FFCCC9}3\%}  & \multicolumn{1}{l|}{\cellcolor[HTML]{FFCCC9}4\%}  & \multicolumn{1}{l|}{\cellcolor[HTML]{FFCCC9}5\%}  & \multicolumn{1}{l|}{\cellcolor[HTML]{FFCCC9}6\%}  & \multicolumn{1}{l|}{\cellcolor[HTML]{FFCCC9}7\%}  & \multicolumn{1}{l|}{\cellcolor[HTML]{FFCCC9}8\%}  & \multicolumn{1}{l|}{\cellcolor[HTML]{FFCCC9}9\%}   \\ \hline
+		\multicolumn{1}{|l|}{\#projects}                         & \multicolumn{1}{l|}{227}                          & \multicolumn{1}{l|}{98}                           & \multicolumn{1}{l|}{75}                           & \multicolumn{1}{l|}{58}                           & \multicolumn{1}{l|}{47}                           & \multicolumn{1}{l|}{53}                           & \multicolumn{1}{l|}{39}                           & \multicolumn{1}{l|}{35}                           & \multicolumn{1}{l|}{32}                           & \multicolumn{1}{l|}{31}                            \\ \hline
+		\multicolumn{1}{|l|}{\#projects \%}                      & \multicolumn{1}{l|}{100\%}                        & \multicolumn{1}{l|}{43\%}                         & \multicolumn{1}{l|}{33\%}                         & \multicolumn{1}{l|}{25\%}                         & \multicolumn{1}{l|}{21\%}                         & \multicolumn{1}{l|}{23\%}                         & \multicolumn{1}{l|}{17\%}                         & \multicolumn{1}{l|}{15\%}                         & \multicolumn{1}{l|}{14\%}                         & \multicolumn{1}{l|}{14\%}                          \\ \hline
+		&                                                   &                                                   &                                                   &                                                   &                                                   &                                                   &                                                   &                                                   &                                                   &                                                    \\ \hline
+		\rowcolor[HTML]{FFCCC9} 
+		\multicolumn{1}{|l|}{\cellcolor[HTML]{FFCCC9}Percentage} & \multicolumn{1}{l|}{\cellcolor[HTML]{FFCCC9}10\%} & \multicolumn{1}{l|}{\cellcolor[HTML]{FFCCC9}20\%} & \multicolumn{1}{l|}{\cellcolor[HTML]{FFCCC9}30\%} & \multicolumn{1}{l|}{\cellcolor[HTML]{FFCCC9}40\%} & \multicolumn{1}{l|}{\cellcolor[HTML]{FFCCC9}50\%} & \multicolumn{1}{l|}{\cellcolor[HTML]{FFCCC9}60\%} & \multicolumn{1}{l|}{\cellcolor[HTML]{FFCCC9}70\%} & \multicolumn{1}{l|}{\cellcolor[HTML]{FFCCC9}80\%} & \multicolumn{1}{l|}{\cellcolor[HTML]{FFCCC9}90\%} & \multicolumn{1}{l|}{\cellcolor[HTML]{FFCCC9}100\%} \\ \hline
+		\multicolumn{1}{|l|}{\#projects}                         & \multicolumn{1}{l|}{28}                           & \multicolumn{1}{l|}{18}                           & \multicolumn{1}{l|}{13}                           & \multicolumn{1}{l|}{10}                           & \multicolumn{1}{l|}{8}                            & \multicolumn{1}{l|}{6}                            & \multicolumn{1}{l|}{6}                            & \multicolumn{1}{l|}{6}                            & \multicolumn{1}{l|}{6}                            & \multicolumn{1}{l|}{6}                             \\ \hline
+		\multicolumn{1}{|l|}{\#projects \%}                      & \multicolumn{1}{l|}{12\%}                         & \multicolumn{1}{l|}{8\%}                          & \multicolumn{1}{l|}{6\%}                          & \multicolumn{1}{l|}{4\%}                          & \multicolumn{1}{l|}{4\%}                          & \multicolumn{1}{l|}{3\%}                          & \multicolumn{1}{l|}{3\%}                          & \multicolumn{1}{l|}{3\%}                          & \multicolumn{1}{l|}{3\%}                          & \multicolumn{1}{l|}{3\%}                           \\ \hline
+	\end{tabular}
+\end{table}
+
+\noindent As I present the results for the first step of my methodology, I want to remind and answer the following research question:
+
+\begin{itemize}
+	\item \textbf{RQ1: How variable are microbenchmark results of Go projects?}
+\end{itemize}
+
+\noindent Unlike my hypothesis, there is no normalized distribution of RCIW99 values of benchmarks. Most of the benchmarks fall to the bucket 1-10\% (98.17\%), from which again most them fall to 0-1\% (87.70\%). Based on the dataset that I analyze with 230 projects, it is clear that most of them are very stable, and 6.16\% (283 in total) of benchmarks don't even vary, i.e., for each execution they have the same amount of nanoseconds as execution time. The possible reasons for the stability of benchmarks, as well as why there is such a distribution is furthermore discussed in the \ref{Discussion}. Section.
+
 
 \section{Source code properties}
 For every project that I was able to analyze by using the tool introduced in second part of methodology section, I was able to collect the source code properties. CSV? ...

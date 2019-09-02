@@ -2,9 +2,14 @@
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \contentsline {figure}{\numberline {2.1}{\ignorespaces Execution of a microbenchmark in JMH, taken from \cite {costa2019}.\relax }}{4}% 
-\contentsline {figure}{\numberline {2.2}{\ignorespaces Example for a low and high variance microbenchmark\relax }}{5}% 
+\contentsline {figure}{\numberline {2.2}{\ignorespaces Example for a low and high variance microbenchmark.\relax }}{5}% 
 \addvspace {10\p@ }
+\contentsline {figure}{\numberline {3.1}{\ignorespaces 3 main steps of the methodology.\relax }}{9}% 
+\contentsline {figure}{\numberline {3.2}{\ignorespaces Example results file from \cite {ironsmile/nedomi}.\relax }}{10}% 
+\contentsline {figure}{\numberline {3.3}{\ignorespaces First lines from the final.csv file involving variability values for \cite {ironsmile/nedomi}.\relax }}{12}% 
 \addvspace {10\p@ }
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Distribution of benchmarks' variabilities 0-100 in 10\% buckets.\relax }}{16}% 
+\contentsline {figure}{\numberline {4.2}{\ignorespaces Distribution of benchmarks' variabilities 0-10 in 1\% buckets.\relax }}{16}% 
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
