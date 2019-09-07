@@ -3,6 +3,13 @@
 \usepackage{subcaption}
 \usepackage{float}
 \usepackage[table,xcdraw]{xcolor}
+\usepackage{multirow}
+\usepackage{lscape}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{longtable}
+\usepackage[inline]{enumitem}
+
 
 \thesisType{Bachelor Thesis}
 \date{\today}
@@ -162,7 +169,7 @@ func BenchmarkHash(b *testing.B) {
 }
 \end{lstlisting}
 
-Go also supports these built-in packages with a CLI flag called "test", with which a developer can execute all the tests of a project on a single command. Executing all benchmarks takes an additional flag "bench", which executes all the benchmarks found in the current directory(package) of a project. An example run of a microbenchmark suite from \textbf{tidwall/buntdb} \cite{tidwall/buntdb} can be seen in Listing \ref{testbench}. The first column is the name of the benchmark, the second column is the amount of executions and the third column is the execution time per execution \cite{gobench}.
+\noindent Go also supports these built-in packages with a CLI flag called "test", with which a developer can execute all the tests of a project on a single command. Executing all benchmarks takes an additional flag "bench", which executes all the benchmarks found in the current directory(package) of a project. An example run of a microbenchmark suite from \textbf{tidwall/buntdb} \cite{tidwall/buntdb} can be seen in Listing \ref{testbench}. The first column is the name of the benchmark, the second column is the amount of executions and the third column is the execution time per execution \cite{gobench}.
 
 \begin{lstlisting}[caption=Example microbenchmark suite execution from \cite{tidwall/buntdb}., label={testbench}, frame=single]
 mikael@mikael-VirtualBox:~/Desktop/BenchmarkProjects/tidwall/buntdb/src-
@@ -202,13 +209,12 @@ ok  	github.com/tidwall/buntdb	71.590s
 
 
 \section{Related Work}
+[Upcoming]
 Here comes the literature research about benchmark variability. While some papers look at the benchmark variability causes, some of them try to predict the performance regressions based on different versions of a software by analyzing different commits and mining source code. \\
 \\
 To the best of my knowledge, there exist no study analyzing benchmark variability of software microbechmarks written in Go by trying to find a correlation with the used source code metrics in these benchmarks.\\
 \\
-Bunu duzelt
 At the time of writing this thesis, most of the existing work is on the research of performance unit testing in Java ecosystem.\cite{Stefan:2017:UTP:3030207.3030226}
-\cite{Laaber:2018:EOS:3196398.3196407}
 
 \chapter{Methodology}
 \label{Methodology}
@@ -296,14 +302,316 @@ Within the end of calculating CV, RCIW95 and RCIW99 of each benchmark, I write a
 \end{figure}
 
 \section{Extracting source code properties}
-Second part of the study was to extract the source code properties of benchmarks written in Go. This also had 2 parts. Results of this part are to be found in second part of the Results section.
+
+This is the second part of the study, which involves extracting the source code properties of benchmarks, for which I calculated the variabilities in Section \ref{Calculating variabilities}. This part consists of a downloading projects from Github, extracting information about all kinds of functions (normal, test and benchmarks) in these projects and finally creating .csv files for each project, having the benchmarks and their properties, which can visually be seen in the second part of Figure \ref{fig:Methodology}. Results of this part are to be found in Section \ref{Source code properties}.
 
 \subsection{Decision on source code properties}
-Which steps I took at deciding for the source code properties
+
+Prior to programming for each of the parts, I do a qualitative analysis to decide on the properties that I want to extract for each benchmark. For this, I start by analyzing some of the benchmarks with particularly high variabilities and look for the properties that come up in these. While this gives me some basic ideas about what to analyze, I also scroll through the standard library of Go \cite{gopackages} and look for the libraries, which in my opinion might make an impact to the variability of the benchmarks. At the time of doing that, my particular inspectation goes to the libraries which implement functionalities about handling file IO, http calls and other functionalities that might otherwise make an impact on the variability.\\
+\\
+As a second source for the source code properties, I have a look at the Go Programming Language \cite{go} and its language properties. Near features such as data structures, control flow elements and error handling mechanisms, Go is also full equipped with concurrency related features, which enable developers to code parallel programs without having to code for underlying data structures in first place. With this, I put language related features on top of usage of standard libraries whilst deciding for the source code properties. Additionally, I look up for source code metrics that are often used/extracted in the literature and find cyclomatic complexity as a metric to measure the depth of control flow graph of a function \cite{shepperd1988critique}.\\
+\\
+Finally, I create the list of properties in Table \ref{table:sourcecodeprop} to analyze when extracting information out of functions. In total, there are 4 different types of properties that I analyze. First one is the usage of specified standard library. In this type, there are 31 libraries that can play a role on the variability of the benchmarks. In particular, I inspect \textbf{io, io/ioutil} which represents file I/O operations; \textbf{net/http, net/http/httptest, net/http/httptrace, net/http/httputil} which represent http calls and other http related functions. All the remaining properties are for me of interest as well: For instance, I wonder if the usage of random functions has an impact on the variability and look for the occurences of \textbf{math/rand}; similarly, I'm interested in the usage of synchronization primitives and seek for \textbf{sync, sync/atomic} to see whether count of usage of this library within a benchmark affects the benchmark in a significant way. Second property type in the list is signature of the function, which stands for the properties that are directly related with the function. In this type there are 6 properties, which can be extracted by looking at the place of function's definition and the identifiers of the function. Third property type is called body of the function, which contains all the properties that can be extracted from the body of the benchmarks. For the variability of the benhcmark, these can also be a predictor of stability. Last property type is other, which has cyclomatic complexity.\\
+\\
+For the extraction of these properties, I use the methodology of parsing the Abstract Syntax Tree of a source code file. While signature properties require only the inspection of function declarations within the AST, the other 3 types require analysis of the body of the function within the declaration, going into a deeper level.
+
+\begin{table}[H]
+	\caption{List of source code properties.}
+	\label{table:sourcecodeprop}
+	\resizebox{\textwidth}{!}{%
+		\begin{tabular}{|
+				>{\columncolor[HTML]{FFFC9E}}c |
+				>{\columncolor[HTML]{FFFC9E}}c |c}
+			\hline
+			\cellcolor[HTML]{C0C0C0}\textbf{Property Type} & \cellcolor[HTML]{C0C0C0}\textbf{Property Name} & \multicolumn{1}{l|}{\cellcolor[HTML]{C0C0C0}\textbf{Explanation}} \\ \hline
+			\cellcolor[HTML]{FFFC9E} & bufio & \multicolumn{1}{c|}{Library to handle buffer actions.} \\ \cline{2-3} 
+			\cellcolor[HTML]{FFFC9E} & bytes & \multicolumn{1}{c|}{Library to manipulate byte slices.} \\ \cline{2-3} 
+			\cellcolor[HTML]{FFFC9E} & crypto & \multicolumn{1}{c|}{Library that has common cryptographic constants.} \\ \cline{2-3} 
+			\cellcolor[HTML]{FFFC9E} & database/sql & \multicolumn{1}{c|}{Library for database interactions.} \\ \cline{2-3} 
+			\cellcolor[HTML]{FFFC9E} & encoding & \multicolumn{1}{c|}{} \\ \cline{2-2}
+			\cellcolor[HTML]{FFFC9E} & encoding/binary & \multicolumn{1}{c|}{} \\ \cline{2-2}
+			\cellcolor[HTML]{FFFC9E} & encoding/csv & \multicolumn{1}{c|}{} \\ \cline{2-2}
+			\cellcolor[HTML]{FFFC9E} & encoding/json & \multicolumn{1}{c|}{} \\ \cline{2-2}
+			\cellcolor[HTML]{FFFC9E} & encoding/xml & \multicolumn{1}{c|}{\multirow{-5}{*}{Libraries for handling different type of encodings.}} \\ \cline{2-3} 
+			\cellcolor[HTML]{FFFC9E} & io & \multicolumn{1}{c|}{} \\ \cline{2-2}
+			\cellcolor[HTML]{FFFC9E} & io/ioutil & \multicolumn{1}{c|}{\multirow{-2}{*}{Libraries that hold io primitives and io functionalities.}} \\ \cline{2-3} 
+			\cellcolor[HTML]{FFFC9E} & math & \multicolumn{1}{c|}{} \\ \cline{2-2}
+			\cellcolor[HTML]{FFFC9E} & math/rand & \multicolumn{1}{c|}{\multirow{-2}{*}{Libraries for math functions and random implementations.}} \\ \cline{2-3} 
+			\cellcolor[HTML]{FFFC9E} & mime & \multicolumn{1}{c|}{Library implementing parts of MIME spec.} \\ \cline{2-3} 
+			\cellcolor[HTML]{FFFC9E} & net & \multicolumn{1}{c|}{Library for handling network I/O.} \\ \cline{2-3} 
+			\cellcolor[HTML]{FFFC9E} & net/http & \multicolumn{1}{c|}{} \\ \cline{2-2}
+			\cellcolor[HTML]{FFFC9E} & net/http/httptest & \multicolumn{1}{c|}{} \\ \cline{2-2}
+			\cellcolor[HTML]{FFFC9E} & net/http/httptrace & \multicolumn{1}{c|}{} \\ \cline{2-2}
+			\cellcolor[HTML]{FFFC9E} & net/http/httputil & \multicolumn{1}{c|}{\multirow{-4}{*}{\begin{tabular}[c]{@{}c@{}}Libraries implementing HTTP client and server, \\ utilities for HTTP testing, mechanisms to trace events \\ and other HTTP utility functions.\end{tabular}}} \\ \cline{2-3} 
+			\cellcolor[HTML]{FFFC9E} & net/rpc & \multicolumn{1}{c|}{} \\ \cline{2-2}
+			\cellcolor[HTML]{FFFC9E} & net/rpc/jsonrpc & \multicolumn{1}{c|}{\multirow{-2}{*}{Libraries that implement remote procedure calls for objects.}} \\ \cline{2-3} 
+			\cellcolor[HTML]{FFFC9E} & net/smtp & \multicolumn{1}{c|}{Library to handle Simple Mail Transfer Protocol.} \\ \cline{2-3} 
+			\cellcolor[HTML]{FFFC9E} & net/textproto & \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}Library that implements generic support for \\ text based request/response protocols.\end{tabular}} \\ \cline{2-3} 
+			\cellcolor[HTML]{FFFC9E} & os & \multicolumn{1}{c|}{Library to handle OS functionality.} \\ \cline{2-3} 
+			\cellcolor[HTML]{FFFC9E} & os/exec & \multicolumn{1}{c|}{Library to run external commands.} \\ \cline{2-3} 
+			\cellcolor[HTML]{FFFC9E} & os/signal & \multicolumn{1}{c|}{Library to access incoming signals.} \\ \cline{2-3} 
+			\cellcolor[HTML]{FFFC9E} & sort & \multicolumn{1}{c|}{Library to sort slices and user defined collections.} \\ \cline{2-3} 
+			\cellcolor[HTML]{FFFC9E} & strconv & \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}Library that implements conversion to and from \\ string representations.\end{tabular}} \\ \cline{2-3} 
+			\cellcolor[HTML]{FFFC9E} & sync & \multicolumn{1}{c|}{} \\ \cline{2-2}
+			\cellcolor[HTML]{FFFC9E} & sync/atomic & \multicolumn{1}{c|}{\multirow{-2}{*}{\begin{tabular}[c]{@{}c@{}}Libraries that implement basic synchronization primitives \\ and low-level atomic memory primitives.\end{tabular}}} \\ \cline{2-3} 
+			\multirow{-31}{*}{\cellcolor[HTML]{FFFC9E}Standard library usage} & syscall & \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}Library that implements an interface to \\ low-level operating system primitives.\end{tabular}} \\ \hline
+			\cellcolor[HTML]{FFCC67} & \cellcolor[HTML]{FFCC67}pkgfiles & \multicolumn{1}{c|}{Files in the package where the function belongs to.} \\ \cline{2-3} 
+			\cellcolor[HTML]{FFCC67} & \cellcolor[HTML]{FFCC67}fileloc & \multicolumn{1}{c|}{Lines of code of the file where the function belongs to.} \\ \cline{2-3} 
+			\cellcolor[HTML]{FFCC67} & \cellcolor[HTML]{FFCC67}namelength & \multicolumn{1}{c|}{Length of the name of the function.} \\ \cline{2-3} 
+			\cellcolor[HTML]{FFCC67} & \cellcolor[HTML]{FFCC67}parameters & \multicolumn{1}{c|}{Parameters of the function.} \\ \cline{2-3} 
+			\cellcolor[HTML]{FFCC67} & \cellcolor[HTML]{FFCC67}returns & \multicolumn{1}{c|}{Return values of the function.} \\ \cline{2-3} 
+			\multirow{-6}{*}{\cellcolor[HTML]{FFCC67}Signature of the function} & \cellcolor[HTML]{FFCC67}loc & \multicolumn{1}{c|}{Lines of code of the function.} \\ \hline
+			\cellcolor[HTML]{CD9934} & \cellcolor[HTML]{CD9934}funccalls & \multicolumn{1}{c|}{Function calls within the function.} \\ \cline{2-3} 
+			\cellcolor[HTML]{CD9934} & \cellcolor[HTML]{CD9934}loops & \multicolumn{1}{c|}{For and while loops within the function.} \\ \cline{2-3} 
+			\cellcolor[HTML]{CD9934} & \cellcolor[HTML]{CD9934}nestedloops & \multicolumn{1}{c|}{Nested for/while loops within the function.} \\ \cline{2-3} 
+			\cellcolor[HTML]{CD9934} & \cellcolor[HTML]{CD9934}channels & \multicolumn{1}{c|}{Channel creations within the function.} \\ \cline{2-3} 
+			\cellcolor[HTML]{CD9934} & \cellcolor[HTML]{CD9934}sends & \multicolumn{1}{c|}{Sending data to the channel within the function.} \\ \cline{2-3} 
+			\cellcolor[HTML]{CD9934} & \cellcolor[HTML]{CD9934}receives & \multicolumn{1}{c|}{Receiving data from the channel within the function.} \\ \cline{2-3} 
+			\cellcolor[HTML]{CD9934} & \cellcolor[HTML]{CD9934}closes & \multicolumn{1}{c|}{Channel terminations within the function.} \\ \cline{2-3} 
+			\cellcolor[HTML]{CD9934} & \cellcolor[HTML]{CD9934}gos & \multicolumn{1}{c|}{Go keywords (new threads) within the function.} \\ \cline{2-3} 
+			\cellcolor[HTML]{CD9934} & \cellcolor[HTML]{CD9934}concrranges & \multicolumn{1}{c|}{Channel loops within the function.} \\ \cline{2-3} 
+			\cellcolor[HTML]{CD9934} & \cellcolor[HTML]{CD9934}selects & \multicolumn{1}{c|}{Select statements within the function.} \\ \cline{2-3} 
+			\cellcolor[HTML]{CD9934} & \cellcolor[HTML]{CD9934}selectcases & \multicolumn{1}{c|}{Cases in select statements within the function.} \\ \cline{2-3} 
+			\cellcolor[HTML]{CD9934} & \cellcolor[HTML]{CD9934}variables & \multicolumn{1}{c|}{} \\ \cline{2-2}
+			\cellcolor[HTML]{CD9934} & \cellcolor[HTML]{CD9934}pointers & \multicolumn{1}{c|}{} \\ \cline{2-2}
+			\cellcolor[HTML]{CD9934} & \cellcolor[HTML]{CD9934}slices & \multicolumn{1}{c|}{} \\ \cline{2-2}
+			\cellcolor[HTML]{CD9934} & \cellcolor[HTML]{CD9934}maps & \multicolumn{1}{c|}{\multirow{-4}{*}{\begin{tabular}[c]{@{}c@{}}Variable, pointer, slice and map declarations \\ within the function.\end{tabular}}} \\ \cline{2-3} 
+			\cellcolor[HTML]{CD9934} & \cellcolor[HTML]{CD9934}ifelses & \multicolumn{1}{c|}{If-else statements within the function.} \\ \cline{2-3} 
+			\cellcolor[HTML]{CD9934} & \cellcolor[HTML]{CD9934}switches & \multicolumn{1}{c|}{Switch statements within the function.} \\ \cline{2-3} 
+			\cellcolor[HTML]{CD9934} & \cellcolor[HTML]{CD9934}switchcases & \multicolumn{1}{c|}{Cases in switch statements within the function.} \\ \cline{2-3} 
+			\cellcolor[HTML]{CD9934} & \cellcolor[HTML]{CD9934}panics & \multicolumn{1}{c|}{Panic statements within the function.} \\ \cline{2-3} 
+			\cellcolor[HTML]{CD9934} & \cellcolor[HTML]{CD9934}recovers & \multicolumn{1}{c|}{Recover statements within the function.} \\ \cline{2-3} 
+			\multirow{-21}{*}{\cellcolor[HTML]{CD9934}Body of the function} & \cellcolor[HTML]{CD9934}defers & \multicolumn{1}{c|}{Defer statements within the function.} \\ \hline
+			\cellcolor[HTML]{CBCEFB}Other & \cellcolor[HTML]{CBCEFB}cyclomaticcomplexity & Cyclomatic complexity of the function. \\ \hline
+		\end{tabular}%
+	}
+\end{table}
+
+\subsection{Downloading projects}
+
+To download all the valid projects that resulted with 4589 benchmarks in the first analysis, I firstly create a little .csv file which stores the name of the projects and its commit, where the execution results are from. I then write a Python script, which reads this file and downlods the projects sequentially from Github. For downloading, I use Go's \textit{get CLI flag}, as this is intended to download and install a Go project along with its dependencies. However, downloading these projects with:
+\begin{lstlisting}
+	go get github.com/{owner_name}/{project_name}
+\end{lstlisting}
+
+\noindent does not suffice, because the commits of these projects are from a time when Go Modules did not used to exist. This means, at the time of these commits projects had their own package management tools, which ensured getting the right dependencies for the project \cite{packagemanagement}. Because projects had their own GOPATH environment back then, I create a GOPATH for each of the projects prior to downloading them. On one hand, I ensure that their dependencies from their commits can be stored in their own GOPATH, on the other hand, I avoid clashing dependencies from other projects, which would then share the same GOPATH for all the dependencies. Post download, I then use a locally installed Git to checkout the project folder from master to the given commit in the .csv file. As an output, I get as .csv file containing name, commit and installed path of each project. This output file is useful for the parser tool that can iterate through different projects, which is explained in the next section. Figure \ref{fig:downloadproject} illustrates the process of downloading projects.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\linewidth]{downloadproject}
+	\caption{Process of downloading projects from Github.}
+	\label{fig:downloadproject}
+\end{figure}
+
 
 \subsection{Golang coding}
-- How I coded in Go to extract the properties? (Also get into detail about AST's in Go and giving code examples) \\
-- Which libraries or other tools I used (Callgraph tool, cyclomatic complexity tool) ? \\
+
+Extracting source code properties in this thesis consists of two main parts. First part has to do with AST parsing of source code files to extract all the functions within a project. Second part is about using a callgraph CLI tool which resides in Go's \textit{golang.org/x/tools/cmd/} repository\cite{callgraphtool}. In particular, I use the parser tool in the first part to create a .csv file from a project which has all the functions with their source code properties. Following that, I use the callgraph tool to iterate through the callgraph of each benchmark found in the resulting .csv file from the parser tool in order to find all the called functions from a benchmark. This way, I'm able to match all the called functions from the benchmark in the first .csv file and calculate the sum of each property value for the benchmark. Output of the callgraph tool is a .csv file for the project, which contains only the benchmark functions with their source code properties.\\
+\\
+For both of the parts I use Go programming language as it offers great functionabilities when it comes to parsing Go's source code files and collect source code information. I present the resulting tools "Prophunt" and "Callgraph Analyzer" in the next sections.
+
+\subsection{Prophunt}
+\label{Prophunt}
+After having all the projects residing in their own GOPATHs, next step is to start with parsing the source code of each file found in a project. But before that, there is still a step that needs to be taken, which is getting the dependencies. Downloading the projects with "go get" without any further flag only causes downloading and installing them in the specified GOPATH, fetching only the dependencies that can be fetched via Go Modules and only for the master commit. However, to be able to parse the source code correctly and have no compilation errors, all the dependencies that are required for that special commit need to be fetched. Because of that reason, I firstly implement a mechanism to iterate through all the project paths, set the GOPATH accordingly, call \textit{"go get -t ./..."} inside the project's root folder and use \textit{deps/fetch.go/Fetch} method from Christoph Laaber's GoABS implementation \cite{sealuzh/goabs}.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\linewidth]{fetchdeps}
+	\caption{Process of fetching dependencies for each project.}
+	\label{fig:fetchdeps}
+\end{figure}
+
+\noindent Figure \ref{fig:fetchdeps} shows how this process runs in Go. The optional "-t" flag of \textit{go get} ensures the installation of all required test packages and the latter \textit{./...} tells \textit{go get} to fetch all dependencies for this project. This command is crucial, since without getting dependencies for test packages some of the source code files cannot be compiled correctly, which leads to not being able to parse them correctly, using Prophunt. For all the projects with their specific commits, which are compabible with Go Modules, this step suffices in terms of being ready to be parsed. However, there are projects which use other package management tools \cite{packagemanagement}. For these kind of projects, I use \textit{deps.Fetch} method and give it the path of the project, from which it automatically extracts GOPATH of the projects and uses one of the preinstalled dependency management tools to get the dependencies. As of writing this thesis, this method has support for the following tools (which need to be installed before using the method):
+
+\begin{itemize*}[font={\color{red!50!black}}]
+	\item Get 
+	\item dep
+	\item Glide
+	\item Godep
+	\item Govendor
+	\item gvt
+	\item govend
+	\item trash
+	\item gom
+	\item gopm
+	\item Gogradle
+	\item gpm
+	\item glock
+\end{itemize*}
+
+I install these tools prior to fetching dependencies in my Ubuntu 18.04 Virtual Machine (VM) environment. After fetching dependencies for all the projects, I am ready with the next step in Prophunt, which is parsing.
+
+\paragraph{Parsing}
+
+I firstly start my parsing processes by importing Go's \textbf{parser} library, and giving its \textit{ParseFile} method some source code files written in Go and the \textit{parser.ParseComments} mode as parameters to parse everything including comments in a file. This method, unless errors occure, returns an \textbf{*ast.File} instance, which represents a file in Go environment. This instance, as shown in Listing \ref{astFile}, has all the information about a .go file. This return value can now be investigated by using its attributes, for example, \textit{*ast.File.Name} gives name of the package this .go file belongs to.
+
+\begin{lstlisting}[caption=*ast.File declaration in Go., label={astFile}, language=Go, frame=single]
+	type File struct {
+	Doc        *CommentGroup   // associated documentation; or nil
+	Package    token.Pos       // position of "package" keyword
+	Name       *Ident          // package name
+	Decls      []Decl          // top-level declarations; or nil
+	Scope      *Scope          // package scope (this file only)
+	Imports    []*ImportSpec   // imports in this file
+	Unresolved []*Ident        // unresolved identifiers in this file
+	Comments   []*CommentGroup // list of all comments in the source file
+	}
+\end{lstlisting}
+
+\noindent Since I am interested in the function declarations in the file, I investigate the \textbf{Decls} slice and search for the function declarations in this slice. A function declaration is defined as \textbf{*ast.FuncDecl} within this library, and has attributes such as \textbf{Doc}, \textbf{Recv}, \textbf{Name}, \textbf{Type} and \textbf{Body}, as in Listing \ref{funcdecl}. From the \textbf{Type} attribute, one can read information about parameters and return values of the function. From the \textbf{Recv} attribute, the receiver of the method can be read. Rest of the properties that I look for are located in the \textbf{Body} of the function.
+
+\begin{lstlisting}[caption=*ast.FuncDecl declaration in Go., label={funcdecl}, language=Go, frame=single]
+FuncDecl struct {
+	Doc  *CommentGroup // associated documentation; or nil
+	Recv *FieldList    // receiver (methods); or nil (functions)
+	Name *Ident        // function/method name
+	Type *FuncType     // function signature: parameters, results, 
+					   // and position of "func" keyword
+	Body *BlockStmt    // function body; or nil for external (non-Go) function
+}
+\end{lstlisting}
+
+\noindent Signature properties are trivially extracted from the \textbf{*ast.FuncDecl}, however, for all the body, standard library usage and other type of properties, one needs to know what to look for inside the \textbf{Body} of the \textbf{*ast.FuncDecl}. To this end, I firstly look for Go's "A Tour of Go" documentation \cite{atourofgo} and find code examples about properties of the language. While one can use these code examples in the programming environment, I aim for a GUI approach to better understand how to look for properties in the bodies of functions. Fortunately, I come across a web application from yuroyoro \cite{goastviewer}, which offers a GUI to visualize a Go AST, given Go source code. Listing \ref{yuroyoro} shows an example output from the AST Viewer of a main function with a "Hello Golang" print on the stdout.
+
+\begin{lstlisting}[caption=Sample output from yuroyoro's Ast Viewer \cite{goastviewer}., label={yuroyoro}, language=Go, frame=single]
+	23  .  .  1: *ast.FuncDecl {
+	24  .  .  .  Name: *ast.Ident {
+	25  .  .  .  .  NamePos: 7:6
+	26  .  .  .  .  Name: "main"
+	27  .  .  .  .  Obj: *ast.Object {
+	28  .  .  .  .  .  Kind: func
+	29  .  .  .  .  .  Name: "main"
+	30  .  .  .  .  .  Decl: *(obj @ 23)
+	31  .  .  .  .  }
+	32  .  .  .  }
+	33  .  .  .  Type: *ast.FuncType {
+	34  .  .  .  .  Func: 7:1
+	35  .  .  .  .  Params: *ast.FieldList {
+	36  .  .  .  .  .  Opening: 7:10
+	37  .  .  .  .  .  Closing: 7:11
+	38  .  .  .  .  }
+	39  .  .  .  }
+	40  .  .  .  Body: *ast.BlockStmt {
+	41  .  .  .  .  Lbrace: 7:13
+	42  .  .  .  .  List: []ast.Stmt (len = 1) {
+	43  .  .  .  .  .  0: *ast.ExprStmt {
+	44  .  .  .  .  .  .  X: *ast.CallExpr {
+	45  .  .  .  .  .  .  .  Fun: *ast.SelectorExpr {
+	46  .  .  .  .  .  .  .  .  X: *ast.Ident {
+	47  .  .  .  .  .  .  .  .  .  NamePos: 8:2
+	48  .  .  .  .  .  .  .  .  .  Name: "fmt"
+	49  .  .  .  .  .  .  .  .  }
+	50  .  .  .  .  .  .  .  .  Sel: *ast.Ident {
+	51  .  .  .  .  .  .  .  .  .  NamePos: 8:6
+	52  .  .  .  .  .  .  .  .  .  Name: "Printf"
+	53  .  .  .  .  .  .  .  .  }
+	54  .  .  .  .  .  .  .  }
+	55  .  .  .  .  .  .  .  Lparen: 8:12
+	56  .  .  .  .  .  .  .  Args: []ast.Expr (len = 1) {
+	57  .  .  .  .  .  .  .  .  0: *ast.BasicLit {
+	58  .  .  .  .  .  .  .  .  .  ValuePos: 8:13
+	59  .  .  .  .  .  .  .  .  .  Kind: STRING
+	60  .  .  .  .  .  .  .  .  .  Value: "\"Hello, Golang\\n\""
+	61  .  .  .  .  .  .  .  .  }
+	62  .  .  .  .  .  .  .  }
+	63  .  .  .  .  .  .  .  Ellipsis: -
+	64  .  .  .  .  .  .  .  Rparen: 8:30
+	65  .  .  .  .  .  .  }
+	66  .  .  .  .  .  }
+	67  .  .  .  .  }
+	68  .  .  .  .  Rbrace: 9:1
+	69  .  .  .  }
+	70  .  .  }
+\end{lstlisting}
+
+
+\noindent Generally, the properties to collect are reachable from the \textbf{Body} by querying for the correct parser instance. Table \ref{table:propsast} presents how I extract these properties or which data structure I aim for when visiting the nodes in a function declaration. For the cyclomatic complexity, I adapt the calculation to an existing calculation approach by fzipp/gocyclo \cite{gocyclo}. 
+
+
+\begin{longtable}{|
+		>{\columncolor[HTML]{CD9934}}l |l|}
+	\hline
+	\cellcolor[HTML]{C0C0C0}\textbf{Property Name} & \cellcolor[HTML]{C0C0C0}\textbf{According Parser Instance / Extraction Method} \\ \hline
+	\endfirsthead
+	%
+	\multicolumn{2}{c}%
+	{{\bfseries Table \thetable\ continued from previous page}} \\
+	\endhead
+	%
+	funccalls & *ast.CallExpr \\ \hline
+	loops & *ast.ForStmt / *ast.RangeStmt \\ \hline
+	nestedloops & none, counting loops inside loops \\ \hline
+	channels & *ast.ChanType \\ \hline
+	sends & *ast.SendStmt \\ \hline
+	receives & *ast.UnaryExpr.Op being "\textless{}-" \\ \hline
+	closes & *ast.CallExpr having name "close" \\ \hline
+	gos & *ast.GoStmt \\ \hline
+	concrranges & none, counting loops with channel ranges \\ \hline
+	selects & *ast.SelectStmt \\ \hline
+	selectcases & *ast.SelectStmt.Body.List length \\ \hline
+	variables & \begin{tabular}[c]{@{}l@{}}*ast.DeclStmt --\textgreater *ast.GenDecl\\ or *ast.AssignStmt right side being *ast.BasicLit\end{tabular} \\ \hline
+	pointers & \begin{tabular}[c]{@{}l@{}}*ast.AssignStmt right side having\\ *ast.UnaryExpr.Op being "\&"\end{tabular} \\ \hline
+	slices & *ast.ArrayType \\ \hline
+	maps & *ast.MapType \\ \hline
+	ifelses & *ast.IfStmt \\ \hline
+	switches & *ast.SwitchStmt \\ \hline
+	switchcases & *ast.SwitchStmt.Body.List length \\ \hline
+	panics & *ast.CallExpr having name "panic" \\ \hline
+	recovers & *ast.CallExpr having name "recover" \\ \hline
+	defers & *ast.DeferStmt \\ \hline
+	\cellcolor[HTML]{CBCEFB}cyclomaticcomplexity & \begin{tabular}[c]{@{}l@{}}calculated by counting each instance of:\\ *ast.FuncDecl\\ *ast.IfStmt\\ *ast.ForStmt\\ *ast.RangeStmt\\ *ast.CaseClause\\ *ast.CommClause\\ *ast.BinaryExpr\\ within the function\end{tabular} \\ \hline
+	\cellcolor[HTML]{FFFC9E}standard library usages & checking resolved funccalls within a function \\ \hline
+	\caption{Extraction of properties based on parser library.}
+	\label{table:propsast}\\
+\end{longtable}
+
+
+
+\noindent To be able to parse each function correctly and later match them with the output of the callgraph tool, I need to resolve the package of the function or the package of the receiver of the method if a receiver exists. Unfortunately, without having types info for the file to be parsed, this is impossible unless all the information is found in the same file. In practice, this is rarely the case.
+
+\paragraph{Package packages}
+
+A little bit of scrolling in Go's \textit{golang.org/x/tools/go/} repository shows me a library, called \textbf{packages}\cite{packages}, which offers the functionality to load a package's related info to the programming environment. This comes as a perfect solution to the problem of resolving types, since it gives all the found .go files in the folder with their according package and a slice of \textbf{*ast.File} for the files that compile within the folder. Furthermore, since it automatically parses all the files, there is no need to parse all the files one by one as I practiced in the previous section. The crucial feature of this functionality is, that it automatically generates a \textbf{*types.Info} instance for each package, which can later be used to query for the resolving type of an existing \textbf{*ast.Ident} node in the AST tree. Best practice to use this package is by giving the path of a folder containing Go source files as a parameter to the configuration of \textit{packages.Load}, while also telling the configuration to include all test files.\\
+\\
+Go's standard practice tells to put the test files in the "\_test" version of the package found in the folder. If that is the case for a folder, \textit{packages.Load} returns both the normal and "\_test" version of the package with their compiled .go files. However, in the dataset that I analyze there are projects which don't follow this practice, hence, they use only one package per folder and include the tests in the same package. In that case, \textit{packages.Load} returns all the .go files in the "package [package.test]" package.\\
+\\
+Having \textbf{packages} library as the skeleton to my parsing technique, I create \textbf{Prophunt}, which is a tool that takes a project folder as a parameter and starts walking all the folders of the project, starting from the root folder. For each folder, resulting packages are acquired via \textit{packages.Load} and function declarations are extracted for each of the compiling .go files. Then, the properties of each function is collected from the functions, using algorithms that aim for the according parser instance or extraction method of the property to be extracted. At the end of visiting all possible functions, the functions are written into a .csv file which includes all 3 kinds of functions from a project, namely: \textbf{normal}, \textbf{test} and \textbf{benchmark} functions. Figure \ref{fig:prophunt} illustrates the workflow of Prophunt. Simply explained, it takes the .csv from Python downloader script to iterate through projects, creates a map containing each function and their properties, and fills it by loading each package, filtering the functions and extracting their properties. At the end of visiting all folders of a project, the map is transformed into a .csv for the project, which is saved in \textit{csv1} folder. For convenience, also an \textit{index.csv} file is written in this folder for later usage with callgraph analyzer, which contains the names and csv1 paths of the projects.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\linewidth]{prophunt}
+	\caption{Workwise of Prophunt iterating through downloaded projects.}
+	\label{fig:prophunt}
+\end{figure}
+
+
+\subsection{Callgraph Analyzer}
+\label{Callgraph Analyzer}
+
+Creating csv1 outputs for all the projects is only half of the story, because the information in these .csv files are only relevant to the functions themselves, i.e., having only csv1 outputs I am limited to properties of an individual function. However, to make a proper correlation analysis, it is interesting and important to look at the callgraphs of the benchmarks, because these reveal information about all the functions that are called by a benchmark. The idea behind the callgraph analyzer is to build a directed graph, which has function nodes and edges between function nodes respresenting a function call. In such a graph, the outgoing node of an edge is the caller, and the incoming node of an edge is the callee. Having such a datastructure can be used to return all the visited functions from a benchmark. To this end, I search for a tool which can in some way return me the edges between functions, which in whole builds the callgraph of the project. Fortunately I come across the callgraph CLI tool, which resides in Go's \textit{golang.org/x/tools/cmd/} repository\cite{callgraphtool}.\\
+\\
+\paragraph{callgraph CLI tool} The tool expects several flags to give the callgraph of a project as output: the first and most important flag is the algorithm ("-algo") that is used to create the callgraph. Under 4 different algorithm options (\textbf{Static}, Class Hierarchy Analysis (\textbf{cha}), Rapid Type Analysis (\textbf{rta}) and inclusion-based Points-to Analysis (\textbf{pta})), I use inclusion-based Points-to Analysis. \textbf{pta} is often referred as Points-to-Analysis and is used in computer science as a static code analysis technique. In its pure form, the algorithm tries to find about which pointer or heap reference can be pointing to which variable or storage location at the runtime. This algorithm, as \textbf{rta}, requires a whole program to give correct output, and includes only functions that are reachable from main \cite{callgraphtool}. This means, that if a benchmark has function calls that are not included in the main or tests of the whole project, this benchmark will likely not be included in the callgraph tool's output, which is the only analyzed drawback by me. The other flags of the tool include "-test", which is to enable creating callgraphs of tests as well and "-format", which is to format the output of the callgraph tool. Using "-format" with "digraph" gives all the edges in form:
+
+\begin{lstlisting}[caption=Output format of callgraph CLI tool., label={callgraphcli}, language=Go, frame=single] 
+"package.functionA" "package.functionB"
+"(package.receiver).functionC" "(*package.receiver).functionD"
+"(package.receiver).functionE" "(package.receiver).functionC"
+\end{lstlisting}
+
+\noindent where each \textbf{functionX} is defined by the signature of the function in a specific way. For instance, if a function is a method, it has the resolved package of the receiver concatenated with the receiver in parantheses before the function name. If the receiver is a pointer type, it has an asterisk at the beginning of the receiver's resolved package. In any other case, the function has the resolved package followed by the function name. Listing \ref{callgraphcli} shows all kinds of examples explained here.\\
+\\
+Next step in order to have a sound directed graph of a project is to find a datastructure, which can store all the nodes with their edges. For this, I import the graph library of \textbf{gonum/gonum} \cite{gonum/gonum}, which is a performant library that has implementations of different graph types. In particular, I use the \textbf{*simple.DirectedGraph} data structure to feed all the edges that can be acquired from the project. Once this graph is fully fed with every found edge from the callgraph tool, the graph can be queried for all the callees of a benchmark.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\linewidth]{callgraph}
+	\caption{Workwise of Callgraph Analyzer iteration through all parser projects.}
+	\label{fig:callgraph}
+\end{figure}
+ 
+Figure \ref{fig:callgraph} shows how Callgraph Analyzer works. Similar to Prophunt, Callgraph Analyzer takes the full path of the project to be analyzed from csv1 output's index.csv. A single loop execution consists of 2 phases. In the first phase, the callgraph tool is called for each of the projects folder because of 2 reasons: (1) a project might not have a main in the root folder, hence, the callgraph fails to create the edges and (2) there might exist more than 1 main in the whole project structure and they may have different scopes for the functions across the project. After each call of the CLI tool, the output is read and the nodes and their edges are collected. These are directly fed to the \textbf{*simple.DirectedGraph} instance of the project. Due to the precautions in the implementation of \textbf{*simple.DirectedGraph}, a node cannot be added to the graph twice, hence, I eliminate edges that occured in a previous output from the process and only feed the nodes if they were not in the graph before. A full walk through the project path results as a full callgraph of a project.\\
+\\
+In the second phase of the same loop execution, according .csv file for the project is read from csv1 folder and its benchmarks are filtered. Having all benchmarks on one place, a lookup for all direct callees of one benchmark node can be made by using \textit{simple.From()} method, when the node of the benchmark is given as a parameter. Since I am interested in not only the direct callees but also all reachable nodes from a benchmark node, I implement a recursive algorithm which calls \textit{simple.From()} method for all the nodes that can be visited from the initial benchmark node. This ensures collecting all the reachable nodes in the callgraph, and as a next step I search for the callees in the according projectX.csv file. If reachable nodes are present in the .csv file of the project, I collect their .csv entries to later sum up all the property values, resulting into the benchmark's cumulitative properties. Note that namelength and parameters are not summed up, as their cumulitative value is not useful for the correlation analysis. Using this methodology, there is 3 possible outcomes for every benchmark analzed by Prophunt: (1) the benchmark cannot be found in the callgraph, resulting into a nil node in the programming environment. In this case, I skip this benchmark and do not record it in the output; (2) the benchmark is found in the callgraph, however, there is no reachable node from this benchmark, either because there was a compilation error in the callgraph CLI tool, or the callees of the benchmark were not reachable from main of the project; (3) the benchmark is found in the callgraph and there is at least 1 reachable node from the benchmark in the callgraph. For the completeness of the results, I anticipate that there are not many occurences of the first and second outcomes, nevertheless, the numbers are reported in the \ref{Source code properties} Section. Finally, Callgraph Analyzer gives an output folder called csv2 with a .csv for each project containing only the benchmarks with their cumulitative property values, as well as an index.csv file which is used later at the correlation analysis.
 
 \section{Finding correlations}
 Third and last part of the study was to find correlations between source code properties of benchmarks and their variability. In this last part, I used a regression model on some chosen benchmarks to find correlations. Results of this part are to be found in the third part of Results section.
@@ -326,7 +634,7 @@ Since the analysis is made statically for the second part of the methodology, th
 
 \chapter{Results}
 \label{Results}
-In this section, I present the results from the 3 parts of this study. First results correspond to the variability of benchmarks and in the first section I present some statistics regarding the distribution of benchmarks' variabilities. [will be continued]
+In this section, I present the results from the 3 parts of this study. First results correspond to the variability of benchmarks and in Section \ref{Variabilities of benchmarks} I present some statistics regarding the distribution of benchmarks' variabilities. Second results report about the outcome of parsing and callgraph analysis in Section \ref{Source code properties}. [will be continued]
 
 \section{Variabilities of benchmarks}
 \label{Variabilities of benchmarks}
@@ -360,8 +668,10 @@ Figure \ref{fig:benchmark0-100} shows the histogram across all benchmarks and di
 Since I eliminated 2 projects because they have 1 execution for each of their benchmarks, following statistical data is based on a total of 228 projects. Table \ref{table:table1}'s header shows \textbf{Percentages} as buckets for the benchmarks' RCIW99 values. Following two rows show how many distinct projects fall into this group (i.e., having at least one benchmark in this bucket), and how many of the total projects this makes in percentage. As one can see, 225 out of 228 projects have benchmarks that have at least one benchmark that has a RCIW99 score. Analyzing the 0-1\% bucket further shows that there are in total 283 benchmarks from 68 projects which have a RCIW99 score of 0.0. This makes 6.16\% of total benchmarks.
 
 \begin{table}[H]
+	\centering
 	\caption{Number of distinct projects, whose benchmarks’ RCIW99 lay between 1-10\% in 1\% buckets and between 10-100\% in 10\% buckets}
 	\label{table:table1}
+	\resizebox{\textwidth}{!}{
 	\begin{tabular}{lllllllllll}
 		\hline
 		\rowcolor[HTML]{FFFC9E} 
@@ -374,11 +684,13 @@ Since I eliminated 2 projects because they have 1 execution for each of their be
 		\multicolumn{1}{|l|}{\#projects}                          & \multicolumn{1}{l|}{18}                              & \multicolumn{1}{l|}{9}                               & \multicolumn{1}{l|}{6}                               & \multicolumn{1}{l|}{4}                               & \multicolumn{1}{l|}{4}                               & \multicolumn{1}{l|}{2}                               & \multicolumn{1}{l|}{1}                               & \multicolumn{1}{l|}{0}                               & \multicolumn{1}{l|}{3}                                & \multicolumn{1}{l|}{6}                                           \\ \hline
 		\multicolumn{1}{|l|}{\#projects \%}                       & \multicolumn{1}{l|}{8\%}                             & \multicolumn{1}{l|}{4\%}                             & \multicolumn{1}{l|}{3\%}                             & \multicolumn{1}{l|}{2\%}                             & \multicolumn{1}{l|}{2\%}                             & \multicolumn{1}{l|}{1\%}                             & \multicolumn{1}{l|}{0\%}                             & \multicolumn{1}{l|}{0\%}                             & \multicolumn{1}{l|}{1\%}                              & \multicolumn{1}{l|}{3\%}                                         \\ \hline
 	\end{tabular}
+	}
 \end{table}
 
 \noindent Table \ref{table:table2} similarly shows the number of projects and their percentages across all projects, whose benchmarks have an RCIW99 score of more than the one provided in the \textbf{Percentage} header. One thing that attracts attention is that in the first row, there are 227 projects which have at least one benchmark that has a RCIW99 score bigger than 0. This is because one of the projects, qjpcu/sesh \cite{qjpcu/sesh}, only has 2 benchmarks, of which both have 0.0 as RCIW99 score.
 
 \begin{table}[H]
+	\centering
 	\caption{Number of distinct projects, whose benchmarks’ RCIW99 lay more than the percent value}
 	\label{table:table2}
 	\begin{tabular}{lllllllllll}
@@ -405,7 +717,28 @@ Since I eliminated 2 projects because they have 1 execution for each of their be
 
 
 \section{Source code properties}
-For every project that I was able to analyze by using the tool introduced in second part of methodology section, I was able to collect the source code properties. CSV? ...
+\label{Source code properties}
+
+Using all the 228 projects and their commits from the first results, my Python downloader script is able to download 223 of the projects successfully. From the remaining 5 projects, 3 (\textbf{tendermint/go-merkle}, \textbf{pp2p/paranoid}, \textbf{eleme/banshee}) are not found, either because they terminated the project on Github, or because they moved the project to another repository within or out of Github. 1 project (\textbf{stratumn/sdk} \cite{stratumn/sdk}) changed its repo and its redirection from Github results in a non-Go-project. 1 project (\textbf{eaburns/T}) changed the repo to a new name (\textbf{eaburns/T\_old}) \cite{eaburns/T_old}, however, it's commit from the initial dataset does not match any commits in the new repo. Since some benchmarks from the old version were matching with those of final.csv, I let the downloaded version stay for the parsing part.\\
+\\
+As described in Section \ref{Prophunt} and \ref{Callgraph Analyzer}, parsing with Prophunt results with csv1 outcomes and using the Callgraph Analyzer results with csv2 outcomes. Prior to running both of the tools, I set up a Virtual Machine for Ubuntu 18.04 in my Windows 10 installation, because some projects have dependencies to some standard library packages, which are not included in a Windows installation of Go, such as "syscall". Not having such libraries causes compilation errors for some projects, hence, I run both of the tools in Ubuntu. This ensures a smoother experience when parsing and extracting properties that rely on the standard library packages.\\
+\\
+Prophunt returns in total 225 .csv files with a size of 35.2 MB, with 1 of the files being totally empty (\textbf{stratumn/sdk}) \cite{stratumn/sdk}, since it has no .go files. In total, Prophunt parses 163.855 functions across all 224 projects. From this many functions, there are 4926 benchmarks parsed. This is more than the total number of benchmarks found in the final.csv (4589) and means that the parser was able to find 337 more benchmarks than in the given dataset. However, when matching them with the benchmarks from final.csv, there are in total 4500 matching benchmarks. That is explainable with the missing projects from unsuccessfull downloads and some compilation problems in 2 projects albeit all dependency fetching efforts. In the list below is the number of benchmarks (89) that are present in final.csv, yet could not be parsed with Prophunt (See in \ref{infinalbutnotincsv1}):\\
+
+\noindent\begin{itemize*}[font={\color{red!50!black}}]\\
+	\item tendermint/go-merkle: 6
+	\item pp2p/paranoid: 14
+	\item eleme/banshee: 19
+	\item micro/go-micro: 10
+	\item coredns/coredns: 1
+	\item stratumn/sdk: 2
+	\item eaburns/T: 37 
+\end{itemize*}
+\\\\
+Next, I run Callgraph Analyzer and collect 225 .csv files again, with the same exception for \textbf{stratumn/sdk} \cite{stratumn/sdk}. The valid 224 files size up to 1.38 MB, with a total of 4837 benchmarks. This shows that 89 of the benchmarks in csv1 output were not analyzed via Callgraph Analyzer, because they had a nil node in the \textbf{*simple.DirectedGraph} instance of the project (See in \ref{incsv1butnotincsv2}). In the next step, I compare the benchmarks from csv1 folder with the ones from csv2 to see whether any benchmark has exactly same property values in both of the versions, and I find 121 exact same benchmarks (See in\ref{sameincsv1asincsv2}). This indicates that Callgraph Analyzer could not find any reachable node from these benchmarks, hence, it took the existing version from csv1 output to the csv2 output. For the sake of proper analysis, I eliminate these 121 benchmarks from csv2 output, having left with 4716 valid benchmarks.\\
+\\
+Finally, I match the benchmarks from final.csv with the valid ones from csv2 and see that there are 4330 matching benchmarks. This means that in total there are 259 not matching benchmarks of which 89 were not present in csv1 output anyways. Rest of 170 benchmarks do not match due to *simple.DirectedGraph not giving any reachable node, or callgraph tool cannot find the benchmark in the folders. 
+
 
 \section{Correlation between variabilities and source code properties}
 - Yes \\
@@ -438,12 +771,324 @@ I finally conclude with what I have done with this project: How I started, which
 
 \appendix
 \chapter{First Append}
+\section{Not matching benchmarks}
+\label{infinalbutnotincsv1}
+Following benchmarks were in final.csv, yet not in CSV1 folder:
+\begin{lstlisting}[basicstyle=\tiny]
+	tendermint/go-merkle /benchmarks/bench_test.go/BenchmarkLevelDBBatchSizes
+	tendermint/go-merkle /benchmarks/bench_test.go/BenchmarkMedium
+	tendermint/go-merkle /benchmarks/bench_test.go/BenchmarkMemKeySizes
+	tendermint/go-merkle /benchmarks/bench_test.go/BenchmarkRandomBytes
+	tendermint/go-merkle /benchmarks/bench_test.go/BenchmarkSmall
+	tendermint/go-merkle iavl_test.go/BenchmarkImmutableAvlTreeMemDB
+	pp2p/paranoid /libpfs/commands/benchmark/commands_benchmark_test.go/BenchmarkAccess
+	pp2p/paranoid /libpfs/commands/benchmark/commands_benchmark_test.go/BenchmarkCreat
+	pp2p/paranoid /libpfs/commands/benchmark/commands_benchmark_test.go/BenchmarkLink
+	pp2p/paranoid /libpfs/commands/benchmark/commands_benchmark_test.go/BenchmarkMkDir
+	pp2p/paranoid /libpfs/commands/benchmark/commands_benchmark_test.go/BenchmarkRead
+	pp2p/paranoid /libpfs/commands/benchmark/commands_benchmark_test.go/BenchmarkReadDir
+	pp2p/paranoid /libpfs/commands/benchmark/commands_benchmark_test.go/BenchmarkReadLink
+	pp2p/paranoid /libpfs/commands/benchmark/commands_benchmark_test.go/BenchmarkRename
+	pp2p/paranoid /libpfs/commands/benchmark/commands_benchmark_test.go/BenchmarkRmDir
+	pp2p/paranoid /libpfs/commands/benchmark/commands_benchmark_test.go/BenchmarkStat
+	pp2p/paranoid /libpfs/commands/benchmark/commands_benchmark_test.go/BenchmarkSymLink
+	pp2p/paranoid /libpfs/commands/benchmark/commands_benchmark_test.go/BenchmarkTruncate
+	pp2p/paranoid /libpfs/commands/benchmark/commands_benchmark_test.go/BenchmarkUtimes
+	pp2p/paranoid /libpfs/commands/benchmark/commands_benchmark_test.go/BenchmarkWrite
+	micro/go-micro /broker/http_broker_test.go/BenchmarkPub1
+	micro/go-micro /broker/http_broker_test.go/BenchmarkPub128
+	micro/go-micro /broker/http_broker_test.go/BenchmarkPub32
+	micro/go-micro /broker/http_broker_test.go/BenchmarkPub64
+	micro/go-micro /broker/http_broker_test.go/BenchmarkPub8
+	micro/go-micro /broker/http_broker_test.go/BenchmarkSub1
+	micro/go-micro /broker/http_broker_test.go/BenchmarkSub128
+	micro/go-micro /broker/http_broker_test.go/BenchmarkSub32
+	micro/go-micro /broker/http_broker_test.go/BenchmarkSub64
+	micro/go-micro /broker/http_broker_test.go/BenchmarkSub8
+	eleme/banshee /filter/filter_test.go/BenchmarkRules1KNativeBest
+	eleme/banshee /filter/filter_test.go/BenchmarkRules1kBest
+	eleme/banshee /filter/filter_test.go/BenchmarkRules1kWorst
+	eleme/banshee /filter/filter_test.go/BenchmarkRules2kWorst
+	eleme/banshee /models/rule_test.go/BenchmarkRuleTest
+	eleme/banshee /models/rule_test.go/BenchmarkRuleTestWithDefaultThresholdMaxsNum4
+	eleme/banshee /models/rule_test.go/BenchmarkRuleTestWithDefaultThresholdMaxsNum8
+	eleme/banshee /storage/indexdb/db_test.go/BenchmarkGet10K
+	eleme/banshee /storage/indexdb/db_test.go/BenchmarkPut
+	eleme/banshee /storage/metricdb/db_test.go/BenchmarkGet100K
+	eleme/banshee /storage/metricdb/db_test.go/BenchmarkPut
+	eleme/banshee /storage/metricdb/db_test.go/BenchmarkPutX10
+	eleme/banshee /util/idpool/pool_test.go/BenchmarkAllocate
+	eleme/banshee /util/mathutil/mathutil_test.go/BenchmarkAverageNum605
+	eleme/banshee /util/mathutil/mathutil_test.go/BenchmarkStdDevNum605
+	eleme/banshee /util/trie/trie_test.go/BenchmarkPutAndGetPrefixedKeys
+	eleme/banshee /util/trie/trie_test.go/BenchmarkPutAndGetRandKeys
+	eleme/banshee /util/trie/trie_test.go/BenchmarkPutPrefixedKeys
+	eleme/banshee /util/trie/trie_test.go/BenchmarkPutRandKeys
+	stratumn/sdk /dummystore/benchmark_test.go/BenchmarkDummystore
+	stratumn/sdk /filestore/benchmark_test.go/BenchmarkFilestore
+	eaburns/T /edit/addr_bench_test.go/BenchmarkLinex1K
+	eaburns/T /edit/addr_bench_test.go/BenchmarkLinex1M
+	eaburns/T /edit/addr_bench_test.go/BenchmarkLinex32
+	eaburns/T /edit/addr_bench_test.go/BenchmarkLinex32M
+	eaburns/T /edit/addr_bench_test.go/BenchmarkRegexpEasy0x1K
+	eaburns/T /edit/addr_bench_test.go/BenchmarkRegexpEasy0x1M
+	eaburns/T /edit/addr_bench_test.go/BenchmarkRegexpEasy0x32
+	eaburns/T /edit/addr_bench_test.go/BenchmarkRegexpEasy0x32M
+	eaburns/T /edit/addr_bench_test.go/BenchmarkRegexpEasy1x1K
+	eaburns/T /edit/addr_bench_test.go/BenchmarkRegexpEasy1x1M
+	eaburns/T /edit/addr_bench_test.go/BenchmarkRegexpEasy1x32
+	eaburns/T /edit/addr_bench_test.go/BenchmarkRegexpEasy1x32M
+	eaburns/T /edit/addr_bench_test.go/BenchmarkRegexpHardx1K
+	eaburns/T /edit/addr_bench_test.go/BenchmarkRegexpHardx1M
+	eaburns/T /edit/addr_bench_test.go/BenchmarkRegexpHardx32
+	eaburns/T /edit/addr_bench_test.go/BenchmarkRegexpHardx32M
+	eaburns/T /edit/addr_bench_test.go/BenchmarkRegexpMediumx1K
+	eaburns/T /edit/addr_bench_test.go/BenchmarkRegexpMediumx1M
+	eaburns/T /edit/addr_bench_test.go/BenchmarkRegexpMediumx32
+	eaburns/T /edit/addr_bench_test.go/BenchmarkRegexpMediumx32M
+	eaburns/T /edit/addr_bench_test.go/BenchmarkRunex1K
+	eaburns/T /edit/addr_bench_test.go/BenchmarkRunex1M
+	eaburns/T /edit/addr_bench_test.go/BenchmarkRunex32
+	eaburns/T /edit/addr_bench_test.go/BenchmarkRunex32M
+	eaburns/T /edit/runes/bench_test.go/BenchmarkRead1
+	eaburns/T /edit/runes/bench_test.go/BenchmarkRead10k
+	eaburns/T /edit/runes/bench_test.go/BenchmarkRead1k
+	eaburns/T /edit/runes/bench_test.go/BenchmarkRead4k
+	eaburns/T /edit/runes/bench_test.go/BenchmarkRune10kRand
+	eaburns/T /edit/runes/bench_test.go/BenchmarkRune10kScan
+	eaburns/T /edit/runes/bench_test.go/BenchmarkRuneCacheRand
+	eaburns/T /edit/runes/bench_test.go/BenchmarkRuneCacheScan
+	eaburns/T /edit/runes/bench_test.go/BenchmarkWrite1
+	eaburns/T /edit/runes/bench_test.go/BenchmarkWrite10k
+	eaburns/T /edit/runes/bench_test.go/BenchmarkWrite1k
+	eaburns/T /edit/runes/bench_test.go/BenchmarkWrite4k
+	eaburns/T /editor/benchmark_test.go/BenchmarkDo
+	coredns/coredns /test/proxy_test.go/BenchmarkProxyLookup
+\end{lstlisting}
 
+\label{incsv1butnotincsv2}
+Following benchmarks resulted as nil nodes in the \textbf{*simple.DirectedGraph}:
+\begin{lstlisting}[basicstyle=\tiny]
+	pilosa/pilosa /test/attr.go/BenchmarkAttrStore_Duplicate
+	pgpst/pgpst /internal/github.com/gin-gonic/gin/benchmarks_test.go/Benchmark404Many
+	pgpst/pgpst /internal/github.com/gin-gonic/gin/githubapi_test.go/BenchmarkGithub
+	pgpst/pgpst /internal/github.com/gin-gonic/gin/benchmarks_test.go/BenchmarkManyHandlers
+	pgpst/pgpst /internal/github.com/gin-gonic/gin/benchmarks_test.go/BenchmarkManyRoutesLast
+	pgpst/pgpst /internal/github.com/gin-gonic/gin/githubapi_test.go/BenchmarkParallelGithub
+	pgpst/pgpst /internal/github.com/gin-gonic/gin/benchmarks_test.go/BenchmarkOneRoute
+	pgpst/pgpst /internal/github.com/gin-gonic/gin/benchmarks_test.go/Benchmark5Params
+	pgpst/pgpst /internal/github.com/gin-gonic/gin/benchmarks_test.go/BenchmarkOneRouteSet
+	pgpst/pgpst /internal/github.com/gin-gonic/gin/benchmarks_test.go/Benchmark404
+	pgpst/pgpst /internal/github.com/gin-gonic/gin/githubapi_test.go/BenchmarkParallelGithubDefault
+	pgpst/pgpst /internal/github.com/gin-gonic/gin/benchmarks_test.go/BenchmarkOneRouteJSON
+	pgpst/pgpst /internal/github.com/gin-gonic/gin/benchmarks_test.go/BenchmarkRecoveryMiddleware
+	pgpst/pgpst /internal/github.com/gin-gonic/gin/benchmarks_test.go/BenchmarkOneRouteString
+	pgpst/pgpst /internal/github.com/gin-gonic/gin/benchmarks_test.go/BenchmarkOneRouteHTML
+	pgpst/pgpst /internal/github.com/gin-gonic/gin/benchmarks_test.go/BenchmarkManyRoutesFist
+	pgpst/pgpst /internal/github.com/gin-gonic/gin/benchmarks_test.go/BenchmarkLoggerMiddleware
+	CodisLabs/codis /pkg/proxy/request_test.go/BenchmarkRequestChan512
+	CodisLabs/codis /pkg/proxy/request_test.go/BenchmarkRequestGoChannel
+	CodisLabs/codis /pkg/proxy/request_test.go/BenchmarkRequestChan128
+	CodisLabs/codis /pkg/proxy/request_test.go/BenchmarkRequestChan256
+	CodisLabs/codis /pkg/proxy/request_test.go/BenchmarkRequestChan2048
+	CodisLabs/codis /pkg/proxy/request_test.go/BenchmarkRequestChan1024
+	nats-io/go-nats /test/bench_test.go/BenchmarkAsyncSubscriptionCreationSpeed
+	nats-io/go-nats /encoders/protobuf/protobuf_test.go/BenchmarkPublishProtobufStruct
+	nats-io/go-nats /test/netchan_test.go/BenchmarkPublishSpeedViaChan
+	nats-io/go-nats /test/bench_test.go/BenchmarkSyncSubscriptionCreationSpeed
+	nats-io/go-nats /encoders/builtin/json_test.go/BenchmarkPublishJsonStruct
+	nats-io/go-nats /test/bench_test.go/BenchmarkRequest
+	nats-io/go-nats /test/bench_test.go/BenchmarkInboxCreation
+	nats-io/go-nats /test/bench_test.go/BenchmarkPublishSpeed
+	nats-io/go-nats /test/bench_test.go/BenchmarkOldRequest
+	nats-io/go-nats /encoders/builtin/json_test.go/BenchmarkJsonMarshalStruct
+	nats-io/go-nats /test/bench_test.go/BenchmarkPubSubSpeed
+	nats-io/go-nats /encoders/builtin/gob_test.go/BenchmarkPublishGobStruct
+	nats-io/go-nats /encoders/protobuf/protobuf_test.go/BenchmarkProtobufMarshalStruct
+	Redundancy/go-sync /comparer/comparer_bench_test.go/BenchmarkWeakComparison
+	Redundancy/go-sync /comparer/comparer_bench_test.go/BenchmarkStrongComparison
+	Redundancy/go-sync gosync_test.go/BenchmarkIndexComparisons
+	Everlag/poeitemstore /dbTest/IndexQueryBench_test.go/BenchmarkMultiLeagueIndexQuerySlow
+	Everlag/poeitemstore /dbTest/IndexQueryBench_test.go/BenchmarkFiveIndexQuerySlow
+	Everlag/poeitemstore /dbTest/StashMetaBench_test.go/BenchmarkCompactFast
+	Everlag/poeitemstore /dbTest/IndexQueryBench_test.go/BenchmarkSingleIndexQueryFast
+	Everlag/poeitemstore /dbTest/StashMetaBench_test.go/BenchmarkAddStashesFast
+	Everlag/poeitemstore /dbTest/StashMetaBench_test.go/BenchmarkCompactAddStashesFast
+	Everlag/poeitemstore /dbTest/IndexQueryBench_test.go/BenchmarkSingleIndexQuerySlow
+	Everlag/poeitemstore /dbTest/IndexQueryBench_test.go/BenchmarkFiveIndexQueryFast
+	Everlag/poeitemstore /dbTest/IndexQueryBench_test.go/BenchmarkMultiLeagueIndexQueryFast
+	dustin/gomemcached /server/server_test.go/BenchmarkTransmitRes
+	dustin/gomemcached /server/server_test.go/BenchmarkTransmitResNull
+	dustin/gomemcached /server/server_test.go/BenchmarkTransmitResLarge
+	dustin/gomemcached /server/server_test.go/BenchmarkReceive
+	fabiolb/fabio /proxy/http_integration_test.go/BenchmarkProxyLogger
+	fabiolb/fabio /proxy/http_headers_test.go/BenchmarkUint16Base16
+	sni/lmd /lmd/benchmark_test.go/BenchmarkSingleFilter_1k_svc_10Peer
+	sni/lmd /lmd/benchmark_test.go/BenchmarkTacStats
+	sni/lmd /lmd/benchmark_test.go/BenchmarkQuery
+	sni/lmd /lmd/benchmark_test.go/BenchmarkServicelistLimit_1k_svc_10Peer
+	sni/lmd /lmd/benchmark_test.go/BenchmarkSimpleStats
+	sni/lmd /lmd/benchmark_test.go/BenchmarkSingleFilter_1k_svc__1Peer
+	sni/lmd /lmd/benchmark_test.go/BenchmarkTacStats_1k_svc_100Peer
+	sni/lmd /lmd/benchmark_test.go/BenchmarkTacStats_1k_svc_10Peer
+	sni/lmd /lmd/benchmark_test.go/BenchmarkMultiFilter
+	sni/lmd /lmd/benchmark_test.go/BenchmarkTacStats_5k_svc_500Peer
+	sni/lmd /lmd/benchmark_test.go/BenchmarkSingleFilter
+	sni/lmd /lmd/benchmark_test.go/BenchmarkTacStats_1k_svc__1Peer
+	sni/lmd /lmd/benchmark_test.go/BenchmarkServicelistLimit_1k_svc__1Peer
+	getlantern/zenodb math_bench_test.go/BenchmarkMathFloatBigEndian
+	getlantern/zenodb math_bench_test.go/BenchmarkMathUintLittleEndian
+	getlantern/zenodb math_bench_test.go/BenchmarkMathIntLittleEndian
+	getlantern/zenodb math_bench_test.go/BenchmarkMathFloatLittleEndian
+	getlantern/zenodb math_bench_test.go/BenchmarkMathIntBigEndian
+	getlantern/zenodb math_bench_test.go/BenchmarkMathUintBigEndian
+	tsuru/planb /reverseproxy/reverseproxy_test.go/BenchmarkServeHTTP_Fast
+	tsuru/planb /reverseproxy/reverseproxy_test.go/BenchmarkServeHTTPInvalidFrontends_Fast
+	tsuru/planb /reverseproxy/reverseproxy_test.go/BenchmarkServeHTTPInvalidFrontends_Native
+	tsuru/planb /reverseproxy/reverseproxy_test.go/BenchmarkServeHTTP_Native
+	rivine/rivine /types/block_bench_test.go/BenchmarkEncodeBlock
+	rivine/rivine /sync/threadgroup_test.go/BenchmarkThreadGroup
+	rivine/rivine /types/block_bench_test.go/BenchmarkDecodeEmptyBlock
+	rivine/rivine /types/validtransaction_bench_test.go/BenchmarkStandaloneValid
+	rivine/rivine /modules/consensus/consensusset_bench_test.go/BenchmarkCreateServerTester
+	rivine/rivine /sync/threadgroup_test.go/BenchmarkWaitGroup
+	Workiva/go-datastructures /btree/immutable/rt_test.go/BenchmarkBulkAdd
+	Workiva/go-datastructures /btree/immutable/rt_test.go/BenchmarkGetitems
+	coredns/coredns /middleware/file/lookup_test.go/BenchmarkFileLookup
+	coredns/coredns /middleware/file/dnssec_test.go/BenchmarkFileLookupDNSSEC
+	coredns/coredns /middleware/cache/cache_test.go/BenchmarkCacheResponse
+	coredns/coredns /middleware/file/file_test.go/BenchmarkFileParseInsert
+\end{lstlisting}
+
+\label{sameincsv1asincsv2}
+Following benchmarks had no reachable callees in the \textbf{*simple.DirectedGraph}:
+\begin{lstlisting}[basicstyle=\tiny]
+	gobwas/glob glob_test.go/BenchmarkAlternativesCombineHardRegexpMatch
+	gobwas/glob glob_test.go/BenchmarkAlternativesSuffixFirstRegexpMismatch
+	gobwas/glob /match/match_test.go/BenchmarkRuneLenFromTable
+	gobwas/glob /util/runes/runes_test.go/BenchmarkLastIndexStrings
+	gobwas/glob /util/runes/runes_test.go/BenchmarkIndexStrings
+	gobwas/glob /util/runes/runes_test.go/BenchmarkNotEqualStrings
+	gobwas/glob glob_test.go/BenchmarkSuffixRegexpMatch
+	gobwas/glob glob_test.go/BenchmarkMultipleRegexpMatch
+	gobwas/glob glob_test.go/BenchmarkSuffixRegexpMismatch
+	gobwas/glob /match/match_test.go/BenchmarkRuneLenFromUTF8
+	gobwas/glob glob_test.go/BenchmarkPlainRegexpMismatch
+	gobwas/glob /util/runes/runes_test.go/BenchmarkIndexAnyStrings
+	gobwas/glob glob_test.go/BenchmarkPrefixRegexpMismatch
+	gobwas/glob glob_test.go/BenchmarkAllRegexpMatch
+	gobwas/glob glob_test.go/BenchmarkAllRegexpMismatch
+	gobwas/glob glob_test.go/BenchmarkPlainRegexpMatch
+	gobwas/glob /util/runes/runes_test.go/BenchmarkIndexRuneStrings
+	gobwas/glob /util/runes/runes_test.go/BenchmarkEqualStrings
+	gobwas/glob glob_test.go/BenchmarkMultipleRegexpMismatch
+	gobwas/glob glob_test.go/BenchmarkAlternativesCombineLiteRegexpMatch
+	gobwas/glob glob_test.go/BenchmarkPrefixSuffixRegexpMismatch
+	gobwas/glob glob_test.go/BenchmarkAlternativesSuffixSecondRegexpMatch
+	gobwas/glob glob_test.go/BenchmarkAlternativesSuffixFirstRegexpMatch
+	gobwas/glob glob_test.go/BenchmarkPrefixSuffixRegexpMatch
+	gobwas/glob glob_test.go/BenchmarkAlternativesRegexpMismatch
+	gobwas/glob glob_test.go/BenchmarkAlternativesRegexpMatch
+	gobwas/glob glob_test.go/BenchmarkPrefixRegexpMatch
+	gobwas/glob glob_test.go/BenchmarkParseRegexp
+	dustin/go-humanize ftoa_test.go/BenchmarkStrconvF
+	dustin/go-humanize ftoa_test.go/BenchmarkFmtF
+	dustin/go-humanize ftoa_test.go/BenchmarkFtoaRegexTrailing
+	siddontang/go /list2/list_bench_test.go/BenchmarkGoList
+	nsqio/nsq /nsqd/guid_test.go/BenchmarkGUIDCopy
+	nsqio/nsq /nsqd/guid_test.go/BenchmarkGUIDUnsafe
+	prataprc/goparsec /json/json_test.go/BenchmarkEncJSONNull
+	prataprc/goparsec /json/json_test.go/BenchmarkEncJSONBool
+	prataprc/goparsec /json/json_test.go/BenchmarkEncJSONInt
+	prataprc/goparsec /json/json_test.go/BenchmarkEncJSONMap
+	prataprc/goparsec /json/json_test.go/BenchmarkEncJSONMedium
+	prataprc/goparsec /json/json_test.go/BenchmarkEncJSONLarge
+	prataprc/goparsec /json/json_test.go/BenchmarkEncJSONArray
+	prataprc/goparsec /json/json_test.go/BenchmarkEncJSONFloat
+	prataprc/goparsec /json/json_test.go/BenchmarkEncJSONString
+	tinylib/synapse map_test.go/BenchmarkStdMapInsertDelete
+	Comcast/rulio /core/util_test.go/BenchmarkMutex
+	Comcast/rulio /core/util_test.go/BenchmarkLoop
+	Comcast/rulio /core/util_test.go/BenchmarkDeferWith
+	Comcast/rulio /core/util_test.go/BenchmarkDeferWithout
+	Comcast/rulio /core/util_test.go/BenchmarkRWMutex
+	wgliang/goreporter /linters/spellcheck/misspell/stringreplacer/replace_test.go/BenchmarkByteByteReplaces
+	dustin/go-jsonpointer bytes_test.go/BenchmarkReplacerTilde
+	dustin/go-jsonpointer bytes_test.go/BenchmarkReplacerSlash
+	json-iterator/go jsoniter_int_test.go/Benchmark_itoa
+	cosmos72/gomacro benchmark_test.go/BenchmarkArithCompiler1
+	cosmos72/gomacro /experiments/stmt_old_test.go/BenchmarkThreadedStmtFunc0
+	cosmos72/gomacro /experiments/stmt_new_test.go/BenchmarkThreadedFuncX6
+	cosmos72/gomacro /experiments/stmt_old_test.go/BenchmarkThreadedStmtFunc3
+	cosmos72/gomacro /experiments/stmt_new_test.go/BenchmarkThreadedStmtFunc6
+	cosmos72/gomacro /experiments/stmt_old_test.go/BenchmarkThreadedStmtFunc4Adaptive
+	cosmos72/gomacro /experiments/stmt_new_test.go/BenchmarkThreadedStmtStruct6Unroll
+	cosmos72/gomacro /experiments/stmt_new_test.go/BenchmarkThreadedStmtStruct6
+	cosmos72/gomacro /experiments/stmt_old_test.go/BenchmarkThreadedStmtFunc5
+	cosmos72/gomacro /experiments/stmt_new_test.go/BenchmarkThreadedStmtFunc6Adaptive
+	cosmos72/gomacro /experiments/stmt_old_test.go/BenchmarkThreadedStmtFunc4Terminate
+	cosmos72/gomacro /experiments/stmt_old_test.go/BenchmarkThreadedStmtFunc4Unroll
+	cosmos72/gomacro /experiments/stmt_old_test.go/BenchmarkThreadedStmtFunc4
+	cosmos72/gomacro /experiments/stmt_new_test.go/BenchmarkThreadedStmtFunc6Unroll
+	cosmos72/gomacro /experiments/stmt_new_test.go/BenchmarkThreadedStmtFuncX6
+	cosmos72/gomacro /experiments/stmt_old_test.go/BenchmarkThreadedStmtFunc2
+	cosmos72/gomacro /experiments/stmt_new_test.go/BenchmarkThreadedStmtFunc6Terminate
+	cosmos72/gomacro /experiments/stmt_old_test.go/BenchmarkThreadedStmtFunc1
+	cosmos72/gomacro /experiments/stmt_new_test.go/BenchmarkThreadedStmtStruct6Terminate
+	cosmos72/gomacro /experiments/stmt_new_test.go/BenchmarkThreadedStmtStruct6Adaptive
+	jmoiron/sqlx /reflectx/reflect_test.go/BenchmarkFieldNameL1
+	jmoiron/sqlx /reflectx/reflect_test.go/BenchmarkFieldPosL4
+	jmoiron/sqlx /reflectx/reflect_test.go/BenchmarkFieldPosL1
+	jmoiron/sqlx /reflectx/reflect_test.go/BenchmarkFieldNameL4
+	DataDog/datadog-go /statsd/statsd_benchmark_test.go/BenchmarkStatBuildGauge_Sprintf
+	DataDog/datadog-go /statsd/statsd_benchmark_test.go/BenchmarkStatBuildGauge_BytesAppend
+	DataDog/datadog-go /statsd/statsd_benchmark_test.go/BenchmarkStatBuildGauge_Concat
+	DataDog/datadog-go /statsd/statsd_benchmark_test.go/BenchmarkStatBuildCount_BytesAppend
+	DataDog/datadog-go /statsd/statsd_benchmark_test.go/BenchmarkStatBuildCount_Concat
+	DataDog/datadog-go /statsd/statsd_benchmark_test.go/BenchmarkStatBuildCount_Sprintf
+	hprose/hprose-golang /util/util_test.go/BenchmarkFormatInt
+	hprose/hprose-golang /util/util_test.go/BenchmarkFormatUint
+	hprose/hprose-golang /util/util_test.go/BenchmarkStrconvItoa
+	Redundancy/go-sync /index/index_bench_test.go/Benchmark_256Split_Map
+	tendermint/tendermint /benchmarks/map_test.go/BenchmarkSomething
+	digitalocean/captainslog parser_test.go/BenchmarkJSONCheckFirstChar
+	dearplain/fast-shadowsocks /shadowsocks/encrypt_test.go/BenchmarkRC4Init
+	google/netstack /sleep/sleep_test.go/BenchmarkGoWaitOnSingleSelect
+	google/netstack /sleep/sleep_test.go/BenchmarkGoAssertNonWaiting
+	google/netstack /sleep/sleep_test.go/BenchmarkGoWaitOnMultiSelect
+	google/netstack /sleep/sleep_test.go/BenchmarkGoSingleSelect
+	google/netstack /sleep/sleep_test.go/BenchmarkGoMultiSelect
+	DataDog/datadog-trace-agent /watchdog/info_test.go/BenchmarkReadMemStats
+	henrylee2cn/faygo /freecache/cache_test.go/BenchmarkMapGet
+	henrylee2cn/faygo /freecache/cache_test.go/BenchmarkMapSet
+	orcaman/concurrent-map concurrent_map_bench_test.go/BenchmarkStrconv
+	Workiva/go-datastructures /hashmap/fastinteger/hashmap_test.go/BenchmarkGoInsertWithExpand
+	Workiva/go-datastructures /queue/queue_test.go/BenchmarkChannel
+	Workiva/go-datastructures /hashmap/fastinteger/hashmap_test.go/BenchmarkGoDelete
+	rackspace/rack /internal/github.com/dustin/go-humanize/ftoa_test.go/BenchmarkStrconvF
+	OneOfOne/xxhash xxhash_test.go/BenchmarkCRC64ISOString
+	OneOfOne/xxhash xxhash_test.go/BenchmarkFnv64MultiWrites
+	OneOfOne/xxhash xxhash_test.go/BenchmarkCRC32IEEEShort
+	OneOfOne/xxhash xxhash_test.go/BenchmarkFnv64Short
+	OneOfOne/xxhash xxhash_test.go/BenchmarkFnv64
+	OneOfOne/xxhash xxhash_test.go/BenchmarkCRC32IEEEString
+	OneOfOne/xxhash xxhash_test.go/BenchmarkCRC64ISO
+	OneOfOne/xxhash xxhash_test.go/BenchmarkFnv32
+	OneOfOne/xxhash xxhash_test.go/BenchmarkAdler32
+	OneOfOne/xxhash xxhash_test.go/BenchmarkCRC32IEEE
+	OneOfOne/xxhash xxhash_test.go/BenchmarkCRC64ISOShort
+	patrickmn/go-cache cache_test.go/BenchmarkRWMutexInterfaceMapGetStruct
+	patrickmn/go-cache cache_test.go/BenchmarkRWMutexInterfaceMapGetString
+	patrickmn/go-cache cache_test.go/BenchmarkRWMutexMapGetConcurrent
+	patrickmn/go-cache cache_test.go/BenchmarkRWMutexMapSetDeleteSingleLock
+	patrickmn/go-cache cache_test.go/BenchmarkRWMutexMapGet
+	patrickmn/go-cache cache_test.go/BenchmarkRWMutexMapSet
+	patrickmn/go-cache cache_test.go/BenchmarkRWMutexMapSetDelete
+\end{lstlisting}
 
 
 
 \backmatter
-
 
 
 \bibliographystyle{ieeetr}

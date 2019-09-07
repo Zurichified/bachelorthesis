@@ -13,6 +13,10 @@ D.~Costa, C.-P. Bezemer, P.~Leitner, and A.~Andrzejak, ``What's wrong with my
 ``tidwall/buntdb.'' https://github.com/tidwall/buntdb.
 \newblock [Online; accessed 2019-08-30].
 
+\bibitem{goastviewer}
+``Goast viewer.'' https://github.com/yuroyoro/goast-viewer.
+\newblock [Online; accessed 2019-08-30].
+
 \bibitem{Woodside:2007:FSP:1253532.1254717}
 M.~Woodside, G.~Franks, and D.~C. Petriu, ``The future of software performance
   engineering,'' in {\em 2007 Future of Software Engineering}, FOSE '07,
@@ -113,6 +117,43 @@ C.~Laaber, J.~Scheuner, and P.~Leitner, ``Performance testing in the cloud. how
   https://docs.python.org/3/library/statistics.html.
 \newblock [Online; accessed 2019-08-30].
 
+\bibitem{gopackages}
+``Packages.'' https://golang.org/pkg/.
+\newblock [Online; accessed 2019-08-30].
+
+\bibitem{shepperd1988critique}
+M.~Shepperd, ``A critique of cyclomatic complexity as a software metric,'' {\em
+  Software Engineering Journal}, vol.~3, no.~2, pp.~30--36, 1988.
+
+\bibitem{packagemanagement}
+``Package management tools.''
+  https://github.com/golang/go/wiki/PackageManagementTools.
+\newblock [Online; accessed 2019-08-30].
+
+\bibitem{callgraphtool}
+``Callgraph tool.'' golang.org/x/tools/cmd/callgraph.
+\newblock [Online; accessed 2019-08-30].
+
+\bibitem{sealuzh/goabs}
+``sealuzh/goabs.'' https://github.com/sealuzh/GoABS.
+\newblock [Online; accessed 2019-08-30].
+
+\bibitem{atourofgo}
+``A tour of go.'' https://tour.golang.org/list.
+\newblock [Online; accessed 2019-08-30].
+
+\bibitem{gocyclo}
+``fzipp/goycylo.'' https://github.com/fzipp/gocyclo.
+\newblock [Online; accessed 2019-08-30].
+
+\bibitem{packages}
+``Package packages.'' https://godoc.org/golang.org/x/tools/go/packages.
+\newblock [Online; accessed 2019-08-30].
+
+\bibitem{gonum/gonum}
+``gonum/gonum.'' https://github.com/gonum/gonum.
+\newblock [Online; accessed 2019-08-30].
+
 \bibitem{mesos/mesos-go}
 ``mesos/mesos-go.'' https://github.com/mesos/mesos-go.
 \newblock [Online; accessed 2019-08-30].
@@ -135,6 +176,14 @@ C.~Laaber, J.~Scheuner, and P.~Leitner, ``Performance testing in the cloud. how
 
 \bibitem{qjpcu/sesh}
 ``qjpcu/sesh.'' https://github.com/qjpcu/sesh.
+\newblock [Online; accessed 2019-08-30].
+
+\bibitem{stratumn/sdk}
+``stratumn/sdk.'' https://github.com/stratumn/sdk-js.
+\newblock [Online; accessed 2019-08-30].
+
+\bibitem{eaburns/T_old}
+``eaburns/t\_old.'' https://github.com/eaburns/T\_old.
 \newblock [Online; accessed 2019-08-30].
 
 \end{thebibliography}
