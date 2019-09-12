@@ -9,11 +9,15 @@
 \usepackage{tabularx}
 \usepackage{longtable}
 \usepackage[inline]{enumitem}
+\usepackage{booktabs}
+\setlength\LTleft{0pt}
+\setlength\LTright{0pt}
+
 
 
 \thesisType{Bachelor Thesis}
 \date{\today}
-\title{Effects of source code properties on variability of software microbenchmarks written in Go}
+\title{A Correlation Analysis Involving Benchmark Stability and Source Code Features}
 
 \author{Mikael Basmaci}
 \home{Istanbul} % Geburtsort
@@ -53,32 +57,34 @@
 \chapter{Introduction}
 
 
-Performance is one of the compelling qualities of a software system \cite{Woodside:2007:FSP:1253532.1254717} and it shapes the way developers build elements of the software. It is affected by lots of factors such as the software itself, the operating system the software is run on, the middleware, the hardware or even the underlying communication networks\cite{Woodside:2007:FSP:1253532.1254717}. Better performance is important for many reasons. To give some examples: With better performance, a data driven application  will load the data faster, a calculation will result quicker, or an interactive software will be more responsive. All these examples show that more or same amount of work can be done in less time, with better performance. Being an important software quality factor, it can also play a big role on the profitableness of a company\cite{Nguyen:2014:ICS:2597073.2597092}\cite{costa2019}.\\
+Performance is one of the crucial qualities of a software system \cite{Woodside:2007:FSP:1253532.1254717}, and it shapes the way developers build elements of the software. It is affected by lots of factors such as the software itself, the operating system the software is run on, the middleware, the hardware or even the underlying communication networks\cite{Woodside:2007:FSP:1253532.1254717}. Better performance is important for many reasons. With better performance, a data driven application  will load the data faster, a calculation will result quicker, or an interactive software will be more responsive. All these examples show that more or same amount of work can be done in less time, with better performance. Being an important software quality factor, it can also play a big role on the profitableness of a company\cite{Nguyen:2014:ICS:2597073.2597092}\cite{costa2019}.\\
 \\
-Having a performant system nowadays is not only the wish of customers or stakeholders, but also one of the goals of software developers when developing software. Till late 2000s, there has not been a lot of research on the field of software performance testing\cite{weyuker2000experience}. With the evolution of software engineering over the years, and the constantly advancing technology that drives software engineering further, the importance of performance has grown. However, the primary problems encountered in the field of software engineering are often related to the performance regressions\cite{weyuker2000experience}.\\
+Having a performant system nowadays is not only the wish of customers or stakeholders but also one of the goals of software developers when developing software. Till late 2000s, there has not been a lot of research on the field of software performance testing\cite{weyuker2000experience}. With the evolution of software engineering over the years and the constantly advancing technology that drives software engineering further, the importance of performance has grown. However, the primary problems encountered in the field of software engineering are often related to performance regressions\cite{weyuker2000experience}.\\
 \\
 A performance regression is to be found when a new version of the software gives a worse user experience in terms of performance, such as having longer response times, or consuming extra resources such as RAM or CPU while giving the same user experience\cite{Nguyen:2014:ICS:2597073.2597092}. Solutions to these kinds of problems include supply of more hardware, which comes costly and is not applicable for large software systems \cite{Nguyen:2014:ICS:2597073.2597092} or finding out the regression causes in the software by testing.\\
 \\
 To assess the performance of the system and improve it, Software Performance Engineering (SPE) activites are needed \cite{Woodside:2007:FSP:1253532.1254717}. There are two general approaches found in the literature: first one is called measurement-based SPE, which stands for experimental performance calculations made on the software to report about the performance, second one is called model-based, which refers to creating performance models while developing to meet the performance requirements\cite{Woodside:2007:FSP:1253532.1254717}. \\ 
 \\
-There are different kinds of performance testing belonging to measurement-based SPE found in the literature. One of them is stress testing, which tests the software system for the stability while putting it under extreme workloads to detect its breaking point. The longer the system holds, the more stable the system is. Another type of performance test is load testing, which tests the software system with high loads to find out about performance bottlenecks. These types of performance tests are useful for when one wants to assess the general performance of a complete software system before it goes into production. They are, however, quite complex in terms of setups, manual configurations and mostly important, having long execution times \cite{Nguyen:2014:ICS:2597073.2597092}. This complexness makes it hard to find performance regressions as fast as possible, causing delay in Continuos Deployment (CD) architectures \cite{Laaber:2018:EOS:3196398.3196407}.\\
+There are different kinds of performance testing belonging to measurement-based SPE found in the literature. One of them is stress testing, which tests the software system for the stability while putting it under extreme workloads to detect its breaking point. The longer the system holds, the more stable the system is. Another type of performance test is load testing, which tests the software system with high loads to find out about performance bottlenecks. These types of performance tests are useful for when one wants to assess the general performance of a complete software system before it goes into production. They are, however, quite complex in terms of setups, manual configurations and mostly important, having long execution times \cite{Nguyen:2014:ICS:2597073.2597092}. This complexity makes it hard to find performance regressions as fast as possible, causing delay in Continuos Deployment (CD) architectures \cite{Laaber:2018:EOS:3196398.3196407}.\\
 \\
-There exist another type of performance testing, which is with the so called software microbenchmarks. These are adopted as performance evaluation strategy for rather small and library-like projects\cite{laaber2019software} and can test modular functions of a software system and measure their performance\cite{costa2019}. With early adoption of these tests, developers can find out about performance regressions whilst developing, and find solutions before they become bigger performance issues, which one would first realize at the time of analyzing results of bigger performance tests such as stress or load tests. A challenge with testing using microbenchmarks is the non-deterministicity of the results, which means a certain variability exist for the results of a benchmark executed\cite{Laaber:2018:EOS:3196398.3196407}.\\
+There exist another type of performance testing, which is with the so called software microbenchmarks. These are adopted as performance evaluation strategy for rather small and library-like projects\cite{laaber2019software} and can test modular functions of a software system and measure their performance\cite{costa2019}. With early adoption of these tests, developers can find out about performance regressions whilst developing, and find solutions before they become bigger performance issues, which one would first realize at the time of analyzing results of bigger performance tests such as stress or load tests. A challenge with testing using microbenchmarks is the non-deterministicity of the results, which means a certain variability exist for the results of an executed benchmark\cite{Laaber:2018:EOS:3196398.3196407}. A benchmark is said to be stable or not stable depending on the variability of its results. Having a stable benchmark is important because being stable means having less varying results across multiple executions, and the less variable the benchmark's results, the more accurate the benchmark is able to report about performance counters. This also indicates that developers can rely on the results of a stable benchmark with less questioning about their validity. There are multiple factors that affect the variability of a benchmark such as the platform where the benchmarks are executed, the hardware that executes them, or the programming language of the benchmark itself \cite{laaber2018performance}. One of the factors that might be affecting the variability of benchmarks could be the source code related features of a benchmark and it is therefore needed to study the correlation between source code features and the stability of a benchmark.\\
 \\
-In this thesis, I am studying the variability of results of performance tests on a large scale with many projects written in Go. For this, I am investigating the reason for the high/low distribution of benchmark results of these Go Projects based on their source code properties such as signature properties, body related features, other source code metrics, and usage of Go's standard libraries which can affect the performance rigorously.\\
+In this thesis, I am studying the stability of benchmarks from 230 open source software projects written in Go. For this, I firstly analyze the variability of 4802 benchmarks across all projects from a given dataset which has benchmark results of the projects. Secondly, I extract source code features of these benchmarks by parsing their source code and doing a callgraph analysis. The source code features extracted in this thesis fall into two categories: (i) Language related source code features, which include syntactic aspects of the programming language such as loops, collections and similar, and (ii) standard library related features, with which indications about the usage of hardware and network related aspects such as I/O, http calls, and similar can be made. Thirdly, I do an analysis using the variability results of benchmarks and their source code features to assess the correlation between the stability of benchmarks and their source code features.\\
 \\
-To this end, I want to answer the following research questions: 
+To this end, I answer the following research questions: 
+
 \begin{itemize}
-	\item \textbf{RQ1: How variable are microbenchmark results of Go projects?}
+	\item \textbf{RQ1: How stable are microbenchmark results of Go projects?}
+\end{itemize}
+
+\noindent My hypothesis for the the first research question is: I expect the benchmarks to have different percentages of variability values, having a normalized distribution between 1\% to 100\%. To answer my first research question, I get all the projects benchmarks, calculate their variability with different measurement metrics such as Coefficient of Variation (CV) and Relative Confidence Interval Width (RCIW), and report the variabilities of benchmarks for 228 valid projects, having in total valid 4589 benchmarks.\\
+\\
+\begin{itemize}
 	\item \textbf{RQ2: Which source code properties contribute to the stability of benchmark results and how?}
 \end{itemize}
 
-\noindent My hypothesis for the the first research question is: I expect the benchmarks to be quite variable, having a normalized distribution between 1\% to 100\% of variation scores. To answer my first research question, I get all the projects benchmarks, calculate their variability with different measurement metrics such as Coefficient of Variation (CV) and Relative Confidence Interval Width (RCIW) and report the variabilities of benchmarks for 228 projects, having in total 4589 benchmarks.\\
+\noindent My hypothesis for the second research question is: I expect to see significant effects of body related features and Go's standard library usages to the variation of benchmark results. In particular, I suppose that cyclomatic complexity, file IO, http calls and loops have a significant impact on the variability. For the second research question, I download all the projects from Github. Then I run my parser program which collects the source code properties from all the functions and make a callgraph analysis for the benchmarks to collect all the visited functions' properties, resulting into properties of the benchmark. Finally, I use Spearman's rank correlation to find out about the correlation between extracted source code properties and the stability of a benchmark.\\
 \\
-My hypothesis for the second research question is: I expect to see significant effects of body related features and Go's standard library usages to the variation of benchmark results. In particular, I suppose that cyclomatic complexity, file IO, http calls and loops have a direct impact on the variability. For the second research question, I download all the projects from Github, fetch their dependencies for the according commit, from which the benchmark results are from. Then I run my parser program which collects the source code properties from all the functions and make a callgraph analysis for the benchmarks to collect all the visited functions' properties, resulting into properties of the benchmark.\\
-\\
-For the "how" part of RQ2, I do a correlation analysis with the collected properties of each benchmark. [final is yet to come]\\
-\\ 
 Rest of this thesis is structured as follows: I give an introduction to related topics and background about this thesis in the \ref{Background and Related Work}. Chapter. In the \ref{Methodology}. Chapter, I explain the three steps I take to do the analytic part of this thesis and elaborate on the threads to the validity of the methodology. I present the results of these steps in the \ref{Results}. Chapter. Next comes the \ref{Discussion}. Chapter where I discuss about the methodology and the results of this thesis and present some ideas for the future work. I conclude with the \ref{Conclusion}. Chapter.
 
 \chapter{Background and Related Work}
@@ -90,69 +96,15 @@ In this subsection, I give a detailed background information about software micr
 
 \subsection{Software microbenchmarks}
 
-Different kinds of benchmarks are found in the literature. While sometimes benchmarks refer to a standardization of a measure, other benchmarks assess the performance of the underlying system. For example, there are different benchmark programs to measure the performance of hardware such as Central Processing Unit(CPU), to be able to compare their performance with others of its kind. Another example can be the benchmark function of a game, which gives the average FPS score of the game run on a hardware.\\
+Different kinds of benchmarks are found in the literature. While sometimes benchmarks refer to a standardization of a measure, other benchmarks assess the performance of the underlying system. For example, there are different benchmark programs to measure the performance of hardware such as Central Processing Unit(CPU), to be able to compare their performance with others of its kind. Another example can be the benchmark function of a game, which gives the average Frames Per Second (FPS) score of the game run on a hardware.\\
 \\
-Software developers can analyze the performance of parts of their software with the so called software microbenchmarks, which are found either as microbenchmarks or performance unit tests in the literature\cite{costa2019}. These two terms differ in the way they test the underlying code for performance: While microbenchmarks report performance counters (e.g., execution time, throughput, latency etc.) for the different iterations of a trial, performance unit tests act like unit tests in functional testing, reporting if a pre set performance criteria has been reached at the runtime of the test \cite{costa2019}. Some studies such as \cite{Stefan:2017:UTP:3030207.3030226}\cite{Horky:2015:UPU:2668930.2688051} investigate the usage of performance unit tests, while sometimes other studies such as \cite{Laaber:2018:EOS:3196398.3196407}\cite{rodriguez2016automatic} work with microbenchmarks. In this thesis, I work with microbenchmarks and in the rest of this thesis I use the term performance test interchangable with testing with microbenchmarks.\\
+Software developers can analyze the performance of parts of their software with so called software microbenchmarks, which are found either as microbenchmarks or performance unit tests in the literature\cite{costa2019}. These two terms differ in the way they test the underlying code for performance: While microbenchmarks report performance counters (e.g., execution time, throughput, latency etc.) for the different iterations of a trial, performance unit tests act like unit tests in functional testing, reporting if a pre set performance criteria has been reached at the runtime of the test \cite{costa2019}. Some studies such as \cite{Stefan:2017:UTP:3030207.3030226}\cite{Horky:2015:UPU:2668930.2688051} investigate the usage of performance unit tests, while sometimes other studies such as \cite{Laaber:2018:EOS:3196398.3196407}\cite{rodriguez2016automatic} work with microbenchmarks. In this thesis, I work with microbenchmarks and in the rest of this thesis I use the term performance test interchangable with testing with microbenchmarks.\\
 \\
-Microbenchmarks usually test for only a small fraction of the software, such as one or multiple little functions, to assess their performance. A microbenchmark can for instance test the performance of a newly introduced data structure, an implemented algorithm, or even the concurrency performance of functions\cite{costa2019}. As in functional testing, microbenchmarking also comes with testing frameworks that allow developers to create function pools, which are often also called microbenchmark suites (in contrast to unit test suites in functional testing). As an example, for Java there exist Java Microbenchmarking Harness (JMH), which is similar to JUnit, but is implemented to help developers with the creation of microbenchmarks\cite{JMH}. Using this framework, developers can put a "Benchmark" annotation to their microbenchmark functions and test them\cite{JMH}. Figure \ref{fig:JMHBenchmark} from Costa et. al's paper \cite{costa2019} illustrates the workflow of JMH's microbenchmark executions for the \textbf{\textit{observeOn}} method. For each test in JMH, one or more forks can be generated that run individual Java Virtual Machine (JVM)s. Inside a fork, a trial is executed (4), which consists of an optional setup phase (1), warmup iterations (2) and benchmark iterations (3). In the setup phase, the environment for the benchmark is initialized, which is followed by warmup iterations that run the benchmark to bring the system into a steady state but do not save their performance counters, and finally the effective benchmark iterations are executed. By default, both of iteration types invoke the microbenchmark method as many times as possible for 1 second and benchmark iterations record the results. Finally, it is up to the developer to save or visualize the output, which summarizes the performance counters for each benchmark found in the microbenchmark suite. Frameworks like JMH \cite{JMH} allow developers to parametrize the execution of microbenchmarks for configuring amount of iterations per fork, amount of warmup/benchmark iterations etc.\\
-
-
-\begin{figure}
-	\centering
-	\includegraphics[width=\linewidth]{JMHBenchmark}
-	\caption{Execution of a microbenchmark in JMH, taken from \cite{costa2019}.}
-	\label{fig:JMHBenchmark}
-\end{figure}
-
-\noindent Depending on the underlying testing framework, developers can choose to run a benchmark for a limited time to see how many iterations can happen in this pre defined time, or also choose to run the benchmark for a specific amount of iterations to see how long it takes the functions within the benchmark to result in average. Such frameworks are especially useful for when determining whether a new introduced feature in the system causes performance regressions. Furthermore, these regressions can be detected early whilst still being in the development stage of the software, and according changes to the code can be scheduled before the changes go to production, which ensures the stability for the performance in the evolution of the software.
-
-
-\subsection{Microbenchmark variability}
-\label{Microbenchmark variability}
-
-Unless otherwise configured, when a microbenchmark is run, it executes the underlying code for a certain time period (e.g., 1s) over and over for each benchmark iteration and returns a collection of average execution times for each benchmark iteration\cite{laaber2019software}. Execution times of a benchmark are usually expressed in nanoseconds \cite{laaber2019software} \cite{costa2019}. In this thesis, the term microbenchmark variability refers to the variability of a microbenchmark's resulting collection of execution times. It is basically computed by measuring how far the single execution times fall from the average execution time. In this manner, if the executions times are in the close neighborhood of the average value, the benchmark is considered as stable and it's predicted that another execution would take same or similar amount of nanoseconds as the average value. If, however, the points are distributed on a broader scale, it means that the benchmark is rather unstable, i.e., it cannot be predicted how long another execution of the benchmark will take.\\
+Microbenchmarks usually test for only a small fraction of the software, such as one or multiple functions, to assess their performance. A microbenchmark can for instance test the performance of a newly introduced data structure, an implemented algorithm, or even the concurrency performance of functions\cite{costa2019}. As in functional testing, microbenchmarking also comes with testing frameworks that allow developers to create function pools, which are often also called microbenchmark suites (in contrast to unit test suites in functional testing). As an example, for Java there exist Java Microbenchmarking Harness (JMH), which is similar to JUnit, but is implemented to help developers with the creation of microbenchmarks\cite{JMH}.\\
 \\
-There are 2 main metrics that I use to calculate the variability of a microbenchmark in this thesis. The first one is called \textbf{coefficient of variation (CV)}, which is also known as the relative standard derivation\cite{laaber2019software}. "CV is a statistical measure for dispersion among a population of values" \cite{laaber2019software}, and in this thesis I use CV on the performance counters (i.e. average execution times in nanoseconds) of a microbenchmark's benchmark iterations to calculate the variation of a microbenchmark. CV is a measurement that is used to determine the variability in pervious studies as well \cite{laaber2019software} \cite{Leitner:2016:PCS:2926746.2885497}. Additionally, I calculate the \textbf{relative confidence interval width (RCIW)} with 95 and 99 percent confidence intervals of each microbenchmark and refer to them as RCIW95 and RCIW99 respectively. "The RCIW describes the estimated spread of the population's CV, as computed by statistical simulation"\cite{laaber2019software}.\\
-\\
-Regarding calculations of these metrics: CV is calculated by dividing the standard deviation of a dataset by the mean of the dataset. For RCIW, another methodology is followed, which is explained as bootstrapping with hierarchical random resampling and is also used in Laaber et al.'s paper \cite{laaber2019software}\cite{davison_hinkley_1997}\cite{hierach_data_2010} . The reason to follow this methodology resides in the non-normalized performance measurements \cite{laaber2019software}. Bootstrapping with randomly resampling refers to randomly sampling data points from a dataset, and in this thesis I use this technique with 10.000 bootstraps on the execution times of each microbenchmark to generate a collection of normalized mean values out of them, which I can then use to create the 95 and 99 percent relative confidence intervals.
+Go comes with a built-in package for testing and benchmarking, which makes it easier for developers to unit test their code while still developing, or measure the performance of their functions\cite{gobench}. To create a benchmark function, the only thing one has to write is a function beginning with the name \textbf{"Benchmark"} and give a parameter \textbf{*testing.B}. These functions are defined in files ending with the \textbf{\_test.go} suffix, and the collection of all the benchmarks within a project build its microbenchmarking suite. Listing \ref{BenchmarkSrc} shows the example benchmark \textit{BenchmarkHash} from project \textbf{ironsmile/nedomi} \cite{ironsmile/nedomi}.
 
-\begin{figure}[H]
-	\centering
-	\begin{subfigure}{.5\textwidth}
-		\centering
-		\includegraphics[width=\linewidth]{10percentvariance}
-		\caption{Execution results of a microbenchmark with a RCIW99 of 10.28.}
-		\label{fig:10percentvariance}
-	\end{subfigure}%
-	\begin{subfigure}{.5\textwidth}
-		\centering
-		\includegraphics[width=\linewidth]{60percentvariance}
-		\caption{Execution results of a microbenchmark with a RCIW99 of 64.18.}
-		\label{fig:60percentvariance}
-	\end{subfigure}
-	\caption{Example for a low and high variance microbenchmark.}
-	\label{fig:variances}
-\end{figure}
-
-\noindent To illustrate a low and high variable microbenchmark: Figure \ref{fig:10percentvariance} shows the execution times of the benchmark \textit{BenchmarkAddSafe} from \textbf{deckarep/golang-set} project\cite{deckarep/golang-set}. As the box plot shows, the points are all within the whiskers and there are no outliers. Also, the distribution of the points vary from 506 to 650 nanoseconds and it has a 99 percent confidence interval width (RCIW99) score of 10.28. In Figure \ref{fig:60percentvariance}, the benchmark \textit{BenchmarkParseUintHex} from \textbf{segmentio/objconv} project \cite{segmentio/objconv} is shown with its execution times. This benchmark's average execution times vary from 6.68 nanoseconds to 57.9 nanoseconds, having 3 outliers. This time, RCIW99 score is 64.18. The  score in RCIW99 is an estimator for the variability, hence, the higher this score, the higher variability the benchmark has.\\
-\\
-The variability of a benchmark may depend on a lot of factors such as the execution platform, the hardware the benchmarks are executed on, or, even the programming language of the microbenchmark itself\cite{laaber2018performance}. For example, the same benchmark can deliver different average values on different CPUs, as one CPU may perform much more operations in a second than the other one. Similarly, the same benchmark can have a different average for the execution time in a personal computer than the average in a cloud-based machine, or in different cloud-based machines compared to each other \cite{laaber2019software}. Some other factors include the concurrency, I/O latencies, virtualization etc.\\ \cite{laaber2019software}.
-\\
-Variability is a crucial factor of a benchmark, because it has an impact on the stability and reliability of it's results \cite{Laaber:2018:EOS:3196398.3196407}. It is important to have stable and reliable benchmarks, because then the developers can rely on the results of the microbenchmarks when they test parts of the software and find the regression causes with a higher trust. To this end, it's essential to predict the variability of microbenchmarks. There has been studies trying to predict the variability of performance tests in public Infrastructure-as-a-Service (IaaS) clouds by comparing aspects such as hardware heterogeneity, multi-tenancy and control over optimizations \cite{Leitner:2016:PCS:2926746.2885497}, or by comparing the outcomes of forks, trials and iterations in terms of variability \cite{laaber2019software}. One way to predict the variability might be through analyzing source code properties of the software. This can on one hand help the developers identify the cause of slowdowns in a newer version for example, on the other hand help them understand which source code property affects the results in which way.\\
-\\
-Executing usual performance tests (e.g., stress tests, load tests etc.) of a software is usually a long, time consuming process that can take up to days to finish\cite{Laaber:2018:EOS:3196398.3196407}. If a developer can rely on the microbenchmarks of the software, this can help reduce the time spent on performance tests for the whole project. When testing the software for performance via microbenchmarks, the aim of the developer is to have the highest possible coverage  with the minimal effort. For this, the minimal benchmark suite is needed, which should cover all or the most of the functionalities in the software. As the size of the software grows, the microbenchmark suite grows as well, and it gets harder to keep track of the tested and not tested functions. To this manner, the importance of predicting variability causes dives in. To keep the size of the benchmark suite minimal while having a good coverage, developers might not need testing all the functionalities. That's why, it's a good idea to predict which parts of the source code should be tested by predicting the variability of the benchmarks based on source code. With this, developers can be supported to write better benchmarks by for example being alerted to which new functions should have priorization in testing for performance.\\
-\\
-In this thesis, my aim is to find whether there is a correlation between the source code and the variability of a benchmark. For this, I analyze source code properties of microbenchmarks written in Go and use them as dependent variables of a statistical equation,  where the independent variable is the variability of the benchmark in RCIW99. The results can be used to understand the correlation between source code and variability, as well as be used to predict the variability of a benchmark for further applications.\\
-
-\subsection{Go}
-
-
-Go is a statically typed, compiled programming language, designed at Google and was released in November 2009 \cite{go}. Some of its innovational features include built-in data structures for advanced concurrent programming, Goroutines as lightweight processes and built-in performance benchmarking/testing libraries. While still being quite a new language among other languages, Go is the forth most active programming language in Github, and third-most highly paid language globally, according to Stack Overflow Developer Survey 2019\cite{stackoverflowdev}. Furthermore, it is effectively used in the industry and has a growing community.\\
-\\
-Go comes with a great built-in package for testing and benchmarking, which makes it easier for developers to unit test their code while still developing, or measure the performance of their functions\cite{gobench}. To create a benchmark function, the only thing one has to write is a function beginning with the name \textbf{"Benchmark"} and give a parameter \textbf{*testing.B}. These functions are typically defined in files ending with the \textbf{\_test.go} suffix, and the collection of all the benchmarks within a project build its microbenchmarking suite. Listing \ref{BenchmarkSrc} shows the example benchmark \textit{BenchmarkHash} from project \textbf{ironsmile/nedomi} \cite{ironsmile/nedomi}.
-
-
-\begin{lstlisting}[caption=An example benchmark from \cite{ironsmile/nedomi}., label={BenchmarkSrc}, language=Go, frame=single]
+\begin{lstlisting}[caption=An example benchmark from \cite{ironsmile/nedomi}., label={BenchmarkSrc}, language=Go, frame=single, breaklines=false]
 func BenchmarkHash(b *testing.B) {
 	var m = buildMapHash(id, count)
 	for i := 0; b.N > i; i++ {
@@ -169,9 +121,54 @@ func BenchmarkHash(b *testing.B) {
 }
 \end{lstlisting}
 
-\noindent Go also supports these built-in packages with a CLI flag called "test", with which a developer can execute all the tests of a project on a single command. Executing all benchmarks takes an additional flag "bench", which executes all the benchmarks found in the current directory(package) of a project. An example run of a microbenchmark suite from \textbf{tidwall/buntdb} \cite{tidwall/buntdb} can be seen in Listing \ref{testbench}. The first column is the name of the benchmark, the second column is the amount of executions and the third column is the execution time per execution \cite{gobench}.
+\noindent A benchmark in Go can be executed by using the built-in command "go test" followed by a flag "-bench", and the benchmark invokes the target code b.N times \cite{gobench}. The default execution time of a benchmark is 1 second and the result of the benchmark is the average execution time of the target code across all runs. In this thesis, a full run of a benchmark is defined as iteration and the number of runs for a benchmark can be configured with a command-line flag "-count". The results of a benchmark refer to the collection of results from all iterations.\\
+\\
+Go developers can choose to run a benchmark for a limited time to see how many iterations can happen in this pre defined time, or also choose to run the benchmark for a specific amount of iterations to see how long it takes the functions within the benchmark to result in average. Such configurations are especially useful for when determining whether a new introduced feature in the system causes performance regressions. Furthermore, these regressions can be detected early whilst still being in the development stage of the software, and according changes to the code can be scheduled before the changes go to production, which ensures the stability for the performance in the evolution of the software.
 
-\begin{lstlisting}[caption=Example microbenchmark suite execution from \cite{tidwall/buntdb}., label={testbench}, frame=single]
+
+\subsection{Microbenchmark variability}
+\label{Microbenchmark variability}
+
+Unless otherwise configured, when a microbenchmark is run, it executes the underlying code for a certain time period (e.g., 1s) over and over for each benchmark iteration and returns a collection of average execution times for each benchmark iteration\cite{laaber2019software}. Execution times of a benchmark in Go are expressed in nanoseconds \cite{laaber2019software} \cite{costa2019}. In this thesis, the term microbenchmark variability refers to the variability of a microbenchmark's resulting collection of execution times. It is basically computed by measuring how far the single execution times fall from the average execution time. In this manner, if the executions times are in the close neighborhood of the average value, the benchmark is considered as stable and it's predicted that another execution would take same or similar amount of nanoseconds as the average value. If, however, the points are distributed on a broader scale, it means that the benchmark is rather unstable, i.e., it cannot be predicted how long another execution of the benchmark will take.\\
+\\
+There are 2 main metrics that I use to calculate the variability of a microbenchmark in this thesis. The first one is called \textbf{coefficient of variation (CV)}, which is also known as the relative standard deviation\cite{laaber2019software}. "CV is a statistical measure for dispersion among a population of values" \cite{laaber2019software}, and in this thesis I use CV on the performance counters (i.e. average execution times in nanoseconds) of a microbenchmark's benchmark iterations to calculate the variation of a microbenchmark. CV is a measurement that is used to determine the variability in pervious studies as well \cite{laaber2019software} \cite{Leitner:2016:PCS:2926746.2885497}. Since CV expects the values to be on the same relative scale (ratio), it is not a statistically sound metric for performance data, because the the execution times of iterations do not form a normal distribution. Additionally, I calculate the \textbf{relative confidence interval width (RCIW)} with 95 and 99 percent confidence intervals of each microbenchmark and refer to them as RCIW95 and RCIW99 respectively. "The RCIW describes the estimated spread of the population's CV, as computed by statistical simulation"\cite{laaber2019software}.\\
+\\
+Regarding calculations of these metrics: CV is calculated by dividing the standard deviation of a dataset by the mean of the dataset. For RCIW, another methodology is followed, which is explained as bootstrapping with hierarchical random resampling with replacement and is also used in Laaber et al.'s paper \cite{laaber2019software}\cite{davison_hinkley_1997}\cite{hierach_data_2010} . The reason to follow this methodology resides in the non-normalized performance measurements \cite{laaber2019software}. Bootstrapping with randomly resampling refers to randomly sampling data points from a dataset, and in this thesis I use this technique with 10000 bootstraps on the execution times of each microbenchmark to generate a collection of normalized mean values out of them, which I can then use to create the 95 and 99 percent relative confidence intervals.
+
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}{.5\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{10percentvariance}
+		\caption{Execution results of a microbenchmark with a RCIW99 of 10.06\%.}
+		\label{fig:10percentvariance}
+	\end{subfigure}%
+	\begin{subfigure}{.5\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{53percentvariance}
+		\caption{Execution results of a microbenchmark with a RCIW99 of 53.41\%.}
+		\label{fig:53percentvariance}
+	\end{subfigure}
+	\caption{Example for a low and high variance microbenchmark.}
+	\label{fig:variances}
+\end{figure}
+
+\noindent To illustrate a low and high variable microbenchmark: Figure \ref{fig:10percentvariance} shows the execution times of the benchmark \textit{BenchmarkSerializeStruct} from \textbf{hprose/hprose-golang} project\cite{hprose/hprose-golang}. As the box plot shows, the points are all within the whiskers and close to the mean. Also, the distribution of the points vary from 525 to 762 nanoseconds and it has a 99 percent confidence interval width (RCIW99) of 10.06\%. In Figure \ref{fig:53percentvariance}, the benchmark \textit{BenchmarkEncoder} from \textbf{segmentio/objconv} project \cite{segmentio/objconv} is shown with its execution times. This benchmark's average execution times vary from 16.8 nanoseconds to 658 nanoseconds. This time, RCIW99 is 53.41\%. The  score in RCIW99 is an estimator for the variability, hence, the higher this score, the higher variability the benchmark has.\\
+\\
+The variability of a benchmark may depend on many factors such as the execution platform, the hardware the benchmarks are executed on, or, even the programming language of the microbenchmark itself\cite{laaber2018performance}. For example, the same benchmark can deliver different average values on different CPUs, as one CPU may perform much more operations in a second than the other one. Similarly, the same benchmark can have a different average for the execution time in a personal computer than the average in a cloud-based machine, or in different cloud-based machines compared to each other \cite{laaber2019software}. Some other factors include the concurrency, I/O latencies, virtualization etc \cite{laaber2019software}. \\
+\\
+Variability is a crucial factor of a benchmark, because it has an impact on the stability and reliability of it's results \cite{Laaber:2018:EOS:3196398.3196407}. It is important to have stable and reliable benchmarks, because then the developers can rely on the results of the microbenchmarks when they test parts of the software and find the regression causes with a higher trust. Therefore, it is essential to predict the stability of microbenchmarks. There has been studies trying to predict the variability of performance tests in public Infrastructure-as-a-Service (IaaS) clouds by comparing aspects such as hardware heterogeneity, multi-tenancy and control over optimizations \cite{Leitner:2016:PCS:2926746.2885497}, or by comparing the outcomes of forks, trials and iterations in terms of variability \cite{laaber2019software}. One way to predict the variability might be through analyzing source code properties of the software. This can on one hand help the developers identify the cause of slowdowns in a newer version for example, on the other hand help them understand which source code property affects the results in which way.\\
+\\
+Executing system-wide performance tests (e.g., stress tests, load tests etc.) of a software is usually a long, time consuming process that can take up to days to finish\cite{Laaber:2018:EOS:3196398.3196407}. If a developer can rely on the microbenchmarks of the software, this could help finding regression causing functions, but, it is still unknown whether microbenchmarks could replace system-wide performance tests in terms of finding performance regressions. When testing the software for performance via microbenchmarks, the aim of the developer is to have the highest possible coverage  with the minimal effort. For this, the minimal benchmark suite is needed, which should cover all or the most of the functionalities in the software. As the size of the software grows, the microbenchmark suite grows as well, and it gets harder to keep track of the tested and not tested functions. To this manner, the importance of predicting variability causes dives in. To keep the size of the benchmark suite minimal while having a good coverage, developers might not need testing all the functionalities. That's why, it's a good idea to predict which parts of the source code should be tested by predicting the variability of the benchmarks based on source code. With this, developers can be supported to write better benchmarks by for example being alerted to which new functions should have priorization in testing for performance.\\
+\\
+In this thesis, my aim is to find whether there is a correlation between the source code and the variability of a benchmark. For this, I analyze source code features of microbenchmarks written in Go and use them as dependent variables of a statistical equation,  where the independent variable is the variability of the benchmark in RCIW99. The results can be used to understand the correlation between source code and variability, as well as be used to predict the variability of a benchmark for further applications.\\
+
+\subsection{Go}
+
+Go is a statically typed, compiled programming language, designed at Google and was released in November 2009 \cite{go}. Some of its innovational features include built-in data structures for advanced concurrent programming, Goroutines as lightweight processes and built-in performance benchmarking/testing libraries. While still being quite a new language among other languages, Go is the forth most active programming language in Github, and third-most highly paid language globally, according to Stack Overflow Developer Survey 2019\cite{stackoverflowdev}. Furthermore, it is effectively used in the industry and has a growing community.\\
+\\
+An example run of a microbenchmark suite from \textbf{tidwall/buntdb} \cite{tidwall/buntdb} can be seen in Listing \ref{testbench}. The first column is the name of the benchmark, the second column is the amount of executions and the third column is the execution time per execution \cite{gobench}.
+\begin{lstlisting}[caption=Example microbenchmark suite execution from \cite{tidwall/buntdb}., label={testbench}, frame=single, breaklines=false]
 mikael@mikael-VirtualBox:~/Desktop/BenchmarkProjects/tidwall/buntdb/src-
 /github.com/tidwall/buntdb$ go test -bench=.
 goos: linux
@@ -208,17 +205,37 @@ ok  	github.com/tidwall/buntdb	71.590s
 
 
 
+
+
+
+
+
+
+
 \section{Related Work}
-[Upcoming]
-Here comes the literature research about benchmark variability. While some papers look at the benchmark variability causes, some of them try to predict the performance regressions based on different versions of a software by analyzing different commits and mining source code. \\
+
+Performance testing, microbenchmarking and identifying performance regression causes are some of the prevalent topics in the field of Software Performance Engineering \cite{laaber2019software, Laaber:2018:EOS:3196398.3196407, costa2019, chenshang, Nguyen:2014:ICS:2597073.2597092, Luo, Alcocer:2015:TDP:2816707.2816718, Stefan:2017:UTP:3030207.3030226, Horky:2015:UPU:2668930.2688051, Leitner:2017:ESS:3030207.3030213}. Another extensive study field is analyzing performance variability of and within the production clouds \cite{Iosup, Leitner:2016:PCS:2926746.2885497}.\\
 \\
-To the best of my knowledge, there exist no study analyzing benchmark variability of software microbechmarks written in Go by trying to find a correlation with the used source code metrics in these benchmarks.\\
+To the best of my knowledge, there exist no study analyzing stability of software microbechmarks written in Go by trying to find a correlation with the underlying source code properties in these benchmarks. Furthermore, at the time of writing this thesis, most of the existing work is on the research of performance unit testing or microbenchmarking in the Java ecosystem \cite{Stefan:2017:UTP:3030207.3030226, Horky:2015:UPU:2668930.2688051, Leitner:2017:ESS:3030207.3030213, costa2019}, as also similarly stated in Stefan et al.'s paper \cite{Stefan:2017:UTP:3030207.3030226}. However, although being a fairly new language (introduction goes back to 2009), Go has become more popular in recent years and has taken its place in the research of software performance testing \cite{laaber2019software, Laaber:2018:EOS:3196398.3196407}.\\
 \\
-At the time of writing this thesis, most of the existing work is on the research of performance unit testing in Java ecosystem.\cite{Stefan:2017:UTP:3030207.3030226}
+Laaber et al. report about the variability of microbenchmark results in various cloud environments \cite{laaber2019software}. For their study, they use 19 microbenchmarks from 4 open source projects, 2 of them being written with Java and the other 2 with Go. To analyze the stability of these benchmarks, they pick 3 well known Infrastructure as a Service (IaaS) providers and 1 bare-metal instance from IBM. From the 4.5 million unique microbenchmarking data points that they obtain from the executions in these environments, they show that the variation of benchmarks' CVs range from 0.03\% to over 100 \%. It is stated that the bare-metal instance's results are very stable, nearly followed by Amazon's Amazon Web Services (AWS) cloud. Google's Google Compute Engine (GCE) and Microsoft's Azure on the other hand do not retrieve reliable results. As a second research topic, they cast about the slowdown detectability of benchmarks and report that while low number of instances and trials cause high false-positive rates in detecting slowdowns, an increase of instances and trials affects slowdown detection rates positively. In a second paper by Laaber and Leitner \cite{Laaber:2018:EOS:3196398.3196407}, the research topic is the quality of the microbenchmark suite, which is investigated by studying 10 different OSS projects. In this study they analyze 5 Go and 5 Java projects' benchmarks suites and describe the size of benchmark suites, having 16 to 983 individual benchmarks and total execution times ranging from 11 minutes to 8.75 hours. To compare the stability of microbenchmarks, they use GCE and a self-managed bare-metal server. Their \textit{maxSpread} analysis shows that Go's benchmarks are very stable, mostly having a \textit{maxSpread} below 0.05 in bare-metal. Moreover, Java's benchmarks have higher variations. These conclusions indicate that not all benchmarks can be trusted in terms of discovering slowdowns. Laaber and Leitner also introduce an API benchmarking score (ABS), with which they measure the slowdown detectability of benchmark suites. For the 20 often-used methods in study subjects, they show that the benchmark suites have ABS scores ranging from 10 to 100 percent.\\
+\\
+Alcocer and Bergel \cite{Alcocer:2015:TDP:2816707.2816718} study the performance evolution of 19 projects from Pharo ecosystem by investigating the variation of benchmarks across 1439 versions. They selectively choose 49 benchmarks and 
+run these across different versions of projects to find performance differences. After finding these, they dig into the source code that underlies the benchmarks to find patterns that are the causes of these performance variations. Their results show that every third project exhibits performance variations across different versions. Causes of performance variations can be grouped into 9 patterns, and, the biggest factors that play a role on the variation are loops and collections.\\
+\\
+Costa et al. present 5 bad practices existing in Java Microbenchmarking Harness and show how these affect the benchmark results \cite{costa2019}. They base their study on a tool developed by them, \textit{SpotJMHBugs}, which does static analysis to find out about previously defined bad practices in JMH. Out of 123 OSS Java projects, 35 projects show at least an example of a bad practice in their benchmark suites. After fixing 105 benchmarks from 6 projects, they show the significant change in results, indicating that bad practices in JMH can affect the results of benchmarks cardinally. Therefore, they provide suggestions to developers for better design of benchmark suite frameworks.\\
+\\
+Chen and Shang \cite{chenshang} investigate root causes of performance regression by analyzing different commits of 2 Java projects, Hadoop and RxJava. After executing benchmarks and tests for each commit of different versions, they look up for the commits which are reported to have performance regressions and compare their execution metrics such as CPU usage, memory usage, I/O read and I/O write with the commits that have no performance regressions. Based on the comparison, they identify the causes of performance regressions and report that most of the performance regressions occur after fixing a bug and that 12.5\% of the regressions found in these versions can be circumvented if precautions are taken early enough. Nguyen et al. \cite{Nguyen:2014:ICS:2597073.2597092} perform 2 case studies analyzing performance regression causes of an OSS and a commercial software. For this, they mine a regression-causes repository and collect performance counter data of previously run performance tests. Using machine learning, they compare the performance counters of newer test runs with the data from the mined repository. They further show that their approach can reach up to 80\% accuracy in automatically detecting regression causes, and that even a very small training dataset is enough to get accurate results. Luo et al. \cite{Luo} present their tool called \textit{Perfimpact}, which is a tool to extract code changes that may be playing a role on a newly introduced performance regressions. The workwise of this tool depends on search-based input profiling, with which the tool identifies inputs for a program that may cause performance regressions. Later, they use change impact analysis to track the execution trace of the program in order to evaluate changes that might have caused the regression. They test this tool with 2 open source web applications and report that it effectively detects regression causes.\\
+\\
+Iosup et al. \cite{Iosup} collect performance traces from different services of AWS and Google App Engine (GAE) and assess the performance variability of these services. They show that there exist yearly and daily patterns, however, most of the services show periods of stable performance. Furthermore, they analyze the effects of performance variability on extensive cloud applications such as scientific computation jobs, trading of virtual goods in social networks and managing the status of social games. They state that the impact of performance variability depends on the type of application. Leitner and Cito \cite{Leitner:2016:PCS:2926746.2885497} do a similar study involving the performance variability and predictability of IaaS instances. For this, they run 5 micro and application level benchmarks more times in a day for a month on different instances of 4 well known IaaS providers (Amazon Elastic Compute Cloud (EC2), Google Compute Enginer (GCE), Microsoft Azure, UBM Softlayer (SL)) and collect 53918 performance measurements in total. Their further analysis shows that hardware heterogeneity is nowadays lesser important unlike other studies find. Multi-tenancy, on the other hand, is a more important factor, although its effect is not applicable for all providers. Unlike Iosup et al. \cite{Iosup}, Leitner and Cito \cite{Leitner:2016:PCS:2926746.2885497} report not to find any pattern of time on the variability and predictability of the cloud performance.\\
+\\
+Stefan et al. \cite{Stefan:2017:UTP:3030207.3030226} do a research about the adoption of performance testing in 99019 Github projects written in Java. In particular, they are interested in the adoption of performance unit tests and Java's JMH performance testing framework. Based on the statistical analysis, only 370 of all projects (0.37\%) have any performance testing framework. A survey about the adoption of performance unit testing conducted on 111 open source software developers shows that only 57\% of all effectively use performance tests for their design desicions. Leitner and Bezemer \cite{Leitner:2017:ESS:3030207.3030213} conduct a study about the usage of performance testing in open source software written in Java. They analyze 111 projects and report that only a small subset of projects' test suite consists of performance tests. Moreover, they show that only low number of developers in projects implement performance tests and they do not have a standard way of implementing these tests, indicating that there is a lack of standardization in creating performance tests. The authors suggest that performance testing frameworks should focus on supporting developers better in terms of writing performance tests.\\
+\\
+Hork\'{y} et al. \cite{Horky:2015:UPU:2668930.2688051} propose an approach to make developers more aware about the performance aspect of their code. For this, they create a performance unit test framework for Java which provides developers information about the performance of the code they are working on. Although it is hard to measure the effects of such a framework on the resulting performance of the software, they claim that developers can benefit from seeing the performance measurements of the code whilst developing, which can help them make better decisions even about small artifacts, which they normally would not take into consideration.\\
 
 \chapter{Methodology}
 \label{Methodology}
-In this section, I present the methodologies I followed to get to the results. As the project consists of 3 main steps, these steps are explained respectively. To shortly illustrate, Figure \ref{fig:Methodology} show the steps along with the programming/scripting languages involved in this thesis. In the first step, I analyze given dataset of microbenchmark results with help of Python and create a .csv file containing all the individual microbenchmarks along with their mean, CV, RCIW95 and RCIW99 values. In the second step, I download all the projects that have an entry in the previous .csv file and run a parser tool written in Go that collects source code properties for each of the benchmarks found in the projects. In the final step, I do a correlation analysis using the variabilities of individual benchmarks as independent variables and their properties as dependent variables. The outcomes of each step are presented in the \ref{Results}. Section.
+In this section, I present the methodologies I followed to get to the results. As the project consists of 3 main steps, these steps are explained respectively. To shortly illustrate, Figure \ref{fig:Methodology} show the steps along with the programming/scripting languages involved in this thesis. In the first step (1), I analyze given dataset of microbenchmark results with help of Python and create a CSV file containing all the individual microbenchmarks along with their mean, CV, RCIW95 and RCIW99 values. In the second step (2), I download all the projects that have an entry in the previous CSV file and run a parser tool written in Go (Prophunt) that collects source code properties for each of the functions found in the projects. This is followed by a callgraph analysis using another tool of the same language (Callgraph Analyer), which gives CSV files containing source code features of all analyzed benchmarks for each project. In the final step (3), I do a correlation analysis using the variabilities of individual benchmarks as independent variables and their properties as dependent variables. The outcomes of each step are presented in the \ref{Results}. Section.
 
 \begin{figure}[H]
 	\centering
@@ -227,10 +244,10 @@ In this section, I present the methodologies I followed to get to the results. A
 	\label{fig:Methodology}
 \end{figure}
 
-\section{Calculating variabilities}
-\label{Calculating variabilities}
+\section{Analyzing variabilities}
+\label{Analyzing variabilities}
 
-First part of this thesis involves doing a quantitive analysis by analyzing the given data set. From this data set, I firstly extract the valid projects, i. e. choose the projects that have a positive number of individual benchmark results. Secondly, I calculate CV, RCIW95 and RCIW99 for each of benchmarks found in the dataset. For RCIW95 and RCIW99, I use a helper tool, called "pa tool", which helps me use the bootstrapping technique with randomly sampling, described in Section \ref{Microbenchmark variability}. The outcome of this part is explained in detail in Section \ref{Variabilities of benchmarks}
+First part of this thesis involves doing a quantitative analysis by analyzing the given data set (This part refers to the 1. box in Figure \ref{fig:Methodology}). From this data set, I firstly extract the valid projects, i. e. choose the projects that have a positive number of individual benchmark results. Secondly, I calculate CV, RCIW95 and RCIW99 for each of benchmarks found in the dataset. For RCIW95 and RCIW99, I use a helper tool, called "pa tool" \cite{patool}, which helps me use the bootstrapping technique with randomly sampling, described in Section \ref{Microbenchmark variability}. The outcome of this part is explained in detail in Section \ref{Variabilities of benchmarks}.
 
 \subsection{Dataset}
 
@@ -238,7 +255,7 @@ The dataset to analyze the variations from was given me from my supervisor Chris
 \\
 Results file of a projects looks like in Figure \ref{fig:exampleresults}. In this file, the middle part in the first column specifies the number of run, the second column specifies the benchmark including the relative path and file where the benchmark is located in, the forth column reports the execution time in nanoseconds, the fifth and sixth column are related to memory performance, bytes/operation and allocations/operation respectively.
  
-\begin{figure}[H]
+\begin{figure}[]
 	\centering
 	\includegraphics[width=\linewidth]{exampleresults}
 	\caption{Example results file from \cite{ironsmile/nedomi}.}
@@ -247,9 +264,11 @@ Results file of a projects looks like in Figure \ref{fig:exampleresults}. In thi
  
 \subsection{Metrics as the variability indicators}
 
-As described in Section \ref{Variabilities of benchmarks}, I orient myself at 3 main metrics to calculate the variabilities of the benchmarks. These are CV, RCIW95 and RCIW99 respectively. In this thesis, I'm only interested in the execution times, hence, I only take the forth column of the results file for each benchmark into consideration. To calculate the CV, I firstly find the standard derivation and mean of the execution times of each benchmark. Dividing the standard derivation by the mean gives me the CV.\\
+As described in Section \ref{Microbenchmark variability}, I orient myself at 3 main metrics to calculate the variabilities of the benchmarks. These are CV, RCIW95 and RCIW99 respectively. In this thesis, I'm only interested in the execution times, hence, I only take the forth column of the results file for each benchmark into consideration. To calculate the CV, I firstly find the standard deviation and mean of the execution times of each benchmark. Dividing the standard deviation by the mean gives me the CV. For the mathematical representation of CV, if the collection of benchmark results is called \textit{M}, then the CV of M can be shown as:
+\[ cv(M) = \sigma _{M} / \mu _{M} \]
+where $\sigma _{M}$ is the standard deviation and $\mu _{M}$ is the mean of the collection.\\
 \\
-For the RCIW part, I use a tool by Christoph Laaber, called "pa-tool" \cite{patool}. This tool works in the following way: For a given benchmark with all its execution times, it randomly samples a subset of the execution times and saves the mean of this new subset. This process is repeated for a considerable amount of time, e.g., 1000 times (number of bootstrap simulations), which guarantees that the new collection of means of the initial benchmark's execution times is now normalized. Finally, the tool gives a confidence interval of the new collection of means with a default significance level of 0.05. Listing \ref{lst:patool} illustrates an example output of pa-tool, showing the confidence interval of each benchmark in project ironsmile/nedomi after bootstrapping 10.000 times with the 0.01 significance level \cite{ironsmile/nedomi}.
+For the RCIW part, I use a tool by Christoph Laaber, called "pa-tool" \cite{patool}. This tool works in the following way: For a given benchmark with all its execution times, it randomly samples a subset of the execution times and saves the mean of this new subset. This process is repeated for a considerable amount of time, e.g., 10000 times (number of bootstrap simulations), and returns the normally distributed set of mean execution times. This is because the distribution of the bootstrap means is normal due to the central limit theorem. Having the normal distribution is a requirement to take the confidence interval of the set. The tool finally gives a confidence interval of the new collection of means with a default significance level of 0.05. Listing \ref{lst:patool} illustrates an example output of pa-tool, showing the confidence interval of each benchmark in project ironsmile/nedomi after bootstrapping 10000 times with the 0.01 significance level \cite{ironsmile/nedomi}.
 
 \begin{lstlisting}[caption=Example pa-tool results of \cite{ironsmile/nedomi}., label={lst:patool}, frame=single, breaklines=true, basicstyle=\small]
 C:\Users\Mikael\pa>pa -bs 10000 -sig 0.01
@@ -287,23 +306,27 @@ C:\Users\Mikael\pa>pa -bs 10000 -sig 0.01
 \end{lstlisting}
 
 
-\subsection{Python coding}
-\label{Python coding}
+\subsection{Benchmark Variabilities}
+\label{Benchmark Variabilities}
 
-Pa-tool requires the benchmarks of a project to be sorted in alphabetical order, along with its number of run and the execution time. After I have all the valid projects with their results file, I firstly create input csv files for the pa-tool to function accordingly. In the next step, I iterate through input files for pa-tool and run the pa-tool for each project 2 times, once with the significance level of 0.05 and once with 0.01, both having 10.000 bootstrap simulations. From the boundaries of the confidence interval acquired from the pa-tool, I calculate RCIW values by substracting the left boundary from the right boundary. As a result, I get RCIW95 for the results with 0.05 significance leve, and RCIW99 for the results with 0.01 significance level. For the CV part of each benchmark, I use \textit{mean()} and \textit{stddev()} from Python's \textit{statistics} module\cite{pythonsta}.\\
+Pa-tool requires the benchmarks of a project to be sorted in alphabetical order, along with its number of run and the execution time. After I have all the valid projects with their results file, I firstly create input CSV files for the pa-tool to function accordingly. In the next step, I iterate through input files for pa-tool and run the pa-tool for each project 2 times, once with the significance level of 0.05 and once with 0.01, both having 10000 bootstrap simulations. From the boundaries of the confidence interval acquired from the pa-tool, I calculate RCIW values by substracting the left boundary from the right boundary, divided by the mean of the benchmark results. For the mathematical representation, if we call the benchmark \textit{B}, collection of benchmark results \textit{M}, the normal distributed output of pa-tool $M_{n}$, and the confidence interval of $M_{n}$ \textit{CI}, then the RCIW value of a benchmark can be shown as:
+\[ RCIW(B) = ({CI_{R}} - {CI_{L}}) / \mu _{M} \]
+where $CI_{R}$ is the right, $CI_{L}$ is the left boundary of the confidence interval and $\mu _{M}$ is the mean of benchmark's execution results.
+
+\noindent As a result of this calculation, I get RCIW95 for the results with 0.05 significance level of confidence interval, and RCIW99 for the results with 0.01 significance level of confidence interval. For the CV part of each benchmark, I use \textit{mean()} and \textit{stddev()} from Python's \textit{statistics} module\cite{pythonsta}.\\
 \\
-Within the end of calculating CV, RCIW95 and RCIW99 of each benchmark, I write all the benchmarks into the \textbf{final.csv} file, which shows the name of the project, the specific benchmark, number of executions, and mean, CV, RCIW95 and RCIW99 of the benchmark respectively. Listing \ref{fig:finalcsv} shows the first lines of \textbf{final.csv}.
+Within the end of calculating CV, RCIW95 and RCIW99 of each benchmark, I write all the benchmarks into the \textbf{benchmark\_variabilities.csv} file, which shows the name of the project, the specific benchmark, number of executions, and mean, CV, RCIW95 and RCIW99 of the benchmark respectively. Listing \ref{fig:finalcsv} shows the first lines of \textbf{benchmark\_variabilities.csv}.
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=\linewidth]{finalcsvexample}
-	\caption{First lines from the final.csv file involving variability values for \cite{ironsmile/nedomi}.}
+	\caption{First lines from the benchmark\_variabilities.csv file involving variability values for \cite{ironsmile/nedomi}.}
 	\label{fig:finalcsv}
 \end{figure}
 
-\section{Extracting source code properties}
+\section{Extracting source code features}
 
-This is the second part of the study, which involves extracting the source code properties of benchmarks, for which I calculated the variabilities in Section \ref{Calculating variabilities}. This part consists of a downloading projects from Github, extracting information about all kinds of functions (normal, test and benchmarks) in these projects and finally creating .csv files for each project, having the benchmarks and their properties, which can visually be seen in the second part of Figure \ref{fig:Methodology}. Results of this part are to be found in Section \ref{Source code properties}.
+This is the second part of the study, which involves extracting the source code properties of benchmarks, for which I calculated the variabilities in Section \ref{Analyzing variabilities}. This part consists of a downloading projects from Github, extracting information about all kinds of functions (normal, test and benchmarks) in these projects and finally creating CSV files for each project, having the benchmarks and their properties, which can visually be seen in the second box of Figure \ref{fig:Methodology}. Results of this part are to be found in Section \ref{Source code properties}.
 
 \subsection{Decision on source code properties}
 
@@ -319,82 +342,85 @@ For the extraction of these properties, I use the methodology of parsing the Abs
 	\caption{List of source code properties.}
 	\label{table:sourcecodeprop}
 	\resizebox{\textwidth}{!}{%
-		\begin{tabular}{|
-				>{\columncolor[HTML]{FFFC9E}}c |
-				>{\columncolor[HTML]{FFFC9E}}c |c}
-			\hline
-			\cellcolor[HTML]{C0C0C0}\textbf{Property Type} & \cellcolor[HTML]{C0C0C0}\textbf{Property Name} & \multicolumn{1}{l|}{\cellcolor[HTML]{C0C0C0}\textbf{Explanation}} \\ \hline
-			\cellcolor[HTML]{FFFC9E} & bufio & \multicolumn{1}{c|}{Library to handle buffer actions.} \\ \cline{2-3} 
-			\cellcolor[HTML]{FFFC9E} & bytes & \multicolumn{1}{c|}{Library to manipulate byte slices.} \\ \cline{2-3} 
-			\cellcolor[HTML]{FFFC9E} & crypto & \multicolumn{1}{c|}{Library that has common cryptographic constants.} \\ \cline{2-3} 
-			\cellcolor[HTML]{FFFC9E} & database/sql & \multicolumn{1}{c|}{Library for database interactions.} \\ \cline{2-3} 
-			\cellcolor[HTML]{FFFC9E} & encoding & \multicolumn{1}{c|}{} \\ \cline{2-2}
-			\cellcolor[HTML]{FFFC9E} & encoding/binary & \multicolumn{1}{c|}{} \\ \cline{2-2}
-			\cellcolor[HTML]{FFFC9E} & encoding/csv & \multicolumn{1}{c|}{} \\ \cline{2-2}
-			\cellcolor[HTML]{FFFC9E} & encoding/json & \multicolumn{1}{c|}{} \\ \cline{2-2}
-			\cellcolor[HTML]{FFFC9E} & encoding/xml & \multicolumn{1}{c|}{\multirow{-5}{*}{Libraries for handling different type of encodings.}} \\ \cline{2-3} 
-			\cellcolor[HTML]{FFFC9E} & io & \multicolumn{1}{c|}{} \\ \cline{2-2}
-			\cellcolor[HTML]{FFFC9E} & io/ioutil & \multicolumn{1}{c|}{\multirow{-2}{*}{Libraries that hold io primitives and io functionalities.}} \\ \cline{2-3} 
-			\cellcolor[HTML]{FFFC9E} & math & \multicolumn{1}{c|}{} \\ \cline{2-2}
-			\cellcolor[HTML]{FFFC9E} & math/rand & \multicolumn{1}{c|}{\multirow{-2}{*}{Libraries for math functions and random implementations.}} \\ \cline{2-3} 
-			\cellcolor[HTML]{FFFC9E} & mime & \multicolumn{1}{c|}{Library implementing parts of MIME spec.} \\ \cline{2-3} 
-			\cellcolor[HTML]{FFFC9E} & net & \multicolumn{1}{c|}{Library for handling network I/O.} \\ \cline{2-3} 
-			\cellcolor[HTML]{FFFC9E} & net/http & \multicolumn{1}{c|}{} \\ \cline{2-2}
-			\cellcolor[HTML]{FFFC9E} & net/http/httptest & \multicolumn{1}{c|}{} \\ \cline{2-2}
-			\cellcolor[HTML]{FFFC9E} & net/http/httptrace & \multicolumn{1}{c|}{} \\ \cline{2-2}
-			\cellcolor[HTML]{FFFC9E} & net/http/httputil & \multicolumn{1}{c|}{\multirow{-4}{*}{\begin{tabular}[c]{@{}c@{}}Libraries implementing HTTP client and server, \\ utilities for HTTP testing, mechanisms to trace events \\ and other HTTP utility functions.\end{tabular}}} \\ \cline{2-3} 
-			\cellcolor[HTML]{FFFC9E} & net/rpc & \multicolumn{1}{c|}{} \\ \cline{2-2}
-			\cellcolor[HTML]{FFFC9E} & net/rpc/jsonrpc & \multicolumn{1}{c|}{\multirow{-2}{*}{Libraries that implement remote procedure calls for objects.}} \\ \cline{2-3} 
-			\cellcolor[HTML]{FFFC9E} & net/smtp & \multicolumn{1}{c|}{Library to handle Simple Mail Transfer Protocol.} \\ \cline{2-3} 
-			\cellcolor[HTML]{FFFC9E} & net/textproto & \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}Library that implements generic support for \\ text based request/response protocols.\end{tabular}} \\ \cline{2-3} 
-			\cellcolor[HTML]{FFFC9E} & os & \multicolumn{1}{c|}{Library to handle OS functionality.} \\ \cline{2-3} 
-			\cellcolor[HTML]{FFFC9E} & os/exec & \multicolumn{1}{c|}{Library to run external commands.} \\ \cline{2-3} 
-			\cellcolor[HTML]{FFFC9E} & os/signal & \multicolumn{1}{c|}{Library to access incoming signals.} \\ \cline{2-3} 
-			\cellcolor[HTML]{FFFC9E} & sort & \multicolumn{1}{c|}{Library to sort slices and user defined collections.} \\ \cline{2-3} 
-			\cellcolor[HTML]{FFFC9E} & strconv & \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}Library that implements conversion to and from \\ string representations.\end{tabular}} \\ \cline{2-3} 
-			\cellcolor[HTML]{FFFC9E} & sync & \multicolumn{1}{c|}{} \\ \cline{2-2}
-			\cellcolor[HTML]{FFFC9E} & sync/atomic & \multicolumn{1}{c|}{\multirow{-2}{*}{\begin{tabular}[c]{@{}c@{}}Libraries that implement basic synchronization primitives \\ and low-level atomic memory primitives.\end{tabular}}} \\ \cline{2-3} 
-			\multirow{-31}{*}{\cellcolor[HTML]{FFFC9E}Standard library usage} & syscall & \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}Library that implements an interface to \\ low-level operating system primitives.\end{tabular}} \\ \hline
-			\cellcolor[HTML]{FFCC67} & \cellcolor[HTML]{FFCC67}pkgfiles & \multicolumn{1}{c|}{Files in the package where the function belongs to.} \\ \cline{2-3} 
-			\cellcolor[HTML]{FFCC67} & \cellcolor[HTML]{FFCC67}fileloc & \multicolumn{1}{c|}{Lines of code of the file where the function belongs to.} \\ \cline{2-3} 
-			\cellcolor[HTML]{FFCC67} & \cellcolor[HTML]{FFCC67}namelength & \multicolumn{1}{c|}{Length of the name of the function.} \\ \cline{2-3} 
-			\cellcolor[HTML]{FFCC67} & \cellcolor[HTML]{FFCC67}parameters & \multicolumn{1}{c|}{Parameters of the function.} \\ \cline{2-3} 
-			\cellcolor[HTML]{FFCC67} & \cellcolor[HTML]{FFCC67}returns & \multicolumn{1}{c|}{Return values of the function.} \\ \cline{2-3} 
-			\multirow{-6}{*}{\cellcolor[HTML]{FFCC67}Signature of the function} & \cellcolor[HTML]{FFCC67}loc & \multicolumn{1}{c|}{Lines of code of the function.} \\ \hline
-			\cellcolor[HTML]{CD9934} & \cellcolor[HTML]{CD9934}funccalls & \multicolumn{1}{c|}{Function calls within the function.} \\ \cline{2-3} 
-			\cellcolor[HTML]{CD9934} & \cellcolor[HTML]{CD9934}loops & \multicolumn{1}{c|}{For and while loops within the function.} \\ \cline{2-3} 
-			\cellcolor[HTML]{CD9934} & \cellcolor[HTML]{CD9934}nestedloops & \multicolumn{1}{c|}{Nested for/while loops within the function.} \\ \cline{2-3} 
-			\cellcolor[HTML]{CD9934} & \cellcolor[HTML]{CD9934}channels & \multicolumn{1}{c|}{Channel creations within the function.} \\ \cline{2-3} 
-			\cellcolor[HTML]{CD9934} & \cellcolor[HTML]{CD9934}sends & \multicolumn{1}{c|}{Sending data to the channel within the function.} \\ \cline{2-3} 
-			\cellcolor[HTML]{CD9934} & \cellcolor[HTML]{CD9934}receives & \multicolumn{1}{c|}{Receiving data from the channel within the function.} \\ \cline{2-3} 
-			\cellcolor[HTML]{CD9934} & \cellcolor[HTML]{CD9934}closes & \multicolumn{1}{c|}{Channel terminations within the function.} \\ \cline{2-3} 
-			\cellcolor[HTML]{CD9934} & \cellcolor[HTML]{CD9934}gos & \multicolumn{1}{c|}{Go keywords (new threads) within the function.} \\ \cline{2-3} 
-			\cellcolor[HTML]{CD9934} & \cellcolor[HTML]{CD9934}concrranges & \multicolumn{1}{c|}{Channel loops within the function.} \\ \cline{2-3} 
-			\cellcolor[HTML]{CD9934} & \cellcolor[HTML]{CD9934}selects & \multicolumn{1}{c|}{Select statements within the function.} \\ \cline{2-3} 
-			\cellcolor[HTML]{CD9934} & \cellcolor[HTML]{CD9934}selectcases & \multicolumn{1}{c|}{Cases in select statements within the function.} \\ \cline{2-3} 
-			\cellcolor[HTML]{CD9934} & \cellcolor[HTML]{CD9934}variables & \multicolumn{1}{c|}{} \\ \cline{2-2}
-			\cellcolor[HTML]{CD9934} & \cellcolor[HTML]{CD9934}pointers & \multicolumn{1}{c|}{} \\ \cline{2-2}
-			\cellcolor[HTML]{CD9934} & \cellcolor[HTML]{CD9934}slices & \multicolumn{1}{c|}{} \\ \cline{2-2}
-			\cellcolor[HTML]{CD9934} & \cellcolor[HTML]{CD9934}maps & \multicolumn{1}{c|}{\multirow{-4}{*}{\begin{tabular}[c]{@{}c@{}}Variable, pointer, slice and map declarations \\ within the function.\end{tabular}}} \\ \cline{2-3} 
-			\cellcolor[HTML]{CD9934} & \cellcolor[HTML]{CD9934}ifelses & \multicolumn{1}{c|}{If-else statements within the function.} \\ \cline{2-3} 
-			\cellcolor[HTML]{CD9934} & \cellcolor[HTML]{CD9934}switches & \multicolumn{1}{c|}{Switch statements within the function.} \\ \cline{2-3} 
-			\cellcolor[HTML]{CD9934} & \cellcolor[HTML]{CD9934}switchcases & \multicolumn{1}{c|}{Cases in switch statements within the function.} \\ \cline{2-3} 
-			\cellcolor[HTML]{CD9934} & \cellcolor[HTML]{CD9934}panics & \multicolumn{1}{c|}{Panic statements within the function.} \\ \cline{2-3} 
-			\cellcolor[HTML]{CD9934} & \cellcolor[HTML]{CD9934}recovers & \multicolumn{1}{c|}{Recover statements within the function.} \\ \cline{2-3} 
-			\multirow{-21}{*}{\cellcolor[HTML]{CD9934}Body of the function} & \cellcolor[HTML]{CD9934}defers & \multicolumn{1}{c|}{Defer statements within the function.} \\ \hline
-			\cellcolor[HTML]{CBCEFB}Other & \cellcolor[HTML]{CBCEFB}cyclomaticcomplexity & Cyclomatic complexity of the function. \\ \hline
+		\begin{tabular}{@{}llr@{}}
+			\toprule
+			\textbf{Property Type} & \textbf{Property Name} & \textbf{Explanation} \\ \midrule
+			\multirow{31}{*}{Standard library usage} & bufio & Library to handle buffer actions. \\
+			& bytes & Library to manipulate byte slices. \\
+			& crypto & Library that has common cryptographic constants. \\
+			& database/sql & Library for database interactions. \\
+			& encoding & \multirow{5}{*}{Libraries for handling different type of encodings.} \\
+			& encoding/binary &  \\
+			& encoding/csv &  \\
+			& encoding/json &  \\
+			& encoding/xml &  \\
+			& io & \multirow{2}{*}{Libraries that hold io primitives and io functionalities.} \\
+			& io/ioutil &  \\
+			& math & \multirow{2}{*}{Libraries for math functions and random implementations.} \\
+			& math/rand &  \\
+			& mime & Library implementing parts of MIME spec. \\
+			& net & Library for handling network I/O. \\
+			& net/http & \multirow{4}{*}{\begin{tabular}[c]{@{}c@{}}Libraries implementing HTTP client and server, \\ utilities for HTTP testing, mechanisms to trace events \\ and other HTTP utility functions.\end{tabular}} \\
+			& net/http/httptest &  \\
+			& net/http/httptrace &  \\
+			& net/http/httputil &  \\
+			& net/rpc & \multirow{2}{*}{Libraries that implement remote procedure calls for objects.} \\
+			& net/rpc/jsonrpc &  \\
+			& net/smtp & Library to handle Simple Mail Transfer Protocol. \\
+			& net/textproto & \begin{tabular}[c]{@{}c@{}}Library that implements generic support for \\ text based request/response protocols.\end{tabular} \\
+			& os & Library to handle OS functionality. \\
+			& os/exec & Library to run external commands. \\
+			& os/signal & Library to access incoming signals. \\
+			& sort & Library to sort slices and user defined collections. \\
+			& strconv & \begin{tabular}[c]{@{}c@{}}Library that implements conversion to and from \\ string representations.\end{tabular} \\
+			& sync & \multirow{2}{*}{\begin{tabular}[c]{@{}c@{}}Libraries that implement basic synchronization primitives \\ and low-level atomic memory primitives.\end{tabular}} \\
+			& sync/atomic &  \\
+			& syscall & \begin{tabular}[c]{@{}c@{}}Library that implements an interface to \\ low-level operating system primitives.\end{tabular} \\
+			\midrule
+			\multirow{6}{*}{Signature of the function} & pkgfiles & Files in the package where the function belongs to. \\
+			& fileloc & Lines of code of the file where the function belongs to. \\
+			& namelength & Length of the name of the function. \\
+			& parameters & Parameters of the function. \\
+			& returns & Return values of the function. \\
+			& loc & Lines of code of the function. \\
+			\midrule
+			\multirow{21}{*}{Body of the function} & funccalls & Function calls within the function. \\
+			& loops & For and while loops within the function. \\
+			& nestedloops & Nested for/while loops within the function. \\
+			& channels & Channel creations within the function. \\
+			& sends & Sending data to the channel within the function. \\
+			& receives & Receiving data from the channel within the function. \\
+			& closes & Channel terminations within the function. \\
+			& gos & Go keywords (new threads) within the function. \\
+			& concrranges & Channel loops within the function. \\
+			& selects & Select statements within the function. \\
+			& selectcases & Cases in select statements within the function. \\
+			& variables & \multirow{4}{*}{\begin{tabular}[c]{@{}c@{}}Variable, pointer, slice and map declarations \\ within the function.\end{tabular}} \\
+			& pointers &  \\
+			& slices &  \\
+			& maps &  \\
+			& ifelses & If-else statements within the function. \\
+			& switches & Switch statements within the function. \\
+			& switchcases & Cases in switch statements within the function. \\
+			& panics & Panic statements within the function. \\
+			& recovers & Recover statements within the function. \\
+			& defers & Defer statements within the function. \\
+			\midrule
+			Other & cyclomaticcomplexity & Cyclomatic complexity of the function. \\
 		\end{tabular}%
 	}
 \end{table}
 
+
+
 \subsection{Downloading projects}
 
-To download all the valid projects that resulted with 4589 benchmarks in the first analysis, I firstly create a little .csv file which stores the name of the projects and its commit, where the execution results are from. I then write a Python script, which reads this file and downlods the projects sequentially from Github. For downloading, I use Go's \textit{get CLI flag}, as this is intended to download and install a Go project along with its dependencies. However, downloading these projects with:
+To download all the valid projects that resulted with 4589 benchmarks in the first analysis, I firstly create a little CSV file which stores the name of the projects and its commit, where the execution results are from. I then write a Python script, which reads this file and downlods the projects sequentially from Github. For downloading, I use Go's \textit{get CLI flag}, as this is intended to download and install a Go project along with its dependencies. However, downloading these projects with:
 \begin{lstlisting}
 	go get github.com/{owner_name}/{project_name}
 \end{lstlisting}
 
-\noindent does not suffice, because the commits of these projects are from a time when Go Modules did not used to exist. This means, at the time of these commits projects had their own package management tools, which ensured getting the right dependencies for the project \cite{packagemanagement}. Because projects had their own GOPATH environment back then, I create a GOPATH for each of the projects prior to downloading them. On one hand, I ensure that their dependencies from their commits can be stored in their own GOPATH, on the other hand, I avoid clashing dependencies from other projects, which would then share the same GOPATH for all the dependencies. Post download, I then use a locally installed Git to checkout the project folder from master to the given commit in the .csv file. As an output, I get as .csv file containing name, commit and installed path of each project. This output file is useful for the parser tool that can iterate through different projects, which is explained in the next section. Figure \ref{fig:downloadproject} illustrates the process of downloading projects.
+\noindent does not suffice, because the commits of these projects are from a time when Go Modules did not used to exist. This means, at the time of these commits projects had their own package management tools, which ensured getting the right dependencies for the project \cite{packagemanagement}. Because projects had their own GOPATH environment back then, I create a GOPATH for each of the projects prior to downloading them. On one hand, I ensure that their dependencies from their commits can be stored in their own GOPATH, on the other hand, I avoid clashing dependencies from other projects, which would then share the same GOPATH for all the dependencies. Post download, I then use a locally installed Git to checkout the project folder from master to the given commit in the CSV file. As an output, I get a CSV file containing name, commit and installed path of each project. This output file is useful for the parser tool that can iterate through different projects, which is explained in the next section. Figure \ref{fig:downloadproject} illustrates the process of downloading projects.
 
 \begin{figure}[H]
 	\centering
@@ -404,9 +430,7 @@ To download all the valid projects that resulted with 4589 benchmarks in the fir
 \end{figure}
 
 
-\subsection{Golang coding}
-
-Extracting source code properties in this thesis consists of two main parts. First part has to do with AST parsing of source code files to extract all the functions within a project. Second part is about using a callgraph CLI tool which resides in Go's \textit{golang.org/x/tools/cmd/} repository\cite{callgraphtool}. In particular, I use the parser tool in the first part to create a .csv file from a project which has all the functions with their source code properties. Following that, I use the callgraph tool to iterate through the callgraph of each benchmark found in the resulting .csv file from the parser tool in order to find all the called functions from a benchmark. This way, I'm able to match all the called functions from the benchmark in the first .csv file and calculate the sum of each property value for the benchmark. Output of the callgraph tool is a .csv file for the project, which contains only the benchmark functions with their source code properties.\\
+\noindent Extracting source code properties in this thesis consists of two main parts. First part has to do with AST parsing of source code files to extract all the functions within a project. Second part is about using a callgraph CLI tool which resides in Go's \textit{golang.org/x/tools/cmd/} repository\cite{callgraphtool}. In particular, I use the parser tool in the first part to create a CSV file from a project which has all the functions with their source code features. Following that, I use the callgraph tool to iterate through the callgraph of each benchmark found in the resulting CSV file from the parser tool in order to find all the called functions from a benchmark. This way, I'm able to match all the called functions from the benchmark in the first CSV file and calculate the sum of each feature value for the benchmark. Output of the callgraph tool is a CSV file for the project, which contains only the benchmark functions with their source code properties.\\
 \\
 For both of the parts I use Go programming language as it offers great functionabilities when it comes to parsing Go's source code files and collect source code information. I present the resulting tools "Prophunt" and "Callgraph Analyzer" in the next sections.
 
@@ -421,25 +445,41 @@ After having all the projects residing in their own GOPATHs, next step is to sta
 	\label{fig:fetchdeps}
 \end{figure}
 
-\noindent Figure \ref{fig:fetchdeps} shows how this process runs in Go. The optional "-t" flag of \textit{go get} ensures the installation of all required test packages and the latter \textit{./...} tells \textit{go get} to fetch all dependencies for this project. This command is crucial, since without getting dependencies for test packages some of the source code files cannot be compiled correctly, which leads to not being able to parse them correctly, using Prophunt. For all the projects with their specific commits, which are compabible with Go Modules, this step suffices in terms of being ready to be parsed. However, there are projects which use other package management tools \cite{packagemanagement}. For these kind of projects, I use \textit{deps.Fetch} method and give it the path of the project, from which it automatically extracts GOPATH of the projects and uses one of the preinstalled dependency management tools to get the dependencies. As of writing this thesis, this method has support for the following tools (which need to be installed before using the method):
+\noindent Figure \ref{fig:fetchdeps} shows how this process runs in Go. The optional "-t" flag of \textit{go get} ensures the installation of all required test packages and the latter \textit{./...} tells \textit{go get} to fetch all dependencies for this project. This command is crucial, since without getting dependencies for test packages some of the source code files cannot be compiled correctly, which leads to not being able to parse them correctly, using Prophunt. For all the projects with their specific commits, which are compabible with Go Modules, this step suffices in terms of being ready to be parsed. However, there are projects which use other package management tools \cite{packagemanagement}. For these kind of projects, I use \textit{deps.Fetch} method and give it the path of the project, from which it automatically extracts GOPATH of the projects and uses one of the preinstalled dependency management tools to get the dependencies. As of writing this thesis, this method has support for the tools (which need to be installed before using the method) listed in Table \ref{dependencymanagementtools}.
 
-\begin{itemize*}[font={\color{red!50!black}}]
-	\item Get 
-	\item dep
-	\item Glide
-	\item Godep
-	\item Govendor
-	\item gvt
-	\item govend
-	\item trash
-	\item gom
-	\item gopm
-	\item Gogradle
-	\item gpm
-	\item glock
-\end{itemize*}
+\begin{table}[H]
+\caption{List of dependency management tools supported in GoABS}
+\label{dependencymanagementtools}
+\begin{longtable}[c]{@{}ll@{}}
+	\toprule
+	Tool & Repo \\* \midrule
+	\endfirsthead
+	%
+	\endhead
+	%
+	\bottomrule
+	\endfoot
+	%
+	\endlastfoot
+	%
+	Get & built-in \\
+	dep & https://github.com/golang/dep \\
+	Glide & https://github.com/Masterminds/glide \\
+	Godep & https://github.com/tools/godep \\
+	Govendor & https://github.com/kardianos/govendor \\
+	gvt & https://github.com/FiloSottile/gvt \\
+	govend & https://github.com/govend/govend \\
+	trash & https://github.com/rancher/trash \\
+	gom & https://github.com/mattn/gom \\
+	gopm & https://github.com/gpmgo/gopm \\
+	Gogradle & https://github.com/blindpirate/gogradle \\
+	gpm & https://github.com/pote/gpm \\
+	glock & https://github.com/robfig/glock \\* \bottomrule
+\end{longtable}
+\end{table}
 
-I install these tools prior to fetching dependencies in my Ubuntu 18.04 Virtual Machine (VM) environment. After fetching dependencies for all the projects, I am ready with the next step in Prophunt, which is parsing.
+
+\noindent I install these tools prior to fetching dependencies in my Ubuntu 18.04 Virtual Machine (VM) environment. After fetching dependencies for all the projects, I am ready for the next step in Prophunt, which is parsing.
 
 \paragraph{Parsing}
 
@@ -527,55 +567,56 @@ FuncDecl struct {
 
 \noindent Generally, the properties to collect are reachable from the \textbf{Body} by querying for the correct parser instance. Table \ref{table:propsast} presents how I extract these properties or which data structure I aim for when visiting the nodes in a function declaration. For the cyclomatic complexity, I adapt the calculation to an existing calculation approach by fzipp/gocyclo \cite{gocyclo}. 
 
-
-\begin{longtable}{|
-		>{\columncolor[HTML]{CD9934}}l |l|}
-	\hline
-	\cellcolor[HTML]{C0C0C0}\textbf{Property Name} & \cellcolor[HTML]{C0C0C0}\textbf{According Parser Instance / Extraction Method} \\ \hline
+\begin{table}[H]
+\caption{Extraction of properties based on parser library.}
+\label{table:propsast}
+\begin{longtable}[c]{@{}ll@{}}
+	\toprule
+	\textbf{Property Name} & \textbf{According Parser Instance / Extraction Method} \\* \midrule
 	\endfirsthead
 	%
-	\multicolumn{2}{c}%
-	{{\bfseries Table \thetable\ continued from previous page}} \\
 	\endhead
 	%
-	funccalls & *ast.CallExpr \\ \hline
-	loops & *ast.ForStmt / *ast.RangeStmt \\ \hline
-	nestedloops & none, counting loops inside loops \\ \hline
-	channels & *ast.ChanType \\ \hline
-	sends & *ast.SendStmt \\ \hline
-	receives & *ast.UnaryExpr.Op being "\textless{}-" \\ \hline
-	closes & *ast.CallExpr having name "close" \\ \hline
-	gos & *ast.GoStmt \\ \hline
-	concrranges & none, counting loops with channel ranges \\ \hline
-	selects & *ast.SelectStmt \\ \hline
-	selectcases & *ast.SelectStmt.Body.List length \\ \hline
-	variables & \begin{tabular}[c]{@{}l@{}}*ast.DeclStmt --\textgreater *ast.GenDecl\\ or *ast.AssignStmt right side being *ast.BasicLit\end{tabular} \\ \hline
-	pointers & \begin{tabular}[c]{@{}l@{}}*ast.AssignStmt right side having\\ *ast.UnaryExpr.Op being "\&"\end{tabular} \\ \hline
-	slices & *ast.ArrayType \\ \hline
-	maps & *ast.MapType \\ \hline
-	ifelses & *ast.IfStmt \\ \hline
-	switches & *ast.SwitchStmt \\ \hline
-	switchcases & *ast.SwitchStmt.Body.List length \\ \hline
-	panics & *ast.CallExpr having name "panic" \\ \hline
-	recovers & *ast.CallExpr having name "recover" \\ \hline
-	defers & *ast.DeferStmt \\ \hline
-	\cellcolor[HTML]{CBCEFB}cyclomaticcomplexity & \begin{tabular}[c]{@{}l@{}}calculated by counting each instance of:\\ *ast.FuncDecl\\ *ast.IfStmt\\ *ast.ForStmt\\ *ast.RangeStmt\\ *ast.CaseClause\\ *ast.CommClause\\ *ast.BinaryExpr\\ within the function\end{tabular} \\ \hline
-	\cellcolor[HTML]{FFFC9E}standard library usages & checking resolved funccalls within a function \\ \hline
-	\caption{Extraction of properties based on parser library.}
-	\label{table:propsast}\\
+	\bottomrule
+	\endfoot
+	%
+	\endlastfoot
+	%
+	funccalls & *ast.CallExpr \\
+	loops & *ast.ForStmt / *ast.RangeStmt \\
+	nestedloops & none, counting loops inside loops \\
+	channels & *ast.ChanType \\
+	sends & *ast.SendStmt \\
+	receives & *ast.UnaryExpr.Op being "\textless{}-" \\
+	closes & *ast.CallExpr having name "close" \\
+	gos & *ast.GoStmt \\
+	concrranges & none, counting loops with channel ranges \\
+	selects & *ast.SelectStmt \\
+	selectcases & *ast.SelectStmt.Body.List length \\
+	variables & \begin{tabular}[c]{@{}l@{}}*ast.DeclStmt --\textgreater *ast.GenDecl\\ or *ast.AssignStmt right side being *ast.BasicLit\end{tabular} \\
+	pointers & \begin{tabular}[c]{@{}l@{}}*ast.AssignStmt right side having\\ *ast.UnaryExpr.Op being "\&"\end{tabular} \\
+	slices & *ast.ArrayType \\
+	maps & *ast.MapType \\
+	ifelses & *ast.IfStmt \\
+	switches & *ast.SwitchStmt \\
+	switchcases & *ast.SwitchStmt.Body.List length \\
+	panics & *ast.CallExpr having name "panic" \\
+	recovers & *ast.CallExpr having name "recover" \\
+	defers & *ast.DeferStmt \\
+	cyclomaticcomplexity & \begin{tabular}[c]{@{}l@{}}calculated by counting each instance of:\\ *ast.FuncDecl\\ *ast.IfStmt\\ *ast.ForStmt\\ *ast.RangeStmt\\ *ast.CaseClause\\ *ast.CommClause\\ *ast.BinaryExpr\\ within the function\end{tabular} \\
+	standard library usages & checking resolved funccalls within a function \\* \bottomrule
 \end{longtable}
-
-
+\end{table}
 
 \noindent To be able to parse each function correctly and later match them with the output of the callgraph tool, I need to resolve the package of the function or the package of the receiver of the method if a receiver exists. Unfortunately, without having types info for the file to be parsed, this is impossible unless all the information is found in the same file. In practice, this is rarely the case.
 
 \paragraph{Package packages}
 
-A little bit of scrolling in Go's \textit{golang.org/x/tools/go/} repository shows me a library, called \textbf{packages}\cite{packages}, which offers the functionality to load a package's related info to the programming environment. This comes as a perfect solution to the problem of resolving types, since it gives all the found .go files in the folder with their according package and a slice of \textbf{*ast.File} for the files that compile within the folder. Furthermore, since it automatically parses all the files, there is no need to parse all the files one by one as I practiced in the previous section. The crucial feature of this functionality is, that it automatically generates a \textbf{*types.Info} instance for each package, which can later be used to query for the resolving type of an existing \textbf{*ast.Ident} node in the AST tree. Best practice to use this package is by giving the path of a folder containing Go source files as a parameter to the configuration of \textit{packages.Load}, while also telling the configuration to include all test files.\\
+I use a library called \textbf{packages} from Go's \textit{golang.org/x/tools/go/} repository  \cite{packages}, which offers the functionality to load a package's related info to the programming environment. This comes as a perfect solution to the problem of resolving types, since it gives all the found .go files in the folder with their according package and a slice of \textbf{*ast.File} for the files that compile within the folder. Furthermore, since it automatically parses all the files, there is no need to parse all the files one by one as I practiced in the previous section. The crucial feature of this functionality is, that it automatically generates a \textbf{*types.Info} instance for each package, which can later be used to query for the resolving type of an existing \textbf{*ast.Ident} node in the AST tree. Best practice to use this package is by giving the path of a folder containing Go source files as a parameter to the configuration of \textit{packages.Load}, while also telling the configuration to include all test files.\\
 \\
 Go's standard practice tells to put the test files in the "\_test" version of the package found in the folder. If that is the case for a folder, \textit{packages.Load} returns both the normal and "\_test" version of the package with their compiled .go files. However, in the dataset that I analyze there are projects which don't follow this practice, hence, they use only one package per folder and include the tests in the same package. In that case, \textit{packages.Load} returns all the .go files in the "package [package.test]" package.\\
 \\
-Having \textbf{packages} library as the skeleton to my parsing technique, I create \textbf{Prophunt}, which is a tool that takes a project folder as a parameter and starts walking all the folders of the project, starting from the root folder. For each folder, resulting packages are acquired via \textit{packages.Load} and function declarations are extracted for each of the compiling .go files. Then, the properties of each function is collected from the functions, using algorithms that aim for the according parser instance or extraction method of the property to be extracted. At the end of visiting all possible functions, the functions are written into a .csv file which includes all 3 kinds of functions from a project, namely: \textbf{normal}, \textbf{test} and \textbf{benchmark} functions. Figure \ref{fig:prophunt} illustrates the workflow of Prophunt. Simply explained, it takes the .csv from Python downloader script to iterate through projects, creates a map containing each function and their properties, and fills it by loading each package, filtering the functions and extracting their properties. At the end of visiting all folders of a project, the map is transformed into a .csv for the project, which is saved in \textit{csv1} folder. For convenience, also an \textit{index.csv} file is written in this folder for later usage with callgraph analyzer, which contains the names and csv1 paths of the projects.
+Having \textbf{packages} library as the skeleton to my parsing technique, I create \textbf{Prophunt}, which is a tool that takes a project folder as a parameter and starts walking all the folders of the project, starting from the root folder. For each folder, resulting packages are acquired via \textit{packages.Load} and function declarations are extracted for each of the compiling .go files. Then, the properties of each function is collected from the functions, using algorithms that aim for the according parser instance or extraction method of the property to be extracted. At the end of visiting all possible functions, the functions are written into a CSV file which includes all 3 kinds of functions from a project, namely: \textbf{normal}, \textbf{test} and \textbf{benchmark} functions. Figure \ref{fig:prophunt} illustrates the workflow of Prophunt. Simply explained, it takes the CSV from Python downloader script to iterate through projects, creates a map containing each function and their properties, and fills it by loading each package, filtering the functions and extracting their properties. At the end of visiting all folders of a project, the map is transformed into a CSV for the project, which is saved in \textit{Prophunt\_Output} folder. For convenience, also an \textit{index.csv} file is written in this folder for later usage with callgraph analyzer, which contains the names and Prophunt\_Output paths of the projects.
 
 \begin{figure}[H]
 	\centering
@@ -588,7 +629,7 @@ Having \textbf{packages} library as the skeleton to my parsing technique, I crea
 \subsection{Callgraph Analyzer}
 \label{Callgraph Analyzer}
 
-Creating csv1 outputs for all the projects is only half of the story, because the information in these .csv files are only relevant to the functions themselves, i.e., having only csv1 outputs I am limited to properties of an individual function. However, to make a proper correlation analysis, it is interesting and important to look at the callgraphs of the benchmarks, because these reveal information about all the functions that are called by a benchmark. The idea behind the callgraph analyzer is to build a directed graph, which has function nodes and edges between function nodes respresenting a function call. In such a graph, the outgoing node of an edge is the caller, and the incoming node of an edge is the callee. Having such a datastructure can be used to return all the visited functions from a benchmark. To this end, I search for a tool which can in some way return me the edges between functions, which in whole builds the callgraph of the project. Fortunately I come across the callgraph CLI tool, which resides in Go's \textit{golang.org/x/tools/cmd/} repository\cite{callgraphtool}.\\
+Creating Prophunt outputs for all the projects is only half of the story, because the information in these CSV files are only relevant to the functions themselves, i.e., having only Prophunt outputs I am limited to properties of an individual function. However, to make a proper correlation analysis, it is interesting and important to look at the callgraphs of the benchmarks, because these reveal information about all the functions that are called by a benchmark. The idea behind the callgraph analyzer is to build a directed graph, which has function nodes and edges between function nodes respresenting a function call. In such a graph, the outgoing node of an edge is the caller, and the incoming node of an edge is the callee. Having such a datastructure can be used to return all the visited functions from a benchmark. To this end, I search for a tool which can in some way return me the edges between functions, which in whole builds the callgraph of the project. Fortunately I come across the callgraph CLI tool, which resides in Go's \textit{golang.org/x/tools/cmd/} repository\cite{callgraphtool}.\\
 \\
 \paragraph{callgraph CLI tool} The tool expects several flags to give the callgraph of a project as output: the first and most important flag is the algorithm ("-algo") that is used to create the callgraph. Under 4 different algorithm options (\textbf{Static}, Class Hierarchy Analysis (\textbf{cha}), Rapid Type Analysis (\textbf{rta}) and inclusion-based Points-to Analysis (\textbf{pta})), I use inclusion-based Points-to Analysis. \textbf{pta} is often referred as Points-to-Analysis and is used in computer science as a static code analysis technique. In its pure form, the algorithm tries to find about which pointer or heap reference can be pointing to which variable or storage location at the runtime. This algorithm, as \textbf{rta}, requires a whole program to give correct output, and includes only functions that are reachable from main \cite{callgraphtool}. This means, that if a benchmark has function calls that are not included in the main or tests of the whole project, this benchmark will likely not be included in the callgraph tool's output, which is the only analyzed drawback by me. The other flags of the tool include "-test", which is to enable creating callgraphs of tests as well and "-format", which is to format the output of the callgraph tool. Using "-format" with "digraph" gives all the edges in form:
 
@@ -609,9 +650,9 @@ Next step in order to have a sound directed graph of a project is to find a data
 	\label{fig:callgraph}
 \end{figure}
  
-Figure \ref{fig:callgraph} shows how Callgraph Analyzer works. Similar to Prophunt, Callgraph Analyzer takes the full path of the project to be analyzed from csv1 output's index.csv. A single loop execution consists of 2 phases. In the first phase, the callgraph tool is called for each of the projects folder because of 2 reasons: (1) a project might not have a main in the root folder, hence, the callgraph fails to create the edges and (2) there might exist more than 1 main in the whole project structure and they may have different scopes for the functions across the project. After each call of the CLI tool, the output is read and the nodes and their edges are collected. These are directly fed to the \textbf{*simple.DirectedGraph} instance of the project. Due to the precautions in the implementation of \textbf{*simple.DirectedGraph}, a node cannot be added to the graph twice, hence, I eliminate edges that occured in a previous output from the process and only feed the nodes if they were not in the graph before. A full walk through the project path results as a full callgraph of a project.\\
+\noindent Figure \ref{fig:callgraph} shows how Callgraph Analyzer works. Similar to Prophunt, Callgraph Analyzer takes the full path of the project to be analyzed from Prophunt\_Output's index.csv. A single loop execution consists of 2 phases. In the first phase, the callgraph tool is called for each of the projects folder because of 2 reasons: (1) a project might not have a main in the root folder, hence, the callgraph fails to create the edges and (2) there might exist more than 1 main in the whole project structure and they may have different scopes for the functions across the project. After each call of the CLI tool, the output is read and the nodes and their edges are collected. These are directly fed to the \textbf{*simple.DirectedGraph} instance of the project. Due to the precautions in the implementation of \textbf{*simple.DirectedGraph}, a node cannot be added to the graph twice, hence, I eliminate edges that occured in a previous output from the process and only feed the nodes if they were not in the graph before. A full walk through the project path results as a full callgraph of a project.\\
 \\
-In the second phase of the same loop execution, according .csv file for the project is read from csv1 folder and its benchmarks are filtered. Having all benchmarks on one place, a lookup for all direct callees of one benchmark node can be made by using \textit{simple.From()} method, when the node of the benchmark is given as a parameter. Since I am interested in not only the direct callees but also all reachable nodes from a benchmark node, I implement a recursive algorithm which calls \textit{simple.From()} method for all the nodes that can be visited from the initial benchmark node. This ensures collecting all the reachable nodes in the callgraph, and as a next step I search for the callees in the according projectX.csv file. If reachable nodes are present in the .csv file of the project, I collect their .csv entries to later sum up all the property values, resulting into the benchmark's cumulitative properties. Note that namelength and parameters are not summed up, as their cumulitative value is not useful for the correlation analysis. Using this methodology, there is 3 possible outcomes for every benchmark analzed by Prophunt: (1) the benchmark cannot be found in the callgraph, resulting into a nil node in the programming environment. In this case, I skip this benchmark and do not record it in the output; (2) the benchmark is found in the callgraph, however, there is no reachable node from this benchmark, either because there was a compilation error in the callgraph CLI tool, or the callees of the benchmark were not reachable from main of the project; (3) the benchmark is found in the callgraph and there is at least 1 reachable node from the benchmark in the callgraph. For the completeness of the results, I anticipate that there are not many occurences of the first and second outcomes, nevertheless, the numbers are reported in the \ref{Source code properties} Section. Finally, Callgraph Analyzer gives an output folder called csv2 with a .csv for each project containing only the benchmarks with their cumulitative property values, as well as an index.csv file which is used later at the correlation analysis.
+In the second phase of the same loop execution, according CSV file for the project is read from Prophunt\_Output folder and its benchmarks are filtered. Having all benchmarks on one place, a lookup for all direct callees of one benchmark node can be made by using \textit{simple.From()} method, when the node of the benchmark is given as a parameter. Since I am interested in not only the direct callees but also all reachable nodes from a benchmark node, I implement a recursive algorithm which calls \textit{simple.From()} method for all the nodes that can be visited from the initial benchmark node. This ensures collecting all the reachable nodes in the callgraph, and as a next step I search for the callees in the according projectX.csv file. If reachable nodes are present in the .csv file of the project, I collect their .csv entries to later sum up all the property values, resulting into the benchmark's cumulitative properties. Note that namelength and parameters are not summed up, as their cumulitative value is not useful for the correlation analysis. Using this methodology, there is 3 possible outcomes for every benchmark analzed by Prophunt: (1) the benchmark cannot be found in the callgraph, resulting into a nil node in the programming environment. In this case, I skip this benchmark and do not record it in the output; (2) the benchmark is found in the callgraph, however, there is no reachable node from this benchmark, either because there was a compilation error in the callgraph CLI tool, or the callees of the benchmark were not reachable from main of the project; (3) the benchmark is found in the callgraph and there is at least 1 reachable node from the benchmark in the callgraph. For the completeness of the results, I anticipate that there are not many occurences of the first and second outcomes, nevertheless, the numbers are reported in the \ref{Source code properties} Section. Finally, Callgraph Analyzer gives an output folder called Callgraph\_Output with a CSV for each project containing only the benchmarks with their cumulitative property values, as well as an index.csv file which is used later at the correlation analysis.
 
 \section{Finding correlations}
 Third and last part of the study was to find correlations between source code properties of benchmarks and their variability. In this last part, I used a regression model on some chosen benchmarks to find correlations. Results of this part are to be found in the third part of Results section.
@@ -747,6 +788,78 @@ Finally, I match the benchmarks from final.csv with the valid ones from csv2 and
 - Can't really say \\
 
 
+\begin{table}[H]
+	\begin{tabular}{@{}llll@{}}
+		property\_name & rciw99 & rciw95 & cv \\
+		\toprule
+		pkgfiles & \cellcolor[HTML]{FFCC99}0.28000** & \cellcolor[HTML]{FFCC99}0.28310** & \cellcolor[HTML]{99CCFF}0.20296** \\
+		fileloc & \cellcolor[HTML]{FFCC99}0.25547** & \cellcolor[HTML]{FFCC99}0.26357** & \cellcolor[HTML]{99CCFF}0.17676** \\
+		namelength & \cellcolor[HTML]{99CCFF}0.10807** & \cellcolor[HTML]{99CCFF}0.11421** & \cellcolor[HTML]{3366FF}0.05583** \\
+		returns & \cellcolor[HTML]{FFCC99}0.28535** & \cellcolor[HTML]{FFCC99}0.28778** & \cellcolor[HTML]{C0C0C0}0.22448** \\
+		loc & \cellcolor[HTML]{C0C0C0}0.24654** & \cellcolor[HTML]{C0C0C0}0.24957** & \cellcolor[HTML]{99CCFF}0.19555** \\
+		funccalls & \cellcolor[HTML]{C0C0C0}0.25208** & \cellcolor[HTML]{FFCC99}0.25542** & \cellcolor[HTML]{99CCFF}0.20048** \\
+		loops & \cellcolor[HTML]{C0C0C0}0.23889** & \cellcolor[HTML]{C0C0C0}0.24372** & \cellcolor[HTML]{99CCFF}0.18443** \\
+		nestedloops & \cellcolor[HTML]{99CCFF}0.18190** & \cellcolor[HTML]{99CCFF}0.18672** & \cellcolor[HTML]{99CCFF}0.13891** \\
+		channels & \cellcolor[HTML]{FFCC99}0.27211** & \cellcolor[HTML]{FFCC99}0.27868** & \cellcolor[HTML]{C0C0C0}0.23050** \\
+		sends & \cellcolor[HTML]{C0C0C0}0.22830** & \cellcolor[HTML]{C0C0C0}0.23290** & \cellcolor[HTML]{99CCFF}0.18796** \\
+		receives & \cellcolor[HTML]{C0C0C0}0.24083** & \cellcolor[HTML]{C0C0C0}0.24562** & \cellcolor[HTML]{99CCFF}0.19546** \\
+		closes & \cellcolor[HTML]{FFCC99}0.26428** & \cellcolor[HTML]{FFCC99}0.27345** & \cellcolor[HTML]{99CCFF}0.21205** \\
+		gos & \cellcolor[HTML]{FFCC99}0.28593** & \cellcolor[HTML]{FFCC99}0.29192** & \cellcolor[HTML]{C0C0C0}0.24832** \\
+		concrranges & \cellcolor[HTML]{3366FF}0.04556** & \cellcolor[HTML]{3366FF}0.04388** & \cellcolor[HTML]{3366FF}0.03319* \\
+		selects & \cellcolor[HTML]{C0C0C0}0.25025** & \cellcolor[HTML]{FFCC99}0.25777** & \cellcolor[HTML]{99CCFF}0.18467** \\
+		selectcases & \cellcolor[HTML]{C0C0C0}0.25005** & \cellcolor[HTML]{FFCC99}0.25751** & \cellcolor[HTML]{99CCFF}0.18493** \\
+		variables & \cellcolor[HTML]{C0C0C0}0.24846** & \cellcolor[HTML]{C0C0C0}0.25292** & \cellcolor[HTML]{99CCFF}0.20061** \\
+		pointers & \cellcolor[HTML]{FFCC99}0.28430** & \cellcolor[HTML]{FFCC99}0.29096** & \cellcolor[HTML]{C0C0C0}0.22130** \\
+		slices & \cellcolor[HTML]{99CCFF}0.17991** & \cellcolor[HTML]{99CCFF}0.18075** & \cellcolor[HTML]{99CCFF}0.13344** \\
+		maps & \cellcolor[HTML]{99CCFF}0.17304** & \cellcolor[HTML]{99CCFF}0.17262** & \cellcolor[HTML]{99CCFF}0.16990** \\
+		ifelses & \cellcolor[HTML]{C0C0C0}0.25134** & \cellcolor[HTML]{FFCC99}0.25509** & \cellcolor[HTML]{99CCFF}0.20447** \\
+		switches & \cellcolor[HTML]{99CCFF}0.08179** & \cellcolor[HTML]{99CCFF}0.08671** & \cellcolor[HTML]{3366FF}0.04099** \\
+		switchcases & \cellcolor[HTML]{99CCFF}0.07659** & \cellcolor[HTML]{99CCFF}0.08068** & \cellcolor[HTML]{3366FF}0.04293** \\
+		panics & \cellcolor[HTML]{99CCFF}0.16285** & \cellcolor[HTML]{99CCFF}0.17181** & \cellcolor[HTML]{99CCFF}0.10483** \\
+		recovers & \cellcolor[HTML]{3366FF}0.07039** & \cellcolor[HTML]{3366FF}0.06250** & \cellcolor[HTML]{99CCFF}0.07748** \\
+		defers & \cellcolor[HTML]{FFCC99}0.27512** & \cellcolor[HTML]{FFCC99}0.27477** & \cellcolor[HTML]{C0C0C0}0.24704** \\
+		cyclomaticcomplexity & \cellcolor[HTML]{FFCC99}0.25656** & \cellcolor[HTML]{FFCC99}0.26004** & \cellcolor[HTML]{99CCFF}0.20563** \\
+		\bottomrule
+	\end{tabular}
+\end{table}
+
+\begin{table}[H]
+	\begin{tabular}{@{}llll@{}}
+		property\_name & rciw99 & rciw95 & cv \\
+		\toprule
+		bufio & \cellcolor[HTML]{99CCFF}0.15467** & \cellcolor[HTML]{99CCFF}0.16217** & \cellcolor[HTML]{99CCFF}0.10351** \\
+		bytes & \cellcolor[HTML]{99CCFF}0.16678** & \cellcolor[HTML]{99CCFF}0.16779** & \cellcolor[HTML]{99CCFF}0.15004** \\
+		crypto & \cellcolor[HTML]{333399}\color{white}-0.02982* & \cellcolor[HTML]{333399}\color{white}-0.03062* & \cellcolor[HTML]{333399}\color{white}-0.02616 \\
+		database/sql & \cellcolor[HTML]{333399}\color{white}0.01040 & \cellcolor[HTML]{333399}\color{white}0.00881 & \cellcolor[HTML]{333399}\color{white}-0.00608 \\
+		encoding & \cellcolor[HTML]{99CCFF}0.12044** & \cellcolor[HTML]{99CCFF}0.11960** & \cellcolor[HTML]{99CCFF}0.07911** \\
+		encoding/binary & \cellcolor[HTML]{99CCFF}0.08718** & \cellcolor[HTML]{99CCFF}0.09103** & \cellcolor[HTML]{3366FF}0.04150** \\
+		encoding/csv & \cellcolor[HTML]{333399}\color{white}-0.00911 & \cellcolor[HTML]{333399}\color{white}-0.01151 & \cellcolor[HTML]{3366FF}0.01892 \\
+		encoding/json & \cellcolor[HTML]{99CCFF}0.09332** & \cellcolor[HTML]{99CCFF}0.09174** & \cellcolor[HTML]{3366FF}0.06628** \\
+		encoding/xml & \cellcolor[HTML]{3366FF}0.05489** & \cellcolor[HTML]{3366FF}0.05191** & \cellcolor[HTML]{3366FF}0.05730** \\
+		io & \cellcolor[HTML]{99CCFF}0.20088** & \cellcolor[HTML]{99CCFF}0.20167** & \cellcolor[HTML]{99CCFF}0.15897** \\
+		io/ioutil & \cellcolor[HTML]{99CCFF}0.17902** & \cellcolor[HTML]{99CCFF}0.18179** & \cellcolor[HTML]{99CCFF}0.13742** \\
+		math & \cellcolor[HTML]{99CCFF}0.13606** & \cellcolor[HTML]{99CCFF}0.14590** & \cellcolor[HTML]{99CCFF}0.08024** \\
+		math/rand & \cellcolor[HTML]{FFCC99}0.26986** & \cellcolor[HTML]{FFCC99}0.27009** & \cellcolor[HTML]{C0C0C0}0.22528** \\
+		mime & \cellcolor[HTML]{99CCFF}0.14102** & \cellcolor[HTML]{99CCFF}0.14973** & \cellcolor[HTML]{99CCFF}0.11820** \\
+		net & \cellcolor[HTML]{C0C0C0}0.23078** & \cellcolor[HTML]{C0C0C0}0.23471** & \cellcolor[HTML]{99CCFF}0.18983** \\
+		net/http & \cellcolor[HTML]{99CCFF}0.15577** & \cellcolor[HTML]{99CCFF}0.15516** & \cellcolor[HTML]{99CCFF}0.13530** \\
+		net/http/httptest & \cellcolor[HTML]{3366FF}0.02879 & \cellcolor[HTML]{3366FF}0.02164 & \cellcolor[HTML]{3366FF}0.06075** \\
+		net/http/httputil & \cellcolor[HTML]{3366FF}0.02795 & \cellcolor[HTML]{3366FF}0.02721 & \cellcolor[HTML]{3366FF}0.02797 \\
+		net/rpc & \cellcolor[HTML]{333399}\color{white}0.01805 & \cellcolor[HTML]{333399}\color{white}0.01221 & \cellcolor[HTML]{3366FF}0.02851 \\
+		net/rpc/jsonrpc & \cellcolor[HTML]{333399}\color{white}0.01783 & \cellcolor[HTML]{333399}\color{white}0.01700 & \cellcolor[HTML]{333399}\color{white}0.01678 \\
+		net/smtp & \cellcolor[HTML]{333399}\color{white}-0.01906 & \cellcolor[HTML]{333399}\color{white}-0.01700 & \cellcolor[HTML]{333399}\color{white}-0.00840 \\
+		net/textproto & \cellcolor[HTML]{3366FF}0.01988 & \cellcolor[HTML]{3366FF}0.01981 & \cellcolor[HTML]{333399}\color{white}0.01227 \\
+		os & \cellcolor[HTML]{99CCFF}0.16799** & \cellcolor[HTML]{99CCFF}0.16924** & \cellcolor[HTML]{99CCFF}0.16754** \\
+		os/exec & \cellcolor[HTML]{99CCFF}0.09034** & \cellcolor[HTML]{99CCFF}0.08932** & \cellcolor[HTML]{99CCFF}0.08138** \\
+		os/signal & \cellcolor[HTML]{3366FF}0.01988 & \cellcolor[HTML]{3366FF}0.01981 & \cellcolor[HTML]{333399}\color{white}0.01227 \\
+		sort & \cellcolor[HTML]{99CCFF}0.11224** & \cellcolor[HTML]{99CCFF}0.11057** & \cellcolor[HTML]{99CCFF}0.09498** \\
+		strconv & \cellcolor[HTML]{99CCFF}0.08764** & \cellcolor[HTML]{99CCFF}0.08236** & \cellcolor[HTML]{99CCFF}0.08342** \\
+		sync & \cellcolor[HTML]{FF8080}0.35690** & \cellcolor[HTML]{FF8080}0.36464** & \cellcolor[HTML]{FFCC99}0.28974** \\
+		sync/atomic & \cellcolor[HTML]{FFCC99}0.25871** & \cellcolor[HTML]{FFCC99}0.27040** & \cellcolor[HTML]{99CCFF}0.18262** \\
+		syscall & \cellcolor[HTML]{3366FF}0.06219** & \cellcolor[HTML]{3366FF}0.06013** & \cellcolor[HTML]{3366FF}0.06330** \\\bottomrule
+	\end{tabular}
+\end{table}
+
 \chapter{Discussion}
 \label{Discussion}
 In this section, I discuss the results that I obtained and how relevant these are.
@@ -766,7 +879,6 @@ What could be done with the results in this thesis in the future?
 \chapter{Conclusion}
 \label{Conclusion}
 I finally conclude with what I have done with this project: How I started, which steps I took and which results I achieved.
-
 
 
 \appendix
@@ -1091,7 +1203,7 @@ Following benchmarks had no reachable callees in the \textbf{*simple.DirectedGra
 \backmatter
 
 
-\bibliographystyle{ieeetr}
 \bibliography{literature}
+\bibliographystyle{ieeetr}
 
 \end{document}

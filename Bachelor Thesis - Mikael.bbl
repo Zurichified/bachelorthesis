@@ -1,20 +1,15 @@
 \begin{thebibliography}{10}
 
-\bibitem{costa2019}
-D.~Costa, C.-P. Bezemer, P.~Leitner, and A.~Andrzejak, ``What's wrong with my
-  benchmark results? studying bad practices in jmh benchmarks,'' {\em IEEE
-  Transactions on Software Engineering}, 06 2019.
-
 \bibitem{ironsmile/nedomi}
-``ironsmile/nedomi.'' https://github.com/ironsmile/nedomi.
+``ironsmile/nedomi.'' https://github.com/ironsmile/nedomi, 2019.
 \newblock [Online; accessed 2019-08-30].
 
 \bibitem{tidwall/buntdb}
-``tidwall/buntdb.'' https://github.com/tidwall/buntdb.
+``tidwall/buntdb.'' https://github.com/tidwall/buntdb, 2019.
 \newblock [Online; accessed 2019-08-30].
 
 \bibitem{goastviewer}
-``Goast viewer.'' https://github.com/yuroyoro/goast-viewer.
+``Goast viewer.'' https://github.com/yuroyoro/goast-viewer, 2019.
 \newblock [Online; accessed 2019-08-30].
 
 \bibitem{Woodside:2007:FSP:1253532.1254717}
@@ -28,6 +23,11 @@ T.~H.~D. Nguyen, M.~Nagappan, A.~E. Hassan, M.~Nasser, and P.~Flora, ``An
   regression-causes,'' in {\em Proceedings of the 11th Working Conference on
   Mining Software Repositories}, MSR 2014, (New York, NY, USA), pp.~232--241,
   ACM, 2014.
+
+\bibitem{costa2019}
+D.~Costa, C.-P. Bezemer, P.~Leitner, and A.~Andrzejak, ``What's wrong with my
+  benchmark results? studying bad practices in jmh benchmarks,'' {\em IEEE
+  Transactions on Software Engineering}, 06 2019.
 
 \bibitem{weyuker2000experience}
 E.~J. Weyuker and F.~I. Vokolos, ``Experience with performance testing of
@@ -44,6 +44,10 @@ C.~Laaber and P.~Leitner, ``An evaluation of open-source software
 C.~Laaber, J.~Scheuner, and P.~Leitner, ``Software microbenchmarking in the
   cloud. how bad is it really?,'' {\em Empirical Software Engineering},
   pp.~1--40, 2019.
+
+\bibitem{laaber2018performance}
+C.~Laaber, J.~Scheuner, and P.~Leitner, ``Performance testing in the cloud. how
+  bad is it really?,'' {\em PeerJ PrePrints}, vol.~6, p.~e3507v1, 2018.
 
 \bibitem{Stefan:2017:UTP:3030207.3030226}
 P.~Stefan, V.~Horky, L.~Bulej, and P.~Tuma, ``Unit testing performance in java
@@ -65,7 +69,11 @@ M.~Rodriguez-Cancio, B.~Combemale, and B.~Baudry, ``Automatic microbenchmark
 
 \bibitem{JMH}
 ``{OpenJDK}: Java microbenchmark harness.''
-  https://openjdk.java.net/projects/code-tools/jmh/.
+  https://openjdk.java.net/projects/code-tools/jmh/, 2019.
+\newblock [Online; accessed 2019-08-30].
+
+\bibitem{gobench}
+``Package testing in go.'' https://golang.org/pkg/testing/, 2019.
 \newblock [Online; accessed 2019-08-30].
 
 \bibitem{Leitner:2016:PCS:2926746.2885497}
@@ -83,42 +91,61 @@ S.~Ren, H.~Lai, W.~Tong, M.~Aminzadeh, X.~Hou, and S.~Lai, ``Nonparametric
   bootstrapping for hierarchical data,'' {\em Journal of Applied Statistics},
   vol.~37, no.~9, pp.~1487--1498, 2010.
 
-\bibitem{deckarep/golang-set}
-``deckarep/golang-set.'' https://github.com/deckarep/golang-set.
+\bibitem{hprose/hprose-golang}
+``hprose/hprose-golang.'' https://github.com/hprose/hprose-golang, 2019.
 \newblock [Online; accessed 2019-08-30].
 
 \bibitem{segmentio/objconv}
-``segmentio/objconv.'' https://github.com/segmentio/objconv.
+``segmentio/objconv.'' https://github.com/segmentio/objconv, 2019.
 \newblock [Online; accessed 2019-08-30].
 
-\bibitem{laaber2018performance}
-C.~Laaber, J.~Scheuner, and P.~Leitner, ``Performance testing in the cloud. how
-  bad is it really?,'' {\em PeerJ PrePrints}, vol.~6, p.~e3507v1, 2018.
-
 \bibitem{go}
-``Go programming language.'' https://golang.org/.
+``Go programming language.'' https://golang.org/, 2019.
 \newblock [Online; accessed 2019-08-30].
 
 \bibitem{stackoverflowdev}
 ``Stackoverflow developer survey 2019.''
-  https://insights.stackoverflow.com/survey/2019.
+  https://insights.stackoverflow.com/survey/2019, 2019.
 \newblock [Online; accessed 2019-08-30].
 
-\bibitem{gobench}
-``Package testing in go.'' https://golang.org/pkg/testing/.
-\newblock [Online; accessed 2019-08-30].
+\bibitem{chenshang}
+J.~{Chen} and W.~{Shang}, ``An exploratory study of performance regression
+  introducing code changes,'' in {\em 2017 IEEE International Conference on
+  Software Maintenance and Evolution (ICSME)}, pp.~341--352, Sep. 2017.
+
+\bibitem{Luo}
+Q.~{Luo}, D.~{Poshyvanyk}, and M.~{Grechanik}, ``Mining performance regression
+  inducing code changes in evolving software,'' in {\em 2016 IEEE/ACM 13th
+  Working Conference on Mining Software Repositories (MSR)}, pp.~25--36, May
+  2016.
+
+\bibitem{Alcocer:2015:TDP:2816707.2816718}
+J.~P.~S. Alcocer and A.~Bergel, ``Tracking down performance variation against
+  source code evolution,'' in {\em Proceedings of the 11th Symposium on Dynamic
+  Languages}, DLS 2015, (New York, NY, USA), pp.~129--139, ACM, 2015.
+
+\bibitem{Leitner:2017:ESS:3030207.3030213}
+P.~Leitner and C.-P. Bezemer, ``An exploratory study of the state of practice
+  of performance testing in java-based open source projects,'' in {\em
+  Proceedings of the 8th ACM/SPEC on International Conference on Performance
+  Engineering}, ICPE '17, (New York, NY, USA), pp.~373--384, ACM, 2017.
+
+\bibitem{Iosup}
+A.~{Iosup}, N.~{Yigitbasi}, and D.~{Epema}, ``On the performance variability of
+  production cloud services,'' in {\em 2011 11th IEEE/ACM International
+  Symposium on Cluster, Cloud and Grid Computing}, pp.~104--113, May 2011.
 
 \bibitem{patool}
-``pa-tool.'' https://bitbucket.org/sealuzh/pa/src/master/.
+``pa-tool.'' https://bitbucket.org/sealuzh/pa/src/master/, 2019.
 \newblock [Online; accessed 2019-08-30].
 
 \bibitem{pythonsta}
 ``statistics — mathematical statistics functions.''
-  https://docs.python.org/3/library/statistics.html.
+  https://docs.python.org/3/library/statistics.html, 2019.
 \newblock [Online; accessed 2019-08-30].
 
 \bibitem{gopackages}
-``Packages.'' https://golang.org/pkg/.
+``Packages.'' https://golang.org/pkg/, 2019.
 \newblock [Online; accessed 2019-08-30].
 
 \bibitem{shepperd1988critique}
@@ -127,63 +154,63 @@ M.~Shepperd, ``A critique of cyclomatic complexity as a software metric,'' {\em
 
 \bibitem{packagemanagement}
 ``Package management tools.''
-  https://github.com/golang/go/wiki/PackageManagementTools.
+  https://github.com/golang/go/wiki/PackageManagementTools, 2019.
 \newblock [Online; accessed 2019-08-30].
 
 \bibitem{callgraphtool}
-``Callgraph tool.'' golang.org/x/tools/cmd/callgraph.
+``Callgraph tool.'' golang.org/x/tools/cmd/callgraph, 2019.
 \newblock [Online; accessed 2019-08-30].
 
 \bibitem{sealuzh/goabs}
-``sealuzh/goabs.'' https://github.com/sealuzh/GoABS.
+``sealuzh/goabs.'' https://github.com/sealuzh/GoABS, 2019.
 \newblock [Online; accessed 2019-08-30].
 
 \bibitem{atourofgo}
-``A tour of go.'' https://tour.golang.org/list.
+``A tour of go.'' https://tour.golang.org/list, 2019.
 \newblock [Online; accessed 2019-08-30].
 
 \bibitem{gocyclo}
-``fzipp/goycylo.'' https://github.com/fzipp/gocyclo.
+``fzipp/goycylo.'' https://github.com/fzipp/gocyclo, 2019.
 \newblock [Online; accessed 2019-08-30].
 
 \bibitem{packages}
-``Package packages.'' https://godoc.org/golang.org/x/tools/go/packages.
+``Package packages.'' https://godoc.org/golang.org/x/tools/go/packages, 2019.
 \newblock [Online; accessed 2019-08-30].
 
 \bibitem{gonum/gonum}
-``gonum/gonum.'' https://github.com/gonum/gonum.
+``gonum/gonum.'' https://github.com/gonum/gonum, 2019.
 \newblock [Online; accessed 2019-08-30].
 
 \bibitem{mesos/mesos-go}
-``mesos/mesos-go.'' https://github.com/mesos/mesos-go.
+``mesos/mesos-go.'' https://github.com/mesos/mesos-go, 2019.
 \newblock [Online; accessed 2019-08-30].
 
 \bibitem{go-gl/mathgl}
-``go-gl/mathgl.'' https://github.com/go-gl/mathgl.
+``go-gl/mathgl.'' https://github.com/go-gl/mathgl, 2019.
 \newblock [Online; accessed 2019-08-30].
 
 \bibitem{nsqio/nsq}
-``nsqio/nsq.'' https://github.com/nsqio/nsq.
+``nsqio/nsq.'' https://github.com/nsqio/nsq, 2019.
 \newblock [Online; accessed 2019-08-30].
 
 \bibitem{uber/tchannel-go}
-``uber/tchannel-go.'' https://github.com/uber/tchannel-go.
+``uber/tchannel-go.'' https://github.com/uber/tchannel-go, 2019.
 \newblock [Online; accessed 2019-08-30].
 
 \bibitem{Matplotlib}
-``Matplotlib.'' https://matplotlib.org/.
+``Matplotlib.'' https://matplotlib.org/, 2019.
 \newblock [Online; accessed 2019-08-30].
 
 \bibitem{qjpcu/sesh}
-``qjpcu/sesh.'' https://github.com/qjpcu/sesh.
+``qjpcu/sesh.'' https://github.com/qjpcu/sesh, 2019.
 \newblock [Online; accessed 2019-08-30].
 
 \bibitem{stratumn/sdk}
-``stratumn/sdk.'' https://github.com/stratumn/sdk-js.
+``stratumn/sdk.'' https://github.com/stratumn/sdk-js, 2019.
 \newblock [Online; accessed 2019-08-30].
 
 \bibitem{eaburns/T_old}
-``eaburns/t\_old.'' https://github.com/eaburns/T\_old.
+``eaburns/t\_old.'' https://github.com/eaburns/T\_old, 2019.
 \newblock [Online; accessed 2019-08-30].
 
 \end{thebibliography}

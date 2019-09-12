@@ -1,19 +1,18 @@
 \babel@toc {english}{}
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {2.1}{\ignorespaces Execution of a microbenchmark in JMH, taken from \cite {costa2019}.\relax }}{4}% 
-\contentsline {figure}{\numberline {2.2}{\ignorespaces Example for a low and high variance microbenchmark.\relax }}{5}% 
+\contentsline {figure}{\numberline {2.1}{\ignorespaces Example for a low and high variance microbenchmark.\relax }}{7}% 
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {3.1}{\ignorespaces 3 main steps of the methodology.\relax }}{9}% 
-\contentsline {figure}{\numberline {3.2}{\ignorespaces Example results file from \cite {ironsmile/nedomi}.\relax }}{10}% 
-\contentsline {figure}{\numberline {3.3}{\ignorespaces First lines from the final.csv file involving variability values for \cite {ironsmile/nedomi}.\relax }}{12}% 
-\contentsline {figure}{\numberline {3.4}{\ignorespaces Process of downloading projects from Github.\relax }}{15}% 
-\contentsline {figure}{\numberline {3.5}{\ignorespaces Process of fetching dependencies for each project.\relax }}{16}% 
-\contentsline {figure}{\numberline {3.6}{\ignorespaces Workwise of Prophunt iterating through downloaded projects.\relax }}{21}% 
-\contentsline {figure}{\numberline {3.7}{\ignorespaces Workwise of Callgraph Analyzer iteration through all parser projects.\relax }}{23}% 
+\contentsline {figure}{\numberline {3.1}{\ignorespaces 3 main steps of the methodology.\relax }}{13}% 
+\contentsline {figure}{\numberline {3.2}{\ignorespaces Example results file from \cite {ironsmile/nedomi}.\relax }}{15}% 
+\contentsline {figure}{\numberline {3.3}{\ignorespaces First lines from the benchmark\_variabilities.csv file involving variability values for \cite {ironsmile/nedomi}.\relax }}{17}% 
+\contentsline {figure}{\numberline {3.4}{\ignorespaces Process of downloading projects from Github.\relax }}{20}% 
+\contentsline {figure}{\numberline {3.5}{\ignorespaces Process of fetching dependencies for each project.\relax }}{21}% 
+\contentsline {figure}{\numberline {3.6}{\ignorespaces Workwise of Prophunt iterating through downloaded projects.\relax }}{27}% 
+\contentsline {figure}{\numberline {3.7}{\ignorespaces Workwise of Callgraph Analyzer iteration through all parser projects.\relax }}{29}% 
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {4.1}{\ignorespaces Distribution of benchmarks' variabilities 0-100 in 10\% buckets.\relax }}{28}% 
-\contentsline {figure}{\numberline {4.2}{\ignorespaces Distribution of benchmarks' variabilities 0-10 in 1\% buckets.\relax }}{28}% 
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Distribution of benchmarks' variabilities 0-100 in 10\% buckets.\relax }}{34}% 
+\contentsline {figure}{\numberline {4.2}{\ignorespaces Distribution of benchmarks' variabilities 0-10 in 1\% buckets.\relax }}{34}% 
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }

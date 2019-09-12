@@ -1,43 +1,42 @@
 \babel@toc {english}{}
 \contentsline {chapter}{\numberline {1}Introduction}{1}% 
-\contentsline {chapter}{\numberline {2}Background and Related Work}{3}% 
-\contentsline {section}{\numberline {2.1}Background}{3}% 
-\contentsline {subsection}{\numberline {2.1.1}Software microbenchmarks}{3}% 
-\contentsline {subsection}{\numberline {2.1.2}Microbenchmark variability}{4}% 
-\contentsline {subsection}{\numberline {2.1.3}Go}{7}% 
-\contentsline {section}{\numberline {2.2}Related Work}{8}% 
-\contentsline {chapter}{\numberline {3}Methodology}{9}% 
-\contentsline {section}{\numberline {3.1}Calculating variabilities}{10}% 
-\contentsline {subsection}{\numberline {3.1.1}Dataset}{10}% 
-\contentsline {subsection}{\numberline {3.1.2}Metrics as the variability indicators}{11}% 
-\contentsline {subsection}{\numberline {3.1.3}Python coding}{12}% 
-\contentsline {section}{\numberline {3.2}Extracting source code properties}{12}% 
-\contentsline {subsection}{\numberline {3.2.1}Decision on source code properties}{13}% 
-\contentsline {subsection}{\numberline {3.2.2}Downloading projects}{15}% 
-\contentsline {subsection}{\numberline {3.2.3}Golang coding}{15}% 
-\contentsline {subsection}{\numberline {3.2.4}Prophunt}{16}% 
-\contentsline {paragraph}{Parsing}{17}% 
-\contentsline {paragraph}{Package packages}{19}% 
-\contentsline {subsection}{\numberline {3.2.5}Callgraph Analyzer}{22}% 
-\contentsline {paragraph}{callgraph CLI tool}{22}% 
-\contentsline {section}{\numberline {3.3}Finding correlations}{24}% 
-\contentsline {subsection}{\numberline {3.3.1}First analysis - Second analysis}{24}% 
-\contentsline {subsection}{\numberline {3.3.2}Regression model}{24}% 
-\contentsline {section}{\numberline {3.4}Threats to the validity}{25}% 
-\contentsline {subsection}{\numberline {3.4.1}Number of projects}{25}% 
-\contentsline {subsection}{\numberline {3.4.2}Chosen properties}{25}% 
-\contentsline {subsection}{\numberline {3.4.3}Analysis of the unknown}{25}% 
-\contentsline {chapter}{\numberline {4}Results}{27}% 
-\contentsline {section}{\numberline {4.1}Variabilities of benchmarks}{27}% 
-\contentsline {subsection}{\numberline {4.1.1}Variabilities in benchmark level}{27}% 
-\contentsline {subsection}{\numberline {4.1.2}Variabilities in project level}{29}% 
-\contentsline {section}{\numberline {4.2}Source code properties}{30}% 
-\contentsline {section}{\numberline {4.3}Correlation between variabilities and source code properties}{31}% 
-\contentsline {chapter}{\numberline {5}Discussion}{33}% 
-\contentsline {section}{\numberline {5.1}Chosen properties}{33}% 
-\contentsline {section}{\numberline {5.2}Static analysis}{33}% 
-\contentsline {section}{\numberline {5.3}Size of data set}{33}% 
-\contentsline {section}{\numberline {5.4}Future Work}{33}% 
-\contentsline {chapter}{\numberline {6}Conclusion}{35}% 
-\contentsline {chapter}{\numberline {A}First Append}{37}% 
-\contentsline {section}{\numberline {A.1}Not matching benchmarks}{37}% 
+\contentsline {chapter}{\numberline {2}Background and Related Work}{5}% 
+\contentsline {section}{\numberline {2.1}Background}{5}% 
+\contentsline {subsection}{\numberline {2.1.1}Software microbenchmarks}{5}% 
+\contentsline {subsection}{\numberline {2.1.2}Microbenchmark variability}{6}% 
+\contentsline {subsection}{\numberline {2.1.3}Go}{9}% 
+\contentsline {section}{\numberline {2.2}Related Work}{10}% 
+\contentsline {chapter}{\numberline {3}Methodology}{13}% 
+\contentsline {section}{\numberline {3.1}Analyzing variabilities}{14}% 
+\contentsline {subsection}{\numberline {3.1.1}Dataset}{14}% 
+\contentsline {subsection}{\numberline {3.1.2}Metrics as the variability indicators}{14}% 
+\contentsline {subsection}{\numberline {3.1.3}Benchmark Variabilities}{16}% 
+\contentsline {section}{\numberline {3.2}Extracting source code features}{17}% 
+\contentsline {subsection}{\numberline {3.2.1}Decision on source code properties}{17}% 
+\contentsline {subsection}{\numberline {3.2.2}Downloading projects}{20}% 
+\contentsline {subsection}{\numberline {3.2.3}Prophunt}{21}% 
+\contentsline {paragraph}{Parsing}{22}% 
+\contentsline {paragraph}{Package packages}{25}% 
+\contentsline {subsection}{\numberline {3.2.4}Callgraph Analyzer}{28}% 
+\contentsline {paragraph}{callgraph CLI tool}{28}% 
+\contentsline {section}{\numberline {3.3}Finding correlations}{30}% 
+\contentsline {subsection}{\numberline {3.3.1}First analysis - Second analysis}{30}% 
+\contentsline {subsection}{\numberline {3.3.2}Regression model}{30}% 
+\contentsline {section}{\numberline {3.4}Threats to the validity}{31}% 
+\contentsline {subsection}{\numberline {3.4.1}Number of projects}{31}% 
+\contentsline {subsection}{\numberline {3.4.2}Chosen properties}{31}% 
+\contentsline {subsection}{\numberline {3.4.3}Analysis of the unknown}{31}% 
+\contentsline {chapter}{\numberline {4}Results}{33}% 
+\contentsline {section}{\numberline {4.1}Variabilities of benchmarks}{33}% 
+\contentsline {subsection}{\numberline {4.1.1}Variabilities in benchmark level}{33}% 
+\contentsline {subsection}{\numberline {4.1.2}Variabilities in project level}{35}% 
+\contentsline {section}{\numberline {4.2}Source code properties}{36}% 
+\contentsline {section}{\numberline {4.3}Correlation between variabilities and source code properties}{37}% 
+\contentsline {chapter}{\numberline {5}Discussion}{39}% 
+\contentsline {section}{\numberline {5.1}Chosen properties}{39}% 
+\contentsline {section}{\numberline {5.2}Static analysis}{39}% 
+\contentsline {section}{\numberline {5.3}Size of data set}{39}% 
+\contentsline {section}{\numberline {5.4}Future Work}{39}% 
+\contentsline {chapter}{\numberline {6}Conclusion}{41}% 
+\contentsline {chapter}{\numberline {A}First Append}{43}% 
+\contentsline {section}{\numberline {A.1}Not matching benchmarks}{43}% 
