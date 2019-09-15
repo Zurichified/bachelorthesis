@@ -10,8 +10,6 @@
 \usepackage{longtable}
 \usepackage[inline]{enumitem}
 \usepackage{booktabs}
-\setlength\LTleft{0pt}
-\setlength\LTright{0pt}
 
 
 
@@ -83,7 +81,7 @@ To this end, I answer the following research questions:
 	\item \textbf{RQ2: Which source code properties contribute to the stability of benchmark results and how?}
 \end{itemize}
 
-\noindent My hypothesis for the second research question is: I expect to see significant effects of body related features and Go's standard library usages to the variation of benchmark results. In particular, I suppose that cyclomatic complexity, file IO, http calls and loops have a significant impact on the variability. For the second research question, I download all the projects from Github. Then I run my parser program which collects the source code properties from all the functions and make a callgraph analysis for the benchmarks to collect all the visited functions' properties, resulting into properties of the benchmark. Finally, I use Spearman's rank correlation to find out about the correlation between extracted source code properties and the stability of a benchmark.\\
+\noindent My hypothesis for the second research question is: I expect to see significant effects of body related features and Go's standard library usages to the stability of benchmark results. In particular, I suppose that cyclomatic complexity, file IO, http calls and loops have a significant impact on the variability. For the second research question, I download all the projects from Github. Then I run my parser program Prophunt which collects the source code properties from all the functions and make a callgraph analysis for the benchmarks to collect all the visited functions' properties, resulting into properties of the benchmark. Finally, I use Spearman's rank-order correlation to find out about the correlation between extracted source code properties and the stability of a benchmark.\\
 \\
 Rest of this thesis is structured as follows: I give an introduction to related topics and background about this thesis in the \ref{Background and Related Work}. Chapter. In the \ref{Methodology}. Chapter, I explain the three steps I take to do the analytic part of this thesis and elaborate on the threads to the validity of the methodology. I present the results of these steps in the \ref{Results}. Chapter. Next comes the \ref{Discussion}. Chapter where I discuss about the methodology and the results of this thesis and present some ideas for the future work. I conclude with the \ref{Conclusion}. Chapter.
 
@@ -255,7 +253,7 @@ The dataset to analyze the variations from was given me from my supervisor Chris
 \\
 Results file of a projects looks like in Figure \ref{fig:exampleresults}. In this file, the middle part in the first column specifies the number of run, the second column specifies the benchmark including the relative path and file where the benchmark is located in, the forth column reports the execution time in nanoseconds, the fifth and sixth column are related to memory performance, bytes/operation and allocations/operation respectively.
  
-\begin{figure}[]
+\begin{figure}[H]
 	\centering
 	\includegraphics[width=\linewidth]{exampleresults}
 	\caption{Example results file from \cite{ironsmile/nedomi}.}
@@ -269,6 +267,7 @@ As described in Section \ref{Microbenchmark variability}, I orient myself at 3 m
 where $\sigma _{M}$ is the standard deviation and $\mu _{M}$ is the mean of the collection.\\
 \\
 For the RCIW part, I use a tool by Christoph Laaber, called "pa-tool" \cite{patool}. This tool works in the following way: For a given benchmark with all its execution times, it randomly samples a subset of the execution times and saves the mean of this new subset. This process is repeated for a considerable amount of time, e.g., 10000 times (number of bootstrap simulations), and returns the normally distributed set of mean execution times. This is because the distribution of the bootstrap means is normal due to the central limit theorem. Having the normal distribution is a requirement to take the confidence interval of the set. The tool finally gives a confidence interval of the new collection of means with a default significance level of 0.05. Listing \ref{lst:patool} illustrates an example output of pa-tool, showing the confidence interval of each benchmark in project ironsmile/nedomi after bootstrapping 10000 times with the 0.01 significance level \cite{ironsmile/nedomi}.
+\begin{minipage}{\linewidth}
 
 \begin{lstlisting}[caption=Example pa-tool results of \cite{ironsmile/nedomi}., label={lst:patool}, frame=single, breaklines=true, basicstyle=\small]
 C:\Users\Mikael\pa>pa -bs 10000 -sig 0.01
@@ -304,6 +303,7 @@ C:\Users\Mikael\pa>pa -bs 10000 -sig 0.01
 #Total execution took 1.1923061s
 	
 \end{lstlisting}
+\end{minipage}
 
 
 \subsection{Benchmark Variabilities}
@@ -326,7 +326,7 @@ Within the end of calculating CV, RCIW95 and RCIW99 of each benchmark, I write a
 
 \section{Extracting source code features}
 
-This is the second part of the study, which involves extracting the source code properties of benchmarks, for which I calculated the variabilities in Section \ref{Analyzing variabilities}. This part consists of a downloading projects from Github, extracting information about all kinds of functions (normal, test and benchmarks) in these projects and finally creating CSV files for each project, having the benchmarks and their properties, which can visually be seen in the second box of Figure \ref{fig:Methodology}. Results of this part are to be found in Section \ref{Source code properties}.
+This is the second part of the study, which involves extracting the source code properties of benchmarks, for which I calculated the variabilities in Section \ref{Analyzing variabilities}. This part consists of a downloading projects from Github, extracting information about all kinds of functions (normal, test and benchmarks) in these projects and finally creating CSV files for each project, having the benchmarks and their properties, which can visually be seen in the second box of Figure \ref{fig:Methodology}. Results of this part are to be found in Section \ref{Extracted source code features}.
 
 \subsection{Decision on source code properties}
 
@@ -384,6 +384,7 @@ For the extraction of these properties, I use the methodology of parsing the Abs
 			& returns & Return values of the function. \\
 			& loc & Lines of code of the function. \\
 			\midrule
+			\pagebreak
 			\multirow{21}{*}{Body of the function} & funccalls & Function calls within the function. \\
 			& loops & For and while loops within the function. \\
 			& nestedloops & Nested for/while loops within the function. \\
@@ -500,6 +501,7 @@ I firstly start my parsing processes by importing Go's \textbf{parser} library, 
 
 \noindent Since I am interested in the function declarations in the file, I investigate the \textbf{Decls} slice and search for the function declarations in this slice. A function declaration is defined as \textbf{*ast.FuncDecl} within this library, and has attributes such as \textbf{Doc}, \textbf{Recv}, \textbf{Name}, \textbf{Type} and \textbf{Body}, as in Listing \ref{funcdecl}. From the \textbf{Type} attribute, one can read information about parameters and return values of the function. From the \textbf{Recv} attribute, the receiver of the method can be read. Rest of the properties that I look for are located in the \textbf{Body} of the function.
 
+
 \begin{lstlisting}[caption=*ast.FuncDecl declaration in Go., label={funcdecl}, language=Go, frame=single]
 FuncDecl struct {
 	Doc  *CommentGroup // associated documentation; or nil
@@ -513,7 +515,8 @@ FuncDecl struct {
 
 \noindent Signature properties are trivially extracted from the \textbf{*ast.FuncDecl}, however, for all the body, standard library usage and other type of properties, one needs to know what to look for inside the \textbf{Body} of the \textbf{*ast.FuncDecl}. To this end, I firstly look for Go's "A Tour of Go" documentation \cite{atourofgo} and find code examples about properties of the language. While one can use these code examples in the programming environment, I aim for a GUI approach to better understand how to look for properties in the bodies of functions. Fortunately, I come across a web application from yuroyoro \cite{goastviewer}, which offers a GUI to visualize a Go AST, given Go source code. Listing \ref{yuroyoro} shows an example output from the AST Viewer of a main function with a "Hello Golang" print on the stdout.
 
-\begin{lstlisting}[caption=Sample output from yuroyoro's Ast Viewer \cite{goastviewer}., label={yuroyoro}, language=Go, frame=single]
+\begin{minipage}{\linewidth}
+\begin{lstlisting}[caption=Sample output from yuroyoro's Ast Viewer \cite{goastviewer}., label={yuroyoro}, language=Go, frame=single, ]
 	23  .  .  1: *ast.FuncDecl {
 	24  .  .  .  Name: *ast.Ident {
 	25  .  .  .  .  NamePos: 7:6
@@ -563,7 +566,7 @@ FuncDecl struct {
 	69  .  .  .  }
 	70  .  .  }
 \end{lstlisting}
-
+\end{minipage}
 
 \noindent Generally, the properties to collect are reachable from the \textbf{Body} by querying for the correct parser instance. Table \ref{table:propsast} presents how I extract these properties or which data structure I aim for when visiting the nodes in a function declaration. For the cyclomatic complexity, I adapt the calculation to an existing calculation approach by fzipp/gocyclo \cite{gocyclo}. 
 
@@ -646,67 +649,132 @@ Next step in order to have a sound directed graph of a project is to find a data
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=\linewidth]{callgraph}
-	\caption{Workwise of Callgraph Analyzer iteration through all parser projects.}
+	\caption{Workwise of Callgraph Analyzer iteration through all parsed projects.}
 	\label{fig:callgraph}
 \end{figure}
  
 \noindent Figure \ref{fig:callgraph} shows how Callgraph Analyzer works. Similar to Prophunt, Callgraph Analyzer takes the full path of the project to be analyzed from Prophunt\_Output's index.csv. A single loop execution consists of 2 phases. In the first phase, the callgraph tool is called for each of the projects folder because of 2 reasons: (1) a project might not have a main in the root folder, hence, the callgraph fails to create the edges and (2) there might exist more than 1 main in the whole project structure and they may have different scopes for the functions across the project. After each call of the CLI tool, the output is read and the nodes and their edges are collected. These are directly fed to the \textbf{*simple.DirectedGraph} instance of the project. Due to the precautions in the implementation of \textbf{*simple.DirectedGraph}, a node cannot be added to the graph twice, hence, I eliminate edges that occured in a previous output from the process and only feed the nodes if they were not in the graph before. A full walk through the project path results as a full callgraph of a project.\\
 \\
-In the second phase of the same loop execution, according CSV file for the project is read from Prophunt\_Output folder and its benchmarks are filtered. Having all benchmarks on one place, a lookup for all direct callees of one benchmark node can be made by using \textit{simple.From()} method, when the node of the benchmark is given as a parameter. Since I am interested in not only the direct callees but also all reachable nodes from a benchmark node, I implement a recursive algorithm which calls \textit{simple.From()} method for all the nodes that can be visited from the initial benchmark node. This ensures collecting all the reachable nodes in the callgraph, and as a next step I search for the callees in the according projectX.csv file. If reachable nodes are present in the .csv file of the project, I collect their .csv entries to later sum up all the property values, resulting into the benchmark's cumulitative properties. Note that namelength and parameters are not summed up, as their cumulitative value is not useful for the correlation analysis. Using this methodology, there is 3 possible outcomes for every benchmark analzed by Prophunt: (1) the benchmark cannot be found in the callgraph, resulting into a nil node in the programming environment. In this case, I skip this benchmark and do not record it in the output; (2) the benchmark is found in the callgraph, however, there is no reachable node from this benchmark, either because there was a compilation error in the callgraph CLI tool, or the callees of the benchmark were not reachable from main of the project; (3) the benchmark is found in the callgraph and there is at least 1 reachable node from the benchmark in the callgraph. For the completeness of the results, I anticipate that there are not many occurences of the first and second outcomes, nevertheless, the numbers are reported in the \ref{Source code properties} Section. Finally, Callgraph Analyzer gives an output folder called Callgraph\_Output with a CSV for each project containing only the benchmarks with their cumulitative property values, as well as an index.csv file which is used later at the correlation analysis.
+In the second phase of the same loop execution, according CSV file for the project is read from Prophunt\_Output folder and its benchmarks are filtered. Having all benchmarks on one place, a lookup for all direct callees of one benchmark node can be made by using \textit{simple.From()} method, when the node of the benchmark is given as a parameter. Since I am interested in not only the direct callees but also all reachable nodes from a benchmark node, I implement a recursive algorithm which calls \textit{simple.From()} method for all the nodes that can be visited from the initial benchmark node. This ensures collecting all the reachable nodes in the callgraph, and as a next step I search for the callees in the according projectX.csv file. If reachable nodes are present in the .csv file of the project, I collect their .csv entries to later sum up all the property values, resulting into the benchmark's cumulitative properties. Note that namelength and parameters are not summed up, as their cumulitative value is not useful for the correlation analysis. Using this methodology, there is 3 possible outcomes for every benchmark analzed by Prophunt: (1) the benchmark cannot be found in the callgraph, resulting into a nil node in the programming environment. In this case, I skip this benchmark and do not record it in the output; (2) the benchmark is found in the callgraph, however, there is no reachable node from this benchmark, either because there was a compilation error in the callgraph CLI tool, or the callees of the benchmark were not reachable from main of the project; (3) the benchmark is found in the callgraph and there is at least 1 reachable node from the benchmark in the callgraph. For the completeness of the results, I anticipate that there are not many occurences of the first and second outcomes, nevertheless, the numbers are reported in the \ref{Extracted source code features} Section. Finally, Callgraph Analyzer gives an output folder called Callgraph\_Output with a CSV for each project containing only the benchmarks with their cumulitative property values, as well as an index.csv file which is used later at the correlation analysis.
 
 \section{Finding correlations}
-Third and last part of the study was to find correlations between source code properties of benchmarks and their variability. In this last part, I used a regression model on some chosen benchmarks to find correlations. Results of this part are to be found in the third part of Results section.
-\subsection{First analysis - Second analysis}
-- Which dependent and independent variables do I have for the comparison?
-\subsection{Regression model}
-- Which regression model I used for the results, how did I get the correlations results?
 
-\section{Threats to the validity}
-There are threats to the validity of this study.
-\subsection{Number of projects}
-There are probably thousands of projects written with Go. These can be with or without benchmarks, however, I was limited to a number of projects for the outcome of this study and the number might not reflect the truth.
+Third and last part of the study is to find correlations between source code features of benchmarks and their variability, which is shown in the 3rd box of Figure \ref{fig:Methodology}. In this last part, I use Spearman's rank-order correlation on  the two variables I acquired in the 2 previous sections (variability values and benchmark properties). Results of this part are to be found in Section \ref{Correlation results}.
 
-\subsection{Chosen properties}
-I presented my chosen properties for this analysis, however, are these enough for this study? There may be other metrics that might be very relevant to this study, which I haven't discovered whilst searching.
+\subsection{Correlation analysis}
+\label{Correlation analysis}
+For the analysis, I have 2 outputs from the previous sections, namely the variability values of each benchmark in Benchmark\_Variabilities.csv file and properties of these benchmarks in Callgraph\_Output folder. Before I start with the analysis, I bring the property values of each project into one CSV file which I name Benchmark\_Properties.csv to be able to match the benchmarks in Benchmark\_Variabilities.csv file easily. Next, I load these CSV files in Python environment using Pandas library \cite{Pandas} and merge the files using a SQL style left join to match benchmarks.\\
+\\
+For the calculation of Spearman's rank-order correlation coefficient, I use the implementation from SciPy library \cite{ScipySpearmanr}. \textit{Spearmanr} method of this library takes as parameters two series of variables and returns the coefficient value and the p-value representing the significance of the correlation value. Spearman's rank-order correlation depicts monotonic relations, which means it looks for the behaviour of change in one variable while observing the change on other variable. In this manner, the value of coefficient lies between -1 and 1, where -1 means a perfect negative correlation and 1 a perfect positive correlation. The p-value for the coefficient is interpreted as follows: If the value is between 0.1-0.05, the significance of the coefficient is weak, if it is between 0.05 and 0.01, the significance is strong, and if it is below 0.01, the significance is very strong. \\
+\\
+From the merged pandas dataframe I create a property series for all of the 59 different property types and use these as the first variable in the \textit{Spearmanr} parameters. For the second variable, I create CV, RCIW95 and RCIW99 series. Finally, I let SciPY's \textit{Spearmanr} method calculate the coefficients and p-values for all property types and variability values. For instance, \textit{Spearmanr} of \textbf{pkgfiles} and RCIW99 returns 0.28000358145089915 as coefficient value and 8.003648264207533e-79 as p-value, meaning that pkgfiles is somewhat correlated with the variability of the benchmark and this correlation is very significant. Detailed analysis follows in Section \ref{Correlation results}.
 
-\subsection{Analysis of the unknown}
-Since the analysis is made statically for the second part of the methodology, this can be a threat to the validity since we don't actually know which nodes in the cyclomatic complexity are visited.
+
+\section{Threats to validity}
+
+The validity of this study depends on the correctness and completeness of multiple aspects and these are discussed in this section.
+
+\paragraph{Number of projects}
+For the correlation analysis, I use a dataset given by my supervisor, which has in total entries for 481 OSS projects, from which only 230 are effectively used in this study because they have valid benchmark results. From these 230 valid projects, 223 qualify to the final correlation analysis, resulting into an analysis done on 4330 individual benchmarks. Although there is not a minimal variable set size requirement for a correlation analysis done with Spearman's rank-order correlation, 223 projects or 4330 benchmarks might not be a sufficient number to reliably accept the correlation results. 
+
+\paragraph{Type of projects}
+Another aspect is, that all the projects used in this study are open source software, meaning that the results of this study can not be generalized for all kinds of software projects existing in the world. Also, the project pool has projects from different directions(libraries, databases, utilities etc.), which means that the results are not applicable for a specific kind of software project. Regarding the microbenchmarks, this study only takes benchmarks written in Go into consideration and shows the correlation of their features with their stability, which means that the results of this study cannot be generalized for all the benchmarks written in different programming languages.
+
+\paragraph{Chosen properties}
+To find correlations between benchmark stability and different benchmark properties, the properties are chosen by means of observations, assumptions and hypotheses. This on one hand means that the properties are not chosen with a standard procedure, which means there is a big chance that work of other researchers won't easily match with this work. On the other hand, it indicates that there may be potential source code properties left out, which might have a strong correlation with the stability of benchmarks.\\
+\\
+It should also be stated that this work is only based on the properties that come up in the programming language Go and on properties that can be extracted from count of the usage of Go standard libraries, which means that third party libraries are not particularly observed for the properties. This poses a threat to the validity of correlations between hardware-network related aspects and stability of a benchmark because if a project strongly relies on a third party library to implement its I/O or networking capabilites, this is not tracked by Prophunt. Since Go has strict rules and has simplicity as part of its core values, my assumption is that there are not many projects among the 230 projects which rely on third parties for such capabilities.
+
+\paragraph{Static Analysis}
+The extraction of source code properties of benchmarks is implemented by an AST traversal of the .go files where the benchmarks are located. This means that the extraction is purely static and there is no evidence whether the nodes that come up in the AST are visited in the runtime of the benchmarks in reality. This poses a threat to the validity in the way that the extracted properties of a benchmark are not as accurate as when they would be extracted by doing a dynamic analysis and tracking the execution traces of benchmarks. 
 
 
 \chapter{Results}
 \label{Results}
-In this section, I present the results from the 3 parts of this study. First results correspond to the variability of benchmarks and in Section \ref{Variabilities of benchmarks} I present some statistics regarding the distribution of benchmarks' variabilities. Second results report about the outcome of parsing and callgraph analysis in Section \ref{Source code properties}. [will be continued]
+In this section, I present the results from the 3 parts of this study. First results correspond to the variability of benchmarks and in Section \ref{Variabilities of benchmarks}, I present statistical information regarding the distribution of benchmarks' variabilities. From the given dataset of 4802 total benchmarks, 4589 valid benchmarks in total qualify to final correlation analysis. Second results are about the outcome of Prophunt and Callgraph Analyzer and are presented in Section \ref{Extracted source code features}. From successfully downloaded 223 projects, Prophunt parses 4926 benchmarks and their properties, of which 4500 are matched with the ones from variability analysis. As a next step, Callgraph Analyzer takes Prophunt\_Output as input and returns 4837 benchmarks with cumulitative source code properties, meaning that 89 benchmarks from Prophunt\_Output had a nil node in Callgraph Analysis and were therefore not included. Also, matching the output of Prophunt and Callgraph Analyzer shows that there are 121 benchmarks which did not have cumulitative property values, which are therefore also removed. Finally, last results are presented in Section \ref{Correlation results}, which are based on 4330 matched benchmarks which are found both in the results of variability and callgraph analysis.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\linewidth]{ResultsGeneral}
+	\caption{General view of processing results.}
+	\label{fig:results}
+\end{figure}
 
 \section{Variabilities of benchmarks}
 \label{Variabilities of benchmarks}
 
-In Section \ref{Calculating variabilities}, I show which steps I go through to get variabilities of benchmarks, and in Section \ref{Python coding} I show the structure of \textbf{final.csv}, which lists all the benchmarks from 230 projects. In total, there are 4802 benchmarks resulting from 230 projects. A quick investigation of this data shows that there are 204 benchmarks with only 1 execution, i.e. having only the average execution time of 1 benchmark iteration. Under these benchmarks lay all the benchmarks of \textbf{mesos/mesos-go} \cite{mesos/mesos-go} and \textbf{go-gl/mathgl} \cite{go-gl/mathgl}, as well as benchmarks \textit{BenchmarkProtocolV2Sub128k} and \textit{BenchmarkCallsConcurrentServer} of projects \textbf{nsqio/nsq} \cite{nsqio/nsq} and \textbf{uber/tchannel-go} \cite{uber/tchannel-go}, respectively. Furthermore, there are in total 9 benchmarks, which, although having more than 1 executions, have a mean of 0, which in further investigation shows that all their execution times are 0 ns. Since having only 1 execution of a benchmark and having 0 ns as a mean execution time lead to not being able to calculate the standard derivation and RCIW values, I drop these benchmarks out of the \textbf{final.csv} file, having left with 4589 benchmarks in total.\\
-\\
-For a general view of data, I create a histograms of benchmarks using Matplotlib library \cite{Matplotlib}, which is a library for Python used often for visualizing data. For looking at the results in project basis, I create tables for projects and report how many of projects fall into which bucket in terms of distribution of variabilities.
+In Section \ref{Analyzing variabilities}, I show which steps I go through to get variabilities of benchmarks, and in Section \ref{Benchmark Variabilities} I show the structure of \textbf{Benchmark\_Variabilities.csv}, which lists all the benchmarks from 230 projects. In total, there are 4802 benchmarks resulting from 230 projects. A quick investigation of this data shows that there are 204 benchmarks with only 1 execution, i.e. having only the average execution time of 1 benchmark iteration. Under these benchmarks are all the benchmarks of \textbf{mesos/mesos-go} \cite{mesos/mesos-go} and \textbf{go-gl/mathgl} \cite{go-gl/mathgl}, as well as benchmarks \textit{BenchmarkProtocolV2Sub128k} and \textit{BenchmarkCallsConcurrentServer} of projects \textbf{nsqio/nsq} \cite{nsqio/nsq} and \textbf{uber/tchannel-go} \cite{uber/tchannel-go}, respectively. Furthermore, there are in total 9 benchmarks, which, although having more than 1 execution, have a mean of 0, which in further investigation shows that all their execution times are 0 ns. Since having only 1 execution of a benchmark and having 0 ns as a mean execution time lead to not being able to calculate the standard derivation and RCIW values, I drop these benchmarks out of the \textbf{Benchmark\_Variabilities.csv} file, having left with 4589 benchmarks in total. The count of removed benchmarks and their belonging projects can be seen in Table \ref{removal1}.
 
-\subsection{Variabilities in benchmark level}
+\begin{table}[H]
+\begin{longtable}[c]{@{}lcr@{}}
+	\caption{Removal of invalid benchmarks from Benchmark\_Variabilities.csv.}
+	\label{removal1}\\
+	\toprule
+	Project Name & Benchmark Count & Reason of Removal \\* \midrule
+	\endfirsthead
+	%
+	\endhead
+	%
+	\bottomrule
+	\endfoot
+	%
+	\endlastfoot
+	%
+	mesos/mesos-go & 178 & Benchmarks have only 1 iteration. \\
+	go-gl/mathgl & 24 & Benchmarks have only 1 iteration. \\
+	nsqio/nsq & 1 & Benchmark has only 1 iteration. \\
+	uber/tchannel-go & 1 & Benchmark has only 1 iteration. \\
+	prometheus/common & 1 & All counters are 0 ns. \\
+	codegangsta/martini-contrib & 2 & All counters are 0 ns. \\
+	DNAProject/DNA & 3 & All counters are 0 ns. \\
+	TuftsBCB/io & 1 & All counters are 0 ns. \\
+	cgrates/cgrates & 2 & All counters are 0 ns. \\* \bottomrule
+\end{longtable}
+\end{table}
 
-Figure \ref{fig:benchmark0-100} shows the histogram across all benchmarks and distributions of their variabilities in 10 percent buckets, taking all 3 metrics into consideration. According to the distribution, (CV) 97.50\% (4474/4589), (RCIW95) 98.48\% (4519/4589) and (RCIW99) 98.17\% (4505/4589) of all benchmarks have a variation between 0 and 10. These are quite high percentages to tell that most of the benchmarks are very stable. Note that last bucket is for all the benchmarks that have a variation equal or higher than 100.
+\noindent For a general view of data, I create a histograms and density plots of benchmarks' variabilities using Matplotlib library \cite{Matplotlib} and Seaborn library\cite{Seaborn}, which are libraries for Python used often for visualizing data. For looking at the results on a project basis, I create tables for projects and report how many of projects fall into which bucket in terms of distribution of variabilities.
+
+\subsection{Variabilities on benchmark level}
+
+Figure \ref{fig:density1} shows the density distribution of all benchmarks found in \textbf{Benchmark\_Variabilities.csv} with all 3 variability metrics considered. According to this plot, most of the benchmarks are found between 0-10\%, however, the decrease of different metrics slightly differ from each other.
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=\linewidth]{benchmarks0-100}
+	\includegraphics[width=\linewidth]{resultsvis/density_controlled1}
+	\caption{Density of benchmarks' variabilities 1-100\%.}
+	\label{fig:density1}
+\end{figure}
+
+\noindent Figure \ref{fig:log1} shows the histogram across all benchmarks and distributions of their variabilities in 10 percent buckets, taking all 3 metrics into consideration. According to the distribution, (CV) 97.50\% (4474/4589), (RCIW95) 98.48\% (4519/4589) and (RCIW99) 98.17\% (4505/4589) of all benchmarks have a variation between 0 and 10 percent. These are quite high percentages to tell that most of the benchmarks are very stable. Note that last bucket is for all the benchmarks that have a variation equal or higher than 100.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\linewidth]{resultsvis/log1}
 	\caption{Distribution of benchmarks' variabilities 0-100 in 10\% buckets.}
-	\label{fig:benchmark0-100}
+	\label{fig:log1}
 \end{figure}
 
-\noindent This result pushes me to further analyze the benchmarks in the 0-10\% bucket, and I create a second histogram showing the distribution of benchmarks' variabilities in the 0-10\% bucket. Figure \ref{fig:benchmark0-10} exposes this variation. Most of the benchmarks fall into the bucket 0-1\%, building (CV) 81.74\% (3657/4474), (RCIW95) 89.20\% (4035/4519) and (RCIW99) 87.70\% (3951/4505) of the projects that are in the 1-10\% bucket. Although not as high in percentage as in 0-10\% bucket, most of the benchmarks can still be described as very stable, having a variation between 0 and 1. Note that last bucket in this figure represents the bucket 9-10\%.
+\noindent This result requires further analysis of the benchmarks in the 0-10\% bucket, and I create a second density plot showing this range in Figure \ref{fig:density2}. Although this time the decrease is not as sharp as in Figure \ref{fig:density1}, most of the variabilities fall in the range 0-1\%, which can be seen with numbers in the Figure \ref{fig:log2}.
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=\linewidth]{benchmarks0-10}
-	\caption{Distribution of benchmarks' variabilities 0-10 in 1\% buckets.}
-	\label{fig:benchmark0-10}
+	\includegraphics[width=\linewidth]{resultsvis/density_controlled2}
+	\caption{Density of benchmarks' variabilities in 1-10\%.}
+	\label{fig:density2}
 \end{figure}
 
-\subsection{Variabilities in project level}
+Figure \ref{fig:log2} exposes the variabilities in percentage. Most of the benchmarks fall into the bucket 0-1\%, building (CV) 81.74\% (3657/4474), (RCIW95) 89.20\% (4035/4519) and (RCIW99) 87.70\% (3951/4505) of the projects that are in the 1-10\% bucket. Although not as high in percentage as in 0-10\% bucket, most of the benchmarks can still be described as very stable, having a variation between 0 and 1 \%.
 
-Since I eliminated 2 projects because they have 1 execution for each of their benchmarks, following statistical data is based on a total of 228 projects. Table \ref{table:table1}'s header shows \textbf{Percentages} as buckets for the benchmarks' RCIW99 values. Following two rows show how many distinct projects fall into this group (i.e., having at least one benchmark in this bucket), and how many of the total projects this makes in percentage. As one can see, 225 out of 228 projects have benchmarks that have at least one benchmark that has a RCIW99 score. Analyzing the 0-1\% bucket further shows that there are in total 283 benchmarks from 68 projects which have a RCIW99 score of 0.0. This makes 6.16\% of total benchmarks.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\linewidth]{resultsvis/log2}
+	\caption{Distribution of benchmarks' variabilities 0-10 in 1\% buckets.}
+	\label{fig:log2}
+\end{figure}
+
+\subsection{Variabilities on project level}
+
+Since I eliminate 2 projects because they have 1 execution for each of their benchmarks, following statistical data is based on a total of 228 projects. Table \ref{table:table1}'s header shows \textbf{Percentages} as buckets for the benchmarks' RCIW99 values. Following two rows show how many distinct projects fall into this group (i.e., having at least one benchmark in this bucket), and how many of the total projects this makes in percentage. As one can see, 225 out of 228 projects have benchmarks that have at least one benchmark that has a RCIW99 value between 0-1\%. Analyzing the 0-1\% bucket further shows that there are in total 283 benchmarks from 68 projects which have a RCIW99 value of 0.0\%. This makes 6.16\% of total benchmarks. A RCIW99 value of 0.0\% means that there is no variation in the results of the benchmark, which can be confirmed by looking at the iteration values of these benchmarks. The number of iterations for these benchmarks varies from 4 to 1519 with an average of 97 iterations, and the average execution time in ns varies from 0.48 ns to 2930.0 ns, having an average of 140 ns. Generally, the benchmarks that have 0.0\% of RCIW99 are short running benchmarks.
 
 \begin{table}[H]
 	\centering
@@ -728,7 +796,7 @@ Since I eliminated 2 projects because they have 1 execution for each of their be
 	}
 \end{table}
 
-\noindent Table \ref{table:table2} similarly shows the number of projects and their percentages across all projects, whose benchmarks have an RCIW99 score of more than the one provided in the \textbf{Percentage} header. One thing that attracts attention is that in the first row, there are 227 projects which have at least one benchmark that has a RCIW99 score bigger than 0. This is because one of the projects, qjpcu/sesh \cite{qjpcu/sesh}, only has 2 benchmarks, of which both have 0.0 as RCIW99 score.
+\noindent Table \ref{table:table2} similarly shows the number of projects and their percentages across all projects, whose benchmarks have an RCIW99 score of more than the one provided in the \textbf{Percentage} header. One thing that attracts attention is that in the first row there are 227 projects which have at least one benchmark that has a RCIW99 score bigger than 0. This is because one of the projects, \textbf{qjpcu/sesh} \cite{qjpcu/sesh}, only has 2 benchmarks, of which both have 0.0 as RCIW99 score.
 
 \begin{table}[H]
 	\centering
@@ -748,49 +816,130 @@ Since I eliminated 2 projects because they have 1 execution for each of their be
 	\end{tabular}
 \end{table}
 
+\noindent If we call the benchmarks which have a RCIW99 value above 60\% unstable benchmarks, then there are in total 19 benchmarks from 6 projects which are unstable. Table \ref{table:unstable} shows in detail the RCIW99 values of benchmarks, their projects, and the commit they are from.
+
+\begin{table}[H]
+\begin{longtable}[c]{@{}lll@{}}
+	\caption{Unstable benchmarks}
+	\label{unstable}\\
+	\toprule
+	Project Name & Benchmark & RCIW99 \\* \midrule
+	\endfirsthead
+	%
+	\endhead
+	%
+	\bottomrule
+	\endfoot
+	%
+	\endlastfoot
+	%
+	tendermint/go-merkle & /benchmarks/bench\_test.go/BenchmarkLevelDBBatchSizes & 101.90618356378155 \\
+	tendermint/go-merkle & /benchmarks/bench\_test.go/BenchmarkMedium & 97.90949382723956 \\
+	tendermint/go-merkle & /benchmarks/bench\_test.go/BenchmarkRandomBytes & 99.07987400530504 \\
+	tendermint/go-merkle & /benchmarks/bench\_test.go/BenchmarkSmall & 96.8579891360519 \\
+	tendermint/merkleeyes & /benchmarks/bench\_test.go/BenchmarkLevelDBBatchSizes & 98.59817524979992 \\
+	tendermint/merkleeyes & /benchmarks/bench\_test.go/BenchmarkMedium & 93.97081845239374 \\
+	tendermint/merkleeyes & /benchmarks/bench\_test.go/BenchmarkMemKeySizes & 63.065558656556966 \\
+	tendermint/merkleeyes & /benchmarks/bench\_test.go/BenchmarkRandomBytes & 111.31606792006772 \\
+	tendermint/merkleeyes & /benchmarks/bench\_test.go/BenchmarkSmall & 96.49370081581276 \\
+	xtaci/kcp-go & sess\_test.go/BenchmarkSinkSpeed1M & 79.15061748312237 \\
+	xtaci/kcp-go & sess\_test.go/BenchmarkSinkSpeed256K & 170.19650415760373 \\
+	xtaci/kcp-go & sess\_test.go/BenchmarkSinkSpeed4K & 90.76953191237926 \\
+	xtaci/kcp-go & sess\_test.go/BenchmarkSinkSpeed64K & 133.5089191240669 \\
+	uber/tchannel-go & relay\_benchmark\_test.go/BenchmarkRelayNoLatencies & 196.25602170651797 \\
+	micro/go-micro & /broker/http\_broker\_test.go/BenchmarkPub128 & 140.02193180903242 \\
+	micro/go-micro & /transport/http/http\_test.go/BenchmarkTransport1 & 121.92430559307232 \\
+	segmentio/objconv & /cbor/cbor\_test.go/BenchmarkCodec & 204.0738989031456 \\
+	segmentio/objconv & /json/json\_test.go/BenchmarkCodec & 188.40021466179115 \\
+	segmentio/objconv & /objutil/int\_test.go/BenchmarkParseUintHex & 64.18111561234029 \\* \bottomrule
+\end{longtable}
+\end{table}
+
 \noindent As I present the results for the first step of my methodology, I want to remind and answer the following research question:
 
 \begin{itemize}
 	\item \textbf{RQ1: How variable are microbenchmark results of Go projects?}
 \end{itemize}
 
-\noindent Unlike my hypothesis, there is no normalized distribution of RCIW99 values of benchmarks. Most of the benchmarks fall to the bucket 1-10\% (98.17\%), from which again most them fall to 0-1\% (87.70\%). Based on the dataset that I analyze with 230 projects, it is clear that most of them are very stable, and 6.16\% (283 in total) of benchmarks don't even vary, i.e., for each execution they have the same amount of nanoseconds as execution time. The possible reasons for the stability of benchmarks, as well as why there is such a distribution is furthermore discussed in the \ref{Discussion}. Section.
+\noindent Unlike my hypothesis, there is no normalized distribution of RCIW99 values of benchmarks. Most of the benchmarks fall to the bucket 1-10\% (98.17\%), from which again most them fall to 0-1\% (87.70\%). Based on the dataset that I analyze with 230 projects, it is clear that most of them are very stable, and 6.16\% (283 in total) of benchmarks don't even vary, i.e., for each execution they have the same amount of nanoseconds as execution time. On the other side, 19 benchmarks from 6 projects are rather unstable with a RCIW99 above 60\%, which makes only 0.4\% of all the benchmarks. The possible reasons for the stability of benchmarks, as well as why there is such a distribution is furthermore discussed in the \ref{Discussion}. Section.
 
 
-\section{Source code properties}
-\label{Source code properties}
+\section{Extracted source code features}
+\label{Extracted source code features}
 
-Using all the 228 projects and their commits from the first results, my Python downloader script is able to download 223 of the projects successfully. From the remaining 5 projects, 3 (\textbf{tendermint/go-merkle}, \textbf{pp2p/paranoid}, \textbf{eleme/banshee}) are not found, either because they terminated the project on Github, or because they moved the project to another repository within or out of Github. 1 project (\textbf{stratumn/sdk} \cite{stratumn/sdk}) changed its repo and its redirection from Github results in a non-Go-project. 1 project (\textbf{eaburns/T}) changed the repo to a new name (\textbf{eaburns/T\_old}) \cite{eaburns/T_old}, however, it's commit from the initial dataset does not match any commits in the new repo. Since some benchmarks from the old version were matching with those of final.csv, I let the downloaded version stay for the parsing part.\\
+\subsection{Downloaded Projects}
+Using all the 228 projects and their commits from the first results, my Python downloader script is able to download 223 of the projects successfully. From the remaining 5 projects, 3 (\textbf{tendermint/go-merkle}, \textbf{pp2p/paranoid}, \textbf{eleme/banshee}) are not found, either because they terminated the project on Github, or because they moved the project to another repository within or out of Github. 1 project (\textbf{stratumn/sdk} \cite{stratumn/sdk}) changed its repo and its redirection from Github results in a non-Go-project. 1 project (\textbf{eaburns/T}) changed the repo to a new name (\textbf{eaburns/T\_old}) \cite{eaburns/T_old}, however, it's commit from the initial dataset does not match any commits in the new repo.\\
 \\
-As described in Section \ref{Prophunt} and \ref{Callgraph Analyzer}, parsing with Prophunt results with csv1 outcomes and using the Callgraph Analyzer results with csv2 outcomes. Prior to running both of the tools, I set up a Virtual Machine for Ubuntu 18.04 in my Windows 10 installation, because some projects have dependencies to some standard library packages, which are not included in a Windows installation of Go, such as "syscall". Not having such libraries causes compilation errors for some projects, hence, I run both of the tools in Ubuntu. This ensures a smoother experience when parsing and extracting properties that rely on the standard library packages.\\
-\\
-Prophunt returns in total 225 .csv files with a size of 35.2 MB, with 1 of the files being totally empty (\textbf{stratumn/sdk}) \cite{stratumn/sdk}, since it has no .go files. In total, Prophunt parses 163.855 functions across all 224 projects. From this many functions, there are 4926 benchmarks parsed. This is more than the total number of benchmarks found in the final.csv (4589) and means that the parser was able to find 337 more benchmarks than in the given dataset. However, when matching them with the benchmarks from final.csv, there are in total 4500 matching benchmarks. That is explainable with the missing projects from unsuccessfull downloads and some compilation problems in 2 projects albeit all dependency fetching efforts. In the list below is the number of benchmarks (89) that are present in final.csv, yet could not be parsed with Prophunt (See in \ref{infinalbutnotincsv1}):\\
+As described in Section \ref{Prophunt} and \ref{Callgraph Analyzer}, parsing with Prophunt results with Prophunt\_Output and using the Callgraph Analyzer results with Callgraph\_Output. Prior to running both of the tools, I set up a Virtual Machine for Ubuntu 18.04 in my Windows 10 installation, because some projects have dependencies to some standard library packages, which are not included in a Windows installation of Go, such as "syscall". Not having such libraries causes compilation errors for some projects, hence, I run both of the tools in Ubuntu. This ensures a smoother experience when parsing and extracting properties that rely on the standard library packages.\\
 
-\noindent\begin{itemize*}[font={\color{red!50!black}}]\\
-	\item tendermint/go-merkle: 6
-	\item pp2p/paranoid: 14
-	\item eleme/banshee: 19
-	\item micro/go-micro: 10
-	\item coredns/coredns: 1
-	\item stratumn/sdk: 2
-	\item eaburns/T: 37 
-\end{itemize*}
-\\\\
-Next, I run Callgraph Analyzer and collect 225 .csv files again, with the same exception for \textbf{stratumn/sdk} \cite{stratumn/sdk}. The valid 224 files size up to 1.38 MB, with a total of 4837 benchmarks. This shows that 89 of the benchmarks in csv1 output were not analyzed via Callgraph Analyzer, because they had a nil node in the \textbf{*simple.DirectedGraph} instance of the project (See in \ref{incsv1butnotincsv2}). In the next step, I compare the benchmarks from csv1 folder with the ones from csv2 to see whether any benchmark has exactly same property values in both of the versions, and I find 121 exact same benchmarks (See in\ref{sameincsv1asincsv2}). This indicates that Callgraph Analyzer could not find any reachable node from these benchmarks, hence, it took the existing version from csv1 output to the csv2 output. For the sake of proper analysis, I eliminate these 121 benchmarks from csv2 output, having left with 4716 valid benchmarks.\\
+\subsection{Prophunt Output}
+
+Prophunt returns in total 223 CSV files with a size of 35.2 MB. In total, Prophunt parses 163474 functions across all 223 projects. This makes an average of 733 functions per project, and Figure \ref{fig:parsed} illustrates the number of parsed functions per project on a log scaled y-axis. From this many functions, there are 4926 parsed benchmarks, which in average equals to 22 benchmarks per project. The frequency of parsed benchmarks per project is illustrated in Figure \ref{fig:parsedb}. This is more than the total number of benchmarks found in the Benchmark\_Variabilities.csv (4589) and means that the parser was able to find 337 more benchmarks than in the given dataset. However, when matching them with the benchmarks from Benchmark\_Variabilities.csv, there are in total 4500 matching benchmarks. That is explainable with the missing benchmarks from unsuccessfull downloads and some compilation problems in 2 projects albeit all dependency fetching efforts. In Table \ref{table:infinalnotcsv1} is the projects of benchmarks (89) that are present in Benchmark\_Variabilities.csv, yet could not be parsed with Prophunt (See in \ref{infinalbutnotincsv1}):\\
+
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{parsedfunctions}
+	\caption{Number of parsed functions per project.}
+	\label{fig:parsed}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{parsedbenchmarks}
+	\caption{Number of parsed benchmarks per project.}
+	\label{fig:parsedb}
+\end{figure}
+
+
+\begin{table}
+\begin{longtable}[c]{@{}lll@{}}
+	\caption{Information about projects of not matching benchmarks}
+	\label{table:infinalnotcsv1}\\
+	\toprule
+	Project Name & Benchmark Count & Reason of not match \\* \midrule
+	\endfirsthead
+	%
+	\endhead
+	%
+	\bottomrule
+	\endfoot
+	%
+	\endlastfoot
+	%
+	tendermint/go-merkle & 6 & Not found \\
+	pp2p/paranoid & 14 & Not found \\
+	eleme/banshee & 19 & Not found \\
+	micro/go-micro & 10 & Not compiling \\
+	coredns/coredns & 1 & Not compiling \\
+	stratumn/sdk & 2 & Changed repo \\
+	eaburns/T & 37 & Changed repo \\* \bottomrule
+\end{longtable}
+\end{table}
+
+
+\subsection{Callgraph Analyzer Output}
+Callgraph Analyzer takes as input the CSV files that are found in Prophunt\_Output. I run Callgraph Analyzer and collect 223 CSV files again. The valid 223 CSV files size up to 1.38 MB, with a total of 4837 benchmarks. This shows that 89 of the benchmarks in Prophunt\_Output were not analyzed via Callgraph Analyzer, because they had a nil node in the \textbf{*simple.DirectedGraph} instance of the project (See in \ref{incsv1butnotincsv2}). In the next step, I compare the benchmarks from Prophunt\_Output with the ones from Callgraph\_Output to see whether any benchmark has exactly same property values in both of the versions, and I find 121 exact same benchmarks (See in\ref{sameincsv1asincsv2}). This indicates that Callgraph Analyzer could not find any reachable node from these benchmarks, hence, it took the existing version of benchmark entry from Prophunt\_Output to Callgraph\_Output. For the sake of proper analysis, I eliminate these 121 benchmarks from Callgraph\_Output, having left with 4716 valid benchmarks and their properties.\\
 \\
-Finally, I match the benchmarks from final.csv with the valid ones from csv2 and see that there are 4330 matching benchmarks. This means that in total there are 259 not matching benchmarks of which 89 were not present in csv1 output anyways. Rest of 170 benchmarks do not match due to *simple.DirectedGraph not giving any reachable node, or callgraph tool cannot find the benchmark in the folders. 
+Finally, I match the benchmarks from Benchmark\_Variabilities.csv with the valid ones from Callgraph\_Output and see that there are 4330 matching benchmarks. This means that in total there are 259 not matching benchmarks of which 89 were not present in Prophunt\_Output in first place. Rest of 170 benchmarks do not match due to *simple.DirectedGraph not giving any reachable node, or callgraph tool cannot find the benchmark in the folders. 
 
 
 \section{Correlation between variabilities and source code properties}
-- Yes \\
-- No \\
-- Not really? \\
-- Can't really say \\
+\label{Correlation results}
 
+Section \ref{Variabilities of benchmarks} and \ref{Extracted source code features} were preliminary steps to build the final dataset of benchmarks, which includes the variability metrics RCIW99, RCIW95, CV, as well as the 59 source code property values for each of the 4330 benchmarks. As stated in Section \ref{Correlation analysis}, the correlation analysis made on this thesis relies on Spearman's rank-order correlation coefficients. For better focus on different types of properties, I present the results in Subsections \ref{Language related properties} and \ref{Standard library related properties}. Because "parameters" and "net/http/httptrace" have 0 value across all benchmarks, there is no correlation found between them and the stability, hence, they are removed from the analysis.
+
+\subsection{Language related properties}
+\label{Language related properties}
+
+There are in total 27 language related properties including "cyclomaticcomplexity" that are the part of this analysis. Table \ref{table:languageproperties} shows the correlation values of these properties with the according variability metric (a concatenating * means a p-value lower than 0.05, and ** means a p-value lower than 0.01).
 
 \begin{table}[H]
+	\centering
+	\caption{Correlation between stability and language related properties.}
+	\label{table:languageproperties}
 	\begin{tabular}{@{}llll@{}}
-		property\_name & rciw99 & rciw95 & cv \\
+		Property Name & rciw99 & rciw95 & cv \\
 		\toprule
 		pkgfiles & \cellcolor[HTML]{FFCC99}0.28000** & \cellcolor[HTML]{FFCC99}0.28310** & \cellcolor[HTML]{99CCFF}0.20296** \\
 		fileloc & \cellcolor[HTML]{FFCC99}0.25547** & \cellcolor[HTML]{FFCC99}0.26357** & \cellcolor[HTML]{99CCFF}0.17676** \\
@@ -822,6 +971,11 @@ Finally, I match the benchmarks from final.csv with the valid ones from csv2 and
 		\bottomrule
 	\end{tabular}
 \end{table}
+
+Taking RCIW99 correlations into consideration, the most correlating 3 properties are "gos", "returns" and "pointers" all with a very high significance. 
+
+\subsection{Standard library related properties}
+\label{Standard library related properties}
 
 \begin{table}[H]
 	\begin{tabular}{@{}llll@{}}
@@ -1204,6 +1358,6 @@ Following benchmarks had no reachable callees in the \textbf{*simple.DirectedGra
 
 
 \bibliography{literature}
-\bibliographystyle{ieeetr}
+\bibliographystyle{unsrt}
 
 \end{document}

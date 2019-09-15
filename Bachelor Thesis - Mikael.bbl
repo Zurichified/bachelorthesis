@@ -1,216 +1,279 @@
 \begin{thebibliography}{10}
 
 \bibitem{ironsmile/nedomi}
-``ironsmile/nedomi.'' https://github.com/ironsmile/nedomi, 2019.
+ironsmile/nedomi.
+\newblock https://github.com/ironsmile/nedomi, 2019.
 \newblock [Online; accessed 2019-08-30].
 
 \bibitem{tidwall/buntdb}
-``tidwall/buntdb.'' https://github.com/tidwall/buntdb, 2019.
+tidwall/buntdb.
+\newblock https://github.com/tidwall/buntdb, 2019.
 \newblock [Online; accessed 2019-08-30].
 
 \bibitem{goastviewer}
-``Goast viewer.'' https://github.com/yuroyoro/goast-viewer, 2019.
+Goast viewer.
+\newblock https://github.com/yuroyoro/goast-viewer, 2019.
 \newblock [Online; accessed 2019-08-30].
 
 \bibitem{Woodside:2007:FSP:1253532.1254717}
-M.~Woodside, G.~Franks, and D.~C. Petriu, ``The future of software performance
-  engineering,'' in {\em 2007 Future of Software Engineering}, FOSE '07,
-  (Washington, DC, USA), pp.~171--187, IEEE Computer Society, 2007.
+Murray Woodside, Greg Franks, and Dorina~C. Petriu.
+\newblock The future of software performance engineering.
+\newblock In {\em 2007 Future of Software Engineering}, FOSE '07, pages
+  171--187, Washington, DC, USA, 2007. IEEE Computer Society.
 
 \bibitem{Nguyen:2014:ICS:2597073.2597092}
-T.~H.~D. Nguyen, M.~Nagappan, A.~E. Hassan, M.~Nasser, and P.~Flora, ``An
-  industrial case study of automatically identifying performance
-  regression-causes,'' in {\em Proceedings of the 11th Working Conference on
-  Mining Software Repositories}, MSR 2014, (New York, NY, USA), pp.~232--241,
-  ACM, 2014.
+Thanh H.~D. Nguyen, Meiyappan Nagappan, Ahmed~E. Hassan, Mohamed Nasser, and
+  Parminder Flora.
+\newblock An industrial case study of automatically identifying performance
+  regression-causes.
+\newblock In {\em Proceedings of the 11th Working Conference on Mining Software
+  Repositories}, MSR 2014, pages 232--241, New York, NY, USA, 2014. ACM.
 
 \bibitem{costa2019}
-D.~Costa, C.-P. Bezemer, P.~Leitner, and A.~Andrzejak, ``What's wrong with my
-  benchmark results? studying bad practices in jmh benchmarks,'' {\em IEEE
-  Transactions on Software Engineering}, 06 2019.
+Diego Costa, Cor-Paul Bezemer, Philipp Leitner, and Artur Andrzejak.
+\newblock What's wrong with my benchmark results? studying bad practices in jmh
+  benchmarks.
+\newblock {\em IEEE Transactions on Software Engineering}, 06 2019.
 
 \bibitem{weyuker2000experience}
-E.~J. Weyuker and F.~I. Vokolos, ``Experience with performance testing of
-  software systems: issues, an approach, and case study,'' {\em IEEE
-  transactions on software engineering}, vol.~26, no.~12, pp.~1147--1156, 2000.
+Elaine~J Weyuker and Filippos~I Vokolos.
+\newblock Experience with performance testing of software systems: issues, an
+  approach, and case study.
+\newblock {\em IEEE transactions on software engineering}, 26(12):1147--1156,
+  2000.
 
 \bibitem{Laaber:2018:EOS:3196398.3196407}
-C.~Laaber and P.~Leitner, ``An evaluation of open-source software
-  microbenchmark suites for continuous performance assessment,'' in {\em
-  Proceedings of the 15th International Conference on Mining Software
-  Repositories}, MSR '18, (New York, NY, USA), pp.~119--130, ACM, 2018.
+Christoph Laaber and Philipp Leitner.
+\newblock An evaluation of open-source software microbenchmark suites for
+  continuous performance assessment.
+\newblock In {\em Proceedings of the 15th International Conference on Mining
+  Software Repositories}, MSR '18, pages 119--130, New York, NY, USA, 2018.
+  ACM.
 
 \bibitem{laaber2019software}
-C.~Laaber, J.~Scheuner, and P.~Leitner, ``Software microbenchmarking in the
-  cloud. how bad is it really?,'' {\em Empirical Software Engineering},
-  pp.~1--40, 2019.
+Christoph Laaber, Joel Scheuner, and Philipp Leitner.
+\newblock Software microbenchmarking in the cloud. how bad is it really?
+\newblock {\em Empirical Software Engineering}, pages 1--40, 2019.
 
 \bibitem{laaber2018performance}
-C.~Laaber, J.~Scheuner, and P.~Leitner, ``Performance testing in the cloud. how
-  bad is it really?,'' {\em PeerJ PrePrints}, vol.~6, p.~e3507v1, 2018.
+Christoph Laaber, Joel Scheuner, and Philipp Leitner.
+\newblock Performance testing in the cloud. how bad is it really?
+\newblock {\em PeerJ PrePrints}, 6:e3507v1, 2018.
 
 \bibitem{Stefan:2017:UTP:3030207.3030226}
-P.~Stefan, V.~Horky, L.~Bulej, and P.~Tuma, ``Unit testing performance in java
-  projects: Are we there yet?,'' in {\em Proceedings of the 8th ACM/SPEC on
-  International Conference on Performance Engineering}, ICPE '17, (New York,
-  NY, USA), pp.~401--412, ACM, 2017.
+Petr Stefan, Vojtech Horky, Lubomir Bulej, and Petr Tuma.
+\newblock Unit testing performance in java projects: Are we there yet?
+\newblock In {\em Proceedings of the 8th ACM/SPEC on International Conference
+  on Performance Engineering}, ICPE '17, pages 401--412, New York, NY, USA,
+  2017. ACM.
 
 \bibitem{Horky:2015:UPU:2668930.2688051}
-V.~Hork\'{y}, P.~Libi\v{c}, L.~Marek, A.~Steinhauser, and P.~T\r{u}ma,
-  ``Utilizing performance unit tests to increase performance awareness,'' in
-  {\em Proceedings of the 6th ACM/SPEC International Conference on Performance
-  Engineering}, ICPE '15, (New York, NY, USA), pp.~289--300, ACM, 2015.
+Vojt\v{e}ch Hork\'{y}, Peter Libi\v{c}, Luk\'{a}\v{s} Marek, Antonin
+  Steinhauser, and Petr T\r{u}ma.
+\newblock Utilizing performance unit tests to increase performance awareness.
+\newblock In {\em Proceedings of the 6th ACM/SPEC International Conference on
+  Performance Engineering}, ICPE '15, pages 289--300, New York, NY, USA, 2015.
+  ACM.
 
 \bibitem{rodriguez2016automatic}
-M.~Rodriguez-Cancio, B.~Combemale, and B.~Baudry, ``Automatic microbenchmark
-  generation to prevent dead code elimination and constant folding,'' in {\em
-  2016 31st IEEE/ACM International Conference on Automated Software Engineering
-  (ASE)}, pp.~132--143, IEEE, 2016.
+Marcelino Rodriguez-Cancio, Benoit Combemale, and Benoit Baudry.
+\newblock Automatic microbenchmark generation to prevent dead code elimination
+  and constant folding.
+\newblock In {\em 2016 31st IEEE/ACM International Conference on Automated
+  Software Engineering (ASE)}, pages 132--143. IEEE, 2016.
 
 \bibitem{JMH}
-``{OpenJDK}: Java microbenchmark harness.''
-  https://openjdk.java.net/projects/code-tools/jmh/, 2019.
+{OpenJDK}: Java microbenchmark harness.
+\newblock https://openjdk.java.net/projects/code-tools/jmh/, 2019.
 \newblock [Online; accessed 2019-08-30].
 
 \bibitem{gobench}
-``Package testing in go.'' https://golang.org/pkg/testing/, 2019.
+Package testing in go.
+\newblock https://golang.org/pkg/testing/, 2019.
 \newblock [Online; accessed 2019-08-30].
 
 \bibitem{Leitner:2016:PCS:2926746.2885497}
-P.~Leitner and J.~Cito, ``Patterns in the chaos\&mdash;a study of performance
-  variation and predictability in public iaas clouds,'' {\em ACM Trans.
-  Internet Technol.}, vol.~16, pp.~15:1--15:23, Apr. 2016.
+Philipp Leitner and J\"{u}rgen Cito.
+\newblock Patterns in the chaos\&mdash;a study of performance variation and
+  predictability in public iaas clouds.
+\newblock {\em ACM Trans. Internet Technol.}, 16(3):15:1--15:23, April 2016.
 
 \bibitem{davison_hinkley_1997}
-A.~C. Davison and D.~V. Hinkley, {\em Bootstrap Methods and their Application}.
-\newblock Cambridge Series in Statistical and Probabilistic Mathematics,
+A.~C. Davison and D.~V. Hinkley.
+\newblock {\em Bootstrap Methods and their Application}.
+\newblock Cambridge Series in Statistical and Probabilistic Mathematics.
   Cambridge University Press, 1997.
 
 \bibitem{hierach_data_2010}
-S.~Ren, H.~Lai, W.~Tong, M.~Aminzadeh, X.~Hou, and S.~Lai, ``Nonparametric
-  bootstrapping for hierarchical data,'' {\em Journal of Applied Statistics},
-  vol.~37, no.~9, pp.~1487--1498, 2010.
+Shiquan Ren, Hong Lai, Wenjing Tong, Mostafa Aminzadeh, Xuezhang Hou, and
+  Shenghan Lai.
+\newblock Nonparametric bootstrapping for hierarchical data.
+\newblock {\em Journal of Applied Statistics}, 37(9):1487--1498, 2010.
 
 \bibitem{hprose/hprose-golang}
-``hprose/hprose-golang.'' https://github.com/hprose/hprose-golang, 2019.
+hprose/hprose-golang.
+\newblock https://github.com/hprose/hprose-golang, 2019.
 \newblock [Online; accessed 2019-08-30].
 
 \bibitem{segmentio/objconv}
-``segmentio/objconv.'' https://github.com/segmentio/objconv, 2019.
+segmentio/objconv.
+\newblock https://github.com/segmentio/objconv, 2019.
 \newblock [Online; accessed 2019-08-30].
 
 \bibitem{go}
-``Go programming language.'' https://golang.org/, 2019.
+Go programming language.
+\newblock https://golang.org/, 2019.
 \newblock [Online; accessed 2019-08-30].
 
 \bibitem{stackoverflowdev}
-``Stackoverflow developer survey 2019.''
-  https://insights.stackoverflow.com/survey/2019, 2019.
+Stackoverflow developer survey 2019.
+\newblock https://insights.stackoverflow.com/survey/2019, 2019.
 \newblock [Online; accessed 2019-08-30].
 
 \bibitem{chenshang}
-J.~{Chen} and W.~{Shang}, ``An exploratory study of performance regression
-  introducing code changes,'' in {\em 2017 IEEE International Conference on
-  Software Maintenance and Evolution (ICSME)}, pp.~341--352, Sep. 2017.
+J.~{Chen} and W.~{Shang}.
+\newblock An exploratory study of performance regression introducing code
+  changes.
+\newblock In {\em 2017 IEEE International Conference on Software Maintenance
+  and Evolution (ICSME)}, pages 341--352, Sep. 2017.
 
 \bibitem{Luo}
-Q.~{Luo}, D.~{Poshyvanyk}, and M.~{Grechanik}, ``Mining performance regression
-  inducing code changes in evolving software,'' in {\em 2016 IEEE/ACM 13th
-  Working Conference on Mining Software Repositories (MSR)}, pp.~25--36, May
-  2016.
+Q.~{Luo}, D.~{Poshyvanyk}, and M.~{Grechanik}.
+\newblock Mining performance regression inducing code changes in evolving
+  software.
+\newblock In {\em 2016 IEEE/ACM 13th Working Conference on Mining Software
+  Repositories (MSR)}, pages 25--36, May 2016.
 
 \bibitem{Alcocer:2015:TDP:2816707.2816718}
-J.~P.~S. Alcocer and A.~Bergel, ``Tracking down performance variation against
-  source code evolution,'' in {\em Proceedings of the 11th Symposium on Dynamic
-  Languages}, DLS 2015, (New York, NY, USA), pp.~129--139, ACM, 2015.
+Juan Pablo~Sandoval Alcocer and Alexandre Bergel.
+\newblock Tracking down performance variation against source code evolution.
+\newblock In {\em Proceedings of the 11th Symposium on Dynamic Languages}, DLS
+  2015, pages 129--139, New York, NY, USA, 2015. ACM.
 
 \bibitem{Leitner:2017:ESS:3030207.3030213}
-P.~Leitner and C.-P. Bezemer, ``An exploratory study of the state of practice
-  of performance testing in java-based open source projects,'' in {\em
-  Proceedings of the 8th ACM/SPEC on International Conference on Performance
-  Engineering}, ICPE '17, (New York, NY, USA), pp.~373--384, ACM, 2017.
+Philipp Leitner and Cor-Paul Bezemer.
+\newblock An exploratory study of the state of practice of performance testing
+  in java-based open source projects.
+\newblock In {\em Proceedings of the 8th ACM/SPEC on International Conference
+  on Performance Engineering}, ICPE '17, pages 373--384, New York, NY, USA,
+  2017. ACM.
 
 \bibitem{Iosup}
-A.~{Iosup}, N.~{Yigitbasi}, and D.~{Epema}, ``On the performance variability of
-  production cloud services,'' in {\em 2011 11th IEEE/ACM International
-  Symposium on Cluster, Cloud and Grid Computing}, pp.~104--113, May 2011.
+A.~{Iosup}, N.~{Yigitbasi}, and D.~{Epema}.
+\newblock On the performance variability of production cloud services.
+\newblock In {\em 2011 11th IEEE/ACM International Symposium on Cluster, Cloud
+  and Grid Computing}, pages 104--113, May 2011.
 
 \bibitem{patool}
-``pa-tool.'' https://bitbucket.org/sealuzh/pa/src/master/, 2019.
+pa-tool.
+\newblock https://bitbucket.org/sealuzh/pa/src/master/, 2019.
 \newblock [Online; accessed 2019-08-30].
 
 \bibitem{pythonsta}
-``statistics — mathematical statistics functions.''
-  https://docs.python.org/3/library/statistics.html, 2019.
+statistics — mathematical statistics functions.
+\newblock https://docs.python.org/3/library/statistics.html, 2019.
 \newblock [Online; accessed 2019-08-30].
 
 \bibitem{gopackages}
-``Packages.'' https://golang.org/pkg/, 2019.
+Packages.
+\newblock https://golang.org/pkg/, 2019.
 \newblock [Online; accessed 2019-08-30].
 
 \bibitem{shepperd1988critique}
-M.~Shepperd, ``A critique of cyclomatic complexity as a software metric,'' {\em
-  Software Engineering Journal}, vol.~3, no.~2, pp.~30--36, 1988.
+Martin Shepperd.
+\newblock A critique of cyclomatic complexity as a software metric.
+\newblock {\em Software Engineering Journal}, 3(2):30--36, 1988.
 
 \bibitem{packagemanagement}
-``Package management tools.''
-  https://github.com/golang/go/wiki/PackageManagementTools, 2019.
+Package management tools.
+\newblock https://github.com/golang/go/wiki/PackageManagementTools, 2019.
 \newblock [Online; accessed 2019-08-30].
 
 \bibitem{callgraphtool}
-``Callgraph tool.'' golang.org/x/tools/cmd/callgraph, 2019.
+Callgraph tool.
+\newblock golang.org/x/tools/cmd/callgraph, 2019.
 \newblock [Online; accessed 2019-08-30].
 
 \bibitem{sealuzh/goabs}
-``sealuzh/goabs.'' https://github.com/sealuzh/GoABS, 2019.
+sealuzh/goabs.
+\newblock https://github.com/sealuzh/GoABS, 2019.
 \newblock [Online; accessed 2019-08-30].
 
 \bibitem{atourofgo}
-``A tour of go.'' https://tour.golang.org/list, 2019.
+A tour of go.
+\newblock https://tour.golang.org/list, 2019.
 \newblock [Online; accessed 2019-08-30].
 
 \bibitem{gocyclo}
-``fzipp/goycylo.'' https://github.com/fzipp/gocyclo, 2019.
+fzipp/goycylo.
+\newblock https://github.com/fzipp/gocyclo, 2019.
 \newblock [Online; accessed 2019-08-30].
 
 \bibitem{packages}
-``Package packages.'' https://godoc.org/golang.org/x/tools/go/packages, 2019.
+Package packages.
+\newblock https://godoc.org/golang.org/x/tools/go/packages, 2019.
 \newblock [Online; accessed 2019-08-30].
 
 \bibitem{gonum/gonum}
-``gonum/gonum.'' https://github.com/gonum/gonum, 2019.
+gonum/gonum.
+\newblock https://github.com/gonum/gonum, 2019.
+\newblock [Online; accessed 2019-08-30].
+
+\bibitem{Pandas}
+Pandas.
+\newblock https://pandas.pydata.org, 2019.
+\newblock [Online; accessed 2019-08-30].
+
+\bibitem{ScipySpearmanr}
+Scipy spearmanr.
+\newblock
+  https://docs.scipy.org/doc/scipy-0.14.0/reference/generated/scipy.stats.spearmanr.html,
+  2019.
 \newblock [Online; accessed 2019-08-30].
 
 \bibitem{mesos/mesos-go}
-``mesos/mesos-go.'' https://github.com/mesos/mesos-go, 2019.
+mesos/mesos-go.
+\newblock https://github.com/mesos/mesos-go, 2019.
 \newblock [Online; accessed 2019-08-30].
 
 \bibitem{go-gl/mathgl}
-``go-gl/mathgl.'' https://github.com/go-gl/mathgl, 2019.
+go-gl/mathgl.
+\newblock https://github.com/go-gl/mathgl, 2019.
 \newblock [Online; accessed 2019-08-30].
 
 \bibitem{nsqio/nsq}
-``nsqio/nsq.'' https://github.com/nsqio/nsq, 2019.
+nsqio/nsq.
+\newblock https://github.com/nsqio/nsq, 2019.
 \newblock [Online; accessed 2019-08-30].
 
 \bibitem{uber/tchannel-go}
-``uber/tchannel-go.'' https://github.com/uber/tchannel-go, 2019.
+uber/tchannel-go.
+\newblock https://github.com/uber/tchannel-go, 2019.
 \newblock [Online; accessed 2019-08-30].
 
 \bibitem{Matplotlib}
-``Matplotlib.'' https://matplotlib.org/, 2019.
+Matplotlib.
+\newblock https://matplotlib.org/, 2019.
+\newblock [Online; accessed 2019-08-30].
+
+\bibitem{Seaborn}
+Seaborn.
+\newblock https://seaborn.pydata.org, 2019.
 \newblock [Online; accessed 2019-08-30].
 
 \bibitem{qjpcu/sesh}
-``qjpcu/sesh.'' https://github.com/qjpcu/sesh, 2019.
+qjpcu/sesh.
+\newblock https://github.com/qjpcu/sesh, 2019.
 \newblock [Online; accessed 2019-08-30].
 
 \bibitem{stratumn/sdk}
-``stratumn/sdk.'' https://github.com/stratumn/sdk-js, 2019.
+stratumn/sdk.
+\newblock https://github.com/stratumn/sdk-js, 2019.
 \newblock [Online; accessed 2019-08-30].
 
 \bibitem{eaburns/T_old}
-``eaburns/t\_old.'' https://github.com/eaburns/T\_old, 2019.
+eaburns/t\_old.
+\newblock https://github.com/eaburns/T\_old, 2019.
 \newblock [Online; accessed 2019-08-30].
 
 \end{thebibliography}

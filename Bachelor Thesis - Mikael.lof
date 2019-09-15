@@ -9,10 +9,15 @@
 \contentsline {figure}{\numberline {3.4}{\ignorespaces Process of downloading projects from Github.\relax }}{20}% 
 \contentsline {figure}{\numberline {3.5}{\ignorespaces Process of fetching dependencies for each project.\relax }}{21}% 
 \contentsline {figure}{\numberline {3.6}{\ignorespaces Workwise of Prophunt iterating through downloaded projects.\relax }}{27}% 
-\contentsline {figure}{\numberline {3.7}{\ignorespaces Workwise of Callgraph Analyzer iteration through all parser projects.\relax }}{29}% 
+\contentsline {figure}{\numberline {3.7}{\ignorespaces Workwise of Callgraph Analyzer iteration through all parsed projects.\relax }}{29}% 
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {4.1}{\ignorespaces Distribution of benchmarks' variabilities 0-100 in 10\% buckets.\relax }}{34}% 
-\contentsline {figure}{\numberline {4.2}{\ignorespaces Distribution of benchmarks' variabilities 0-10 in 1\% buckets.\relax }}{34}% 
+\contentsline {figure}{\numberline {4.1}{\ignorespaces General view of processing results.\relax }}{34}% 
+\contentsline {figure}{\numberline {4.2}{\ignorespaces Density of benchmarks' variabilities 1-100\%.\relax }}{35}% 
+\contentsline {figure}{\numberline {4.3}{\ignorespaces Distribution of benchmarks' variabilities 0-100 in 10\% buckets.\relax }}{36}% 
+\contentsline {figure}{\numberline {4.4}{\ignorespaces Density of benchmarks' variabilities in 1-10\%.\relax }}{37}% 
+\contentsline {figure}{\numberline {4.5}{\ignorespaces Distribution of benchmarks' variabilities 0-10 in 1\% buckets.\relax }}{37}% 
+\contentsline {figure}{\numberline {4.6}{\ignorespaces Number of parsed functions per project.\relax }}{40}% 
+\contentsline {figure}{\numberline {4.7}{\ignorespaces Number of parsed benchmarks per project.\relax }}{41}% 
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
