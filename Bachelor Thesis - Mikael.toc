@@ -12,7 +12,7 @@
 \contentsline {subsection}{\numberline {3.1.2}Metrics as the variability indicators}{15}% 
 \contentsline {subsection}{\numberline {3.1.3}Benchmark Variabilities}{16}% 
 \contentsline {section}{\numberline {3.2}Extracting source code features}{17}% 
-\contentsline {subsection}{\numberline {3.2.1}Decision on source code properties}{17}% 
+\contentsline {subsection}{\numberline {3.2.1}Decision on source code features}{17}% 
 \contentsline {subsection}{\numberline {3.2.2}Downloading projects}{20}% 
 \contentsline {subsection}{\numberline {3.2.3}Prophunt}{21}% 
 \contentsline {paragraph}{Parsing}{22}% 
@@ -24,7 +24,7 @@
 \contentsline {section}{\numberline {3.4}Threats to validity}{31}% 
 \contentsline {paragraph}{Number of projects}{31}% 
 \contentsline {paragraph}{Type of projects}{31}% 
-\contentsline {paragraph}{Chosen properties}{31}% 
+\contentsline {paragraph}{Chosen features}{31}% 
 \contentsline {paragraph}{Static Analysis}{32}% 
 \contentsline {chapter}{\numberline {4}Results}{33}% 
 \contentsline {section}{\numberline {4.1}Variabilities of benchmarks}{34}% 
@@ -34,14 +34,14 @@
 \contentsline {subsection}{\numberline {4.2.1}Downloaded Projects}{39}% 
 \contentsline {subsection}{\numberline {4.2.2}Prophunt Output}{40}% 
 \contentsline {subsection}{\numberline {4.2.3}Callgraph Analyzer Output}{41}% 
-\contentsline {section}{\numberline {4.3}Correlation between variabilities and source code properties}{42}% 
-\contentsline {subsection}{\numberline {4.3.1}Language related properties}{42}% 
-\contentsline {subsection}{\numberline {4.3.2}Standard library related properties}{44}% 
-\contentsline {chapter}{\numberline {5}Discussion}{45}% 
-\contentsline {section}{\numberline {5.1}Chosen properties}{45}% 
-\contentsline {section}{\numberline {5.2}Static analysis}{45}% 
-\contentsline {section}{\numberline {5.3}Size of data set}{45}% 
-\contentsline {section}{\numberline {5.4}Future Work}{45}% 
-\contentsline {chapter}{\numberline {6}Conclusion}{47}% 
-\contentsline {chapter}{\numberline {A}First Append}{49}% 
-\contentsline {section}{\numberline {A.1}Not matching benchmarks}{49}% 
+\contentsline {section}{\numberline {4.3}Correlation between variabilities and source code features}{42}% 
+\contentsline {subsection}{\numberline {4.3.1}Language related features}{42}% 
+\contentsline {subsection}{\numberline {4.3.2}Standard library related features}{44}% 
+\contentsline {chapter}{\numberline {5}Discussion}{47}% 
+\contentsline {section}{\numberline {5.1}Benchmark Stability}{47}% 
+\contentsline {section}{\numberline {5.2}Chosen features}{47}% 
+\contentsline {section}{\numberline {5.3}Correlation results}{48}% 
+\contentsline {section}{\numberline {5.4}Future Work}{48}% 
+\contentsline {chapter}{\numberline {6}Conclusion}{51}% 
+\contentsline {chapter}{\numberline {A}First Append}{53}% 
+\contentsline {section}{\numberline {A.1}Not matching benchmarks}{53}% 

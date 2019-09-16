@@ -5,7 +5,7 @@
 \addvspace {10\p@ }
 \contentsline {figure}{\numberline {3.1}{\ignorespaces 3 main steps of the methodology.\relax }}{13}% 
 \contentsline {figure}{\numberline {3.2}{\ignorespaces Example results file from \cite {ironsmile/nedomi}.\relax }}{15}% 
-\contentsline {figure}{\numberline {3.3}{\ignorespaces First lines from the benchmark\_variabilities.csv file involving variability values for \cite {ironsmile/nedomi}.\relax }}{17}% 
+\contentsline {figure}{\numberline {3.3}{\ignorespaces First lines from the Benchmark\_Variabilities.csv file involving variability values for \cite {ironsmile/nedomi}.\relax }}{17}% 
 \contentsline {figure}{\numberline {3.4}{\ignorespaces Process of downloading projects from Github.\relax }}{20}% 
 \contentsline {figure}{\numberline {3.5}{\ignorespaces Process of fetching dependencies for each project.\relax }}{21}% 
 \contentsline {figure}{\numberline {3.6}{\ignorespaces Workwise of Prophunt iterating through downloaded projects.\relax }}{27}% 
@@ -18,6 +18,8 @@
 \contentsline {figure}{\numberline {4.5}{\ignorespaces Distribution of benchmarks' variabilities 0-10 in 1\% buckets.\relax }}{37}% 
 \contentsline {figure}{\numberline {4.6}{\ignorespaces Number of parsed functions per project.\relax }}{40}% 
 \contentsline {figure}{\numberline {4.7}{\ignorespaces Number of parsed benchmarks per project.\relax }}{41}% 
+\contentsline {figure}{\numberline {4.8}{\ignorespaces "Gos" and rciw99 values plotted with a linear regression model.\relax }}{44}% 
+\contentsline {figure}{\numberline {4.9}{\ignorespaces "sync" and rciw99 values plotted with a linear regression model.\relax }}{46}% 
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }

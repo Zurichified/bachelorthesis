@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7000 64-bit) (preloaded format=pdflatex 2019.4.29)  15 SEP 2019 19:21
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7000 64-bit) (preloaded format=pdflatex 2019.4.29)  16 SEP 2019 02:24
 entering extended mode
 **"./Bachelor Thesis - Mikael.tex"
 ("Bachelor Thesis - Mikael.tex"
@@ -705,53 +705,53 @@ Underfull \hbox (badness 10000) in paragraph at lines 166--169
  []
 
 
-Overfull \hbox (1.8541pt too wide) in paragraph at lines 215--233
+Overfull \hbox (1.8541pt too wide) in paragraph at lines 209--227
 \T1/ppl/m/n/10 Performance test-ing, mi-crobench-mark-ing and iden-ti-fy-ing pe
 r-for-mance re-gres-sion causes are some
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 215--233
+Underfull \hbox (badness 10000) in paragraph at lines 209--227
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 215--233
+Underfull \hbox (badness 10000) in paragraph at lines 209--227
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 215--233
+Underfull \hbox (badness 10000) in paragraph at lines 209--227
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 215--233
+Underfull \hbox (badness 10000) in paragraph at lines 209--227
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 215--233
+Underfull \hbox (badness 10000) in paragraph at lines 209--227
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 215--233
+Underfull \hbox (badness 10000) in paragraph at lines 209--227
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 215--233
+Underfull \hbox (badness 10000) in paragraph at lines 209--227
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 215--233
+Underfull \hbox (badness 10000) in paragraph at lines 209--227
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 215--233
+Underfull \hbox (badness 10000) in paragraph at lines 209--227
 
  []
 
@@ -767,7 +767,7 @@ Chapter 3.
 <Methodology.png, id=121, 3093.5575pt x 1678.27pt>
 File: Methodology.png Graphic file (type png)
 <use Methodology.png>
-Package pdftex.def Info: Methodology.png  used on input line 240.
+Package pdftex.def Info: Methodology.png  used on input line 234.
 (pdftex.def)             Requested size: 426.79134pt x 231.52469pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
@@ -776,90 +776,90 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
  <./Methodology.png>]
-Overfull \hbox (1.93442pt too wide) in paragraph at lines 252--255
+Overfull \hbox (1.93442pt too wide) in paragraph at lines 246--249
 \T1/ppl/m/n/10 This dataset with a size of 43.8 MB con-tains \T1/ppl/b/n/10 go-
 results.csv\T1/ppl/m/n/10 , \T1/ppl/b/n/10 go-results-2.csv \T1/ppl/m/n/10 and 
 4 fold-ers \T1/ppl/b/n/10 cumulus-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 252--255
+Underfull \hbox (badness 10000) in paragraph at lines 246--249
 
  []
 
 <exampleresults.png, id=126, 745.28438pt x 364.36125pt>
 File: exampleresults.png Graphic file (type png)
 <use exampleresults.png>
-Package pdftex.def Info: exampleresults.png  used on input line 258.
+Package pdftex.def Info: exampleresults.png  used on input line 252.
 (pdftex.def)             Requested size: 426.79134pt x 208.64989pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [14]
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <9> on input line 273.
+(Font)              <9> on input line 267.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 273.
+(Font)              <6> on input line 267.
 
 
-Package xcolor Warning: Incompatible color definition on input line 274.
+Package xcolor Warning: Incompatible color definition on input line 268.
 
 
-Package xcolor Warning: Incompatible color definition on input line 274.
+Package xcolor Warning: Incompatible color definition on input line 268.
 
 
-Package xcolor Warning: Incompatible color definition on input line 274.
+Package xcolor Warning: Incompatible color definition on input line 268.
 
 
-Package xcolor Warning: Incompatible color definition on input line 274.
+Package xcolor Warning: Incompatible color definition on input line 268.
 
 
-Package xcolor Warning: Incompatible color definition on input line 274.
+Package xcolor Warning: Incompatible color definition on input line 268.
 
 
-Package xcolor Warning: Incompatible color definition on input line 274.
+Package xcolor Warning: Incompatible color definition on input line 268.
 
 
-Package xcolor Warning: Incompatible color definition on input line 274.
+Package xcolor Warning: Incompatible color definition on input line 268.
 
 
-Package xcolor Warning: Incompatible color definition on input line 274.
+Package xcolor Warning: Incompatible color definition on input line 268.
 
 
-Package xcolor Warning: Incompatible color definition on input line 274.
+Package xcolor Warning: Incompatible color definition on input line 268.
 
 
-Package xcolor Warning: Incompatible color definition on input line 274.
+Package xcolor Warning: Incompatible color definition on input line 268.
 
 
-Package xcolor Warning: Incompatible color definition on input line 274.
+Package xcolor Warning: Incompatible color definition on input line 268.
 
 
-Package xcolor Warning: Incompatible color definition on input line 274.
+Package xcolor Warning: Incompatible color definition on input line 268.
 
 
-Package xcolor Warning: Incompatible color definition on input line 274.
+Package xcolor Warning: Incompatible color definition on input line 268.
 
 
-Package xcolor Warning: Incompatible color definition on input line 274.
+Package xcolor Warning: Incompatible color definition on input line 268.
 
 
-Package xcolor Warning: Incompatible color definition on input line 274.
+Package xcolor Warning: Incompatible color definition on input line 268.
 
 
-Package xcolor Warning: Incompatible color definition on input line 274.
+Package xcolor Warning: Incompatible color definition on input line 268.
 
 
-Package xcolor Warning: Incompatible color definition on input line 274.
+Package xcolor Warning: Incompatible color definition on input line 268.
 
 
-Package xcolor Warning: Incompatible color definition on input line 274.
+Package xcolor Warning: Incompatible color definition on input line 268.
 
 
-Package xcolor Warning: Incompatible color definition on input line 274.
+Package xcolor Warning: Incompatible color definition on input line 268.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 267--307
+Underfull \hbox (badness 10000) in paragraph at lines 261--301
 
  []
 
@@ -867,27 +867,27 @@ Underfull \hbox (badness 10000) in paragraph at lines 267--307
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [15 <./exampleresults.png>] [16]
-Underfull \hbox (badness 10000) in paragraph at lines 316--319
+Underfull \hbox (badness 10000) in paragraph at lines 310--313
 
  []
 
 <finalcsvexample.png, id=141, 890.5772pt x 288.3272pt>
 File: finalcsvexample.png Graphic file (type png)
 <use finalcsvexample.png>
-Package pdftex.def Info: finalcsvexample.png  used on input line 322.
+Package pdftex.def Info: finalcsvexample.png  used on input line 316.
 (pdftex.def)             Requested size: 426.79134pt x 138.17549pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 333--340
+Underfull \hbox (badness 10000) in paragraph at lines 327--334
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 333--340
+Underfull \hbox (badness 10000) in paragraph at lines 327--334
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 333--340
+Underfull \hbox (badness 10000) in paragraph at lines 327--334
 
  []
 
@@ -902,10 +902,10 @@ Overfull \vbox (90.32072pt too high) has occurred while \output is active []
 <downloadproject.png, id=154, 1670.24pt x 584.1825pt>
 File: downloadproject.png Graphic file (type png)
 <use downloadproject.png>
-Package pdftex.def Info: downloadproject.png  used on input line 428.
+Package pdftex.def Info: downloadproject.png  used on input line 422.
 (pdftex.def)             Requested size: 426.79134pt x 149.2721pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 434--437
+Underfull \hbox (badness 10000) in paragraph at lines 428--431
 
  []
 
@@ -913,13 +913,193 @@ Underfull \hbox (badness 10000) in paragraph at lines 434--437
 <fetchdeps.png, id=159, 1469.49pt x 505.89pt>
 File: fetchdeps.png Graphic file (type png)
 <use fetchdeps.png>
-Package pdftex.def Info: fetchdeps.png  used on input line 444.
+Package pdftex.def Info: fetchdeps.png  used on input line 438.
 (pdftex.def)             Requested size: 426.79134pt x 146.92819pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [21 <./fetchdeps.png>]
 
+Package xcolor Warning: Incompatible color definition on input line 484.
+
+
+Package xcolor Warning: Incompatible color definition on input line 484.
+
+
+Package xcolor Warning: Incompatible color definition on input line 485.
+
+
+Package xcolor Warning: Incompatible color definition on input line 485.
+
+
+Package xcolor Warning: Incompatible color definition on input line 485.
+
+
+Package xcolor Warning: Incompatible color definition on input line 485.
+
+
+Package xcolor Warning: Incompatible color definition on input line 485.
+
+
+Package xcolor Warning: Incompatible color definition on input line 485.
+
+
+Package xcolor Warning: Incompatible color definition on input line 485.
+
+
+Package xcolor Warning: Incompatible color definition on input line 485.
+
+
+Package xcolor Warning: Incompatible color definition on input line 485.
+
+
+Package xcolor Warning: Incompatible color definition on input line 485.
+
+
+Package xcolor Warning: Incompatible color definition on input line 486.
+
+
+Package xcolor Warning: Incompatible color definition on input line 486.
+
+
+Package xcolor Warning: Incompatible color definition on input line 486.
+
+
+Package xcolor Warning: Incompatible color definition on input line 486.
+
+
+Package xcolor Warning: Incompatible color definition on input line 486.
+
+
+Package xcolor Warning: Incompatible color definition on input line 486.
+
+
+Package xcolor Warning: Incompatible color definition on input line 486.
+
+
+Package xcolor Warning: Incompatible color definition on input line 486.
+
+
+Package xcolor Warning: Incompatible color definition on input line 486.
+
+
+Package xcolor Warning: Incompatible color definition on input line 486.
+
+
+Package xcolor Warning: Incompatible color definition on input line 486.
+
+
+Package xcolor Warning: Incompatible color definition on input line 487.
+
+
+Package xcolor Warning: Incompatible color definition on input line 487.
+
+
+Package xcolor Warning: Incompatible color definition on input line 487.
+
+
+Package xcolor Warning: Incompatible color definition on input line 487.
+
+
+Package xcolor Warning: Incompatible color definition on input line 487.
+
+
+Package xcolor Warning: Incompatible color definition on input line 488.
+
+
+Package xcolor Warning: Incompatible color definition on input line 488.
+
+
+Package xcolor Warning: Incompatible color definition on input line 488.
+
+
+Package xcolor Warning: Incompatible color definition on input line 488.
+
+
+Package xcolor Warning: Incompatible color definition on input line 488.
+
+
+Package xcolor Warning: Incompatible color definition on input line 488.
+
+
+Package xcolor Warning: Incompatible color definition on input line 488.
+
+
+Package xcolor Warning: Incompatible color definition on input line 488.
+
+
+Package xcolor Warning: Incompatible color definition on input line 488.
+
+
+Package xcolor Warning: Incompatible color definition on input line 488.
+
+
+Package xcolor Warning: Incompatible color definition on input line 488.
+
+
+Package xcolor Warning: Incompatible color definition on input line 488.
+
+
+Package xcolor Warning: Incompatible color definition on input line 489.
+
+
+Package xcolor Warning: Incompatible color definition on input line 489.
+
+
+Package xcolor Warning: Incompatible color definition on input line 489.
+
+
+Package xcolor Warning: Incompatible color definition on input line 489.
+
+
+Package xcolor Warning: Incompatible color definition on input line 489.
+
+
+Package xcolor Warning: Incompatible color definition on input line 489.
+
+
+Package xcolor Warning: Incompatible color definition on input line 489.
+
+
+Package xcolor Warning: Incompatible color definition on input line 489.
+
+
+Package xcolor Warning: Incompatible color definition on input line 489.
+
+
+Package xcolor Warning: Incompatible color definition on input line 489.
+
+
+Package xcolor Warning: Incompatible color definition on input line 489.
+
+
+Package xcolor Warning: Incompatible color definition on input line 489.
+
+
+Package xcolor Warning: Incompatible color definition on input line 489.
+
+
+Package xcolor Warning: Incompatible color definition on input line 490.
+
+
+Package xcolor Warning: Incompatible color definition on input line 490.
+
+
+Package xcolor Warning: Incompatible color definition on input line 490.
+
+
+Package xcolor Warning: Incompatible color definition on input line 490.
+
+
+Package xcolor Warning: Incompatible color definition on input line 490.
+
+
+Package xcolor Warning: Incompatible color definition on input line 490.
+
+
+Package xcolor Warning: Incompatible color definition on input line 490.
+
+
 Package xcolor Warning: Incompatible color definition on input line 490.
 
 
@@ -956,7 +1136,7 @@ Package xcolor Warning: Incompatible color definition on input line 491.
 Package xcolor Warning: Incompatible color definition on input line 491.
 
 
-Package xcolor Warning: Incompatible color definition on input line 492.
+Package xcolor Warning: Incompatible color definition on input line 491.
 
 
 Package xcolor Warning: Incompatible color definition on input line 492.
@@ -989,527 +1169,347 @@ Package xcolor Warning: Incompatible color definition on input line 492.
 Package xcolor Warning: Incompatible color definition on input line 492.
 
 
-Package xcolor Warning: Incompatible color definition on input line 493.
+Package xcolor Warning: Incompatible color definition on input line 492.
 
 
-Package xcolor Warning: Incompatible color definition on input line 493.
+Package xcolor Warning: Incompatible color definition on input line 492.
 
 
-Package xcolor Warning: Incompatible color definition on input line 493.
+Package xcolor Warning: Incompatible color definition on input line 492.
 
 
-Package xcolor Warning: Incompatible color definition on input line 493.
+Package xcolor Warning: Incompatible color definition on input line 492.
 
 
-Package xcolor Warning: Incompatible color definition on input line 493.
+Package xcolor Warning: Incompatible color definition on input line 492.
 
 
-Package xcolor Warning: Incompatible color definition on input line 494.
+Package xcolor Warning: Incompatible color definition on input line 492.
 
 
-Package xcolor Warning: Incompatible color definition on input line 494.
-
-
-Package xcolor Warning: Incompatible color definition on input line 494.
-
-
-Package xcolor Warning: Incompatible color definition on input line 494.
-
-
-Package xcolor Warning: Incompatible color definition on input line 494.
-
-
-Package xcolor Warning: Incompatible color definition on input line 494.
-
-
-Package xcolor Warning: Incompatible color definition on input line 494.
-
-
-Package xcolor Warning: Incompatible color definition on input line 494.
-
-
-Package xcolor Warning: Incompatible color definition on input line 494.
-
-
-Package xcolor Warning: Incompatible color definition on input line 494.
-
-
-Package xcolor Warning: Incompatible color definition on input line 494.
-
-
-Package xcolor Warning: Incompatible color definition on input line 494.
-
-
-Package xcolor Warning: Incompatible color definition on input line 495.
-
-
-Package xcolor Warning: Incompatible color definition on input line 495.
-
-
-Package xcolor Warning: Incompatible color definition on input line 495.
-
-
-Package xcolor Warning: Incompatible color definition on input line 495.
-
-
-Package xcolor Warning: Incompatible color definition on input line 495.
-
-
-Package xcolor Warning: Incompatible color definition on input line 495.
-
-
-Package xcolor Warning: Incompatible color definition on input line 495.
-
-
-Package xcolor Warning: Incompatible color definition on input line 495.
-
-
-Package xcolor Warning: Incompatible color definition on input line 495.
-
-
-Package xcolor Warning: Incompatible color definition on input line 495.
-
-
-Package xcolor Warning: Incompatible color definition on input line 495.
-
-
-Package xcolor Warning: Incompatible color definition on input line 495.
-
-
-Package xcolor Warning: Incompatible color definition on input line 495.
-
-
-Package xcolor Warning: Incompatible color definition on input line 496.
-
-
-Package xcolor Warning: Incompatible color definition on input line 496.
-
-
-Package xcolor Warning: Incompatible color definition on input line 496.
-
-
-Package xcolor Warning: Incompatible color definition on input line 496.
-
-
-Package xcolor Warning: Incompatible color definition on input line 496.
-
-
-Package xcolor Warning: Incompatible color definition on input line 496.
-
-
-Package xcolor Warning: Incompatible color definition on input line 496.
-
-
-Package xcolor Warning: Incompatible color definition on input line 496.
-
-
-Package xcolor Warning: Incompatible color definition on input line 496.
-
-
-Package xcolor Warning: Incompatible color definition on input line 497.
-
-
-Package xcolor Warning: Incompatible color definition on input line 497.
-
-
-Package xcolor Warning: Incompatible color definition on input line 497.
-
-
-Package xcolor Warning: Incompatible color definition on input line 497.
-
-
-Package xcolor Warning: Incompatible color definition on input line 497.
-
-
-Package xcolor Warning: Incompatible color definition on input line 497.
-
-
-Package xcolor Warning: Incompatible color definition on input line 497.
-
-
-Package xcolor Warning: Incompatible color definition on input line 497.
-
-
-Package xcolor Warning: Incompatible color definition on input line 497.
-
-
-Package xcolor Warning: Incompatible color definition on input line 497.
-
-
-Package xcolor Warning: Incompatible color definition on input line 497.
-
-
-Package xcolor Warning: Incompatible color definition on input line 498.
-
-
-Package xcolor Warning: Incompatible color definition on input line 498.
-
-
-Package xcolor Warning: Incompatible color definition on input line 498.
-
-
-Package xcolor Warning: Incompatible color definition on input line 498.
-
-
-Package xcolor Warning: Incompatible color definition on input line 498.
-
-
-Package xcolor Warning: Incompatible color definition on input line 498.
-
-
-Package xcolor Warning: Incompatible color definition on input line 498.
-
-
-Package xcolor Warning: Incompatible color definition on input line 498.
-
-
-Package xcolor Warning: Incompatible color definition on input line 498.
-
-
-Package xcolor Warning: Incompatible color definition on input line 498.
-
-
-Package xcolor Warning: Incompatible color definition on input line 498.
-
-
-Package xcolor Warning: Incompatible color definition on input line 498.
-
-
-Package xcolor Warning: Incompatible color definition on input line 498.
-
-
-Package xcolor Warning: Incompatible color definition on input line 498.
-
-
-Package xcolor Warning: Incompatible color definition on input line 498.
-
-
-Package xcolor Warning: Incompatible color definition on input line 498.
-
-
-Package xcolor Warning: Incompatible color definition on input line 498.
+Package xcolor Warning: Incompatible color definition on input line 492.
 
 [22]
+
+Package xcolor Warning: Incompatible color definition on input line 500.
+
+
+Package xcolor Warning: Incompatible color definition on input line 501.
+
+
+Package xcolor Warning: Incompatible color definition on input line 501.
+
+
+Package xcolor Warning: Incompatible color definition on input line 501.
+
+
+Package xcolor Warning: Incompatible color definition on input line 501.
+
+
+Package xcolor Warning: Incompatible color definition on input line 501.
+
+
+Package xcolor Warning: Incompatible color definition on input line 501.
+
+
+Package xcolor Warning: Incompatible color definition on input line 501.
+
+
+Package xcolor Warning: Incompatible color definition on input line 501.
+
+
+Package xcolor Warning: Incompatible color definition on input line 501.
+
+
+Package xcolor Warning: Incompatible color definition on input line 501.
+
+
+Package xcolor Warning: Incompatible color definition on input line 502.
+
+
+Package xcolor Warning: Incompatible color definition on input line 502.
+
+
+Package xcolor Warning: Incompatible color definition on input line 502.
+
+
+Package xcolor Warning: Incompatible color definition on input line 502.
+
+
+Package xcolor Warning: Incompatible color definition on input line 502.
+
+
+Package xcolor Warning: Incompatible color definition on input line 502.
+
+
+Package xcolor Warning: Incompatible color definition on input line 502.
+
+
+Package xcolor Warning: Incompatible color definition on input line 502.
+
+
+Package xcolor Warning: Incompatible color definition on input line 502.
+
+
+Package xcolor Warning: Incompatible color definition on input line 502.
+
+
+Package xcolor Warning: Incompatible color definition on input line 502.
+
+
+Package xcolor Warning: Incompatible color definition on input line 502.
+
+
+Package xcolor Warning: Incompatible color definition on input line 502.
+
+
+Package xcolor Warning: Incompatible color definition on input line 502.
+
+
+Package xcolor Warning: Incompatible color definition on input line 502.
+
+
+Package xcolor Warning: Incompatible color definition on input line 503.
+
+
+Package xcolor Warning: Incompatible color definition on input line 503.
+
+
+Package xcolor Warning: Incompatible color definition on input line 503.
+
+
+Package xcolor Warning: Incompatible color definition on input line 503.
+
+
+Package xcolor Warning: Incompatible color definition on input line 503.
+
+
+Package xcolor Warning: Incompatible color definition on input line 503.
+
+
+Package xcolor Warning: Incompatible color definition on input line 503.
+
+
+Package xcolor Warning: Incompatible color definition on input line 504.
+
+
+Package xcolor Warning: Incompatible color definition on input line 504.
+
+
+Package xcolor Warning: Incompatible color definition on input line 504.
+
+
+Package xcolor Warning: Incompatible color definition on input line 504.
+
+
+Package xcolor Warning: Incompatible color definition on input line 504.
+
+
+Package xcolor Warning: Incompatible color definition on input line 504.
+
+
+Package xcolor Warning: Incompatible color definition on input line 504.
+
+
+Package xcolor Warning: Incompatible color definition on input line 504.
+
+
+Package xcolor Warning: Incompatible color definition on input line 504.
+
+
+Package xcolor Warning: Incompatible color definition on input line 504.
+
+
+Package xcolor Warning: Incompatible color definition on input line 504.
+
+
+Package xcolor Warning: Incompatible color definition on input line 504.
+
+
+Package xcolor Warning: Incompatible color definition on input line 505.
+
+
+Package xcolor Warning: Incompatible color definition on input line 505.
+
+
+Package xcolor Warning: Incompatible color definition on input line 505.
+
+
+Package xcolor Warning: Incompatible color definition on input line 505.
+
+
+Package xcolor Warning: Incompatible color definition on input line 505.
+
+
+Package xcolor Warning: Incompatible color definition on input line 505.
+
+
+Package xcolor Warning: Incompatible color definition on input line 505.
+
+
+Package xcolor Warning: Incompatible color definition on input line 505.
+
+
+Package xcolor Warning: Incompatible color definition on input line 505.
+
+
+Package xcolor Warning: Incompatible color definition on input line 505.
+
+
+Package xcolor Warning: Incompatible color definition on input line 505.
+
+
+Package xcolor Warning: Incompatible color definition on input line 505.
+
+
+Package xcolor Warning: Incompatible color definition on input line 505.
+
+
+Package xcolor Warning: Incompatible color definition on input line 505.
+
 
 Package xcolor Warning: Incompatible color definition on input line 506.
 
 
-Package xcolor Warning: Incompatible color definition on input line 507.
+Package xcolor Warning: Incompatible color definition on input line 506.
 
 
-Package xcolor Warning: Incompatible color definition on input line 507.
+Package xcolor Warning: Incompatible color definition on input line 506.
 
 
-Package xcolor Warning: Incompatible color definition on input line 507.
+Package xcolor Warning: Incompatible color definition on input line 506.
 
 
-Package xcolor Warning: Incompatible color definition on input line 507.
+Package xcolor Warning: Incompatible color definition on input line 506.
 
 
-Package xcolor Warning: Incompatible color definition on input line 507.
+Package xcolor Warning: Incompatible color definition on input line 506.
 
 
-Package xcolor Warning: Incompatible color definition on input line 507.
+Package xcolor Warning: Incompatible color definition on input line 506.
 
 
-Package xcolor Warning: Incompatible color definition on input line 507.
+Package xcolor Warning: Incompatible color definition on input line 506.
 
 
-Package xcolor Warning: Incompatible color definition on input line 507.
+Package xcolor Warning: Incompatible color definition on input line 506.
 
 
-Package xcolor Warning: Incompatible color definition on input line 507.
+Package xcolor Warning: Incompatible color definition on input line 506.
 
 
-Package xcolor Warning: Incompatible color definition on input line 507.
+Package xcolor Warning: Incompatible color definition on input line 506.
 
 
-Package xcolor Warning: Incompatible color definition on input line 508.
+Package xcolor Warning: Incompatible color definition on input line 506.
 
 
-Package xcolor Warning: Incompatible color definition on input line 508.
+Package xcolor Warning: Incompatible color definition on input line 506.
 
 
-Package xcolor Warning: Incompatible color definition on input line 508.
+Package xcolor Warning: Incompatible color definition on input line 506.
 
 
-Package xcolor Warning: Incompatible color definition on input line 508.
+Package xcolor Warning: Incompatible color definition on input line 506.
 
 
-Package xcolor Warning: Incompatible color definition on input line 508.
+Package xcolor Warning: Incompatible color definition on input line 506.
 
 
-Package xcolor Warning: Incompatible color definition on input line 508.
+Package xcolor Warning: Incompatible color definition on input line 506.
 
 
-Package xcolor Warning: Incompatible color definition on input line 508.
+Package xcolor Warning: Incompatible color definition on input line 506.
 
 
-Package xcolor Warning: Incompatible color definition on input line 508.
+Package xcolor Warning: Incompatible color definition on input line 506.
 
 
-Package xcolor Warning: Incompatible color definition on input line 508.
+Package xcolor Warning: Incompatible color definition on input line 506.
 
 
-Package xcolor Warning: Incompatible color definition on input line 508.
+Package xcolor Warning: Incompatible color definition on input line 506.
 
 
-Package xcolor Warning: Incompatible color definition on input line 508.
+Package xcolor Warning: Incompatible color definition on input line 506.
 
 
-Package xcolor Warning: Incompatible color definition on input line 508.
+Package xcolor Warning: Incompatible color definition on input line 517.
 
 
-Package xcolor Warning: Incompatible color definition on input line 508.
+Package xcolor Warning: Incompatible color definition on input line 517.
 
 
-Package xcolor Warning: Incompatible color definition on input line 508.
+Package xcolor Warning: Incompatible color definition on input line 517.
 
 
-Package xcolor Warning: Incompatible color definition on input line 508.
+Package xcolor Warning: Incompatible color definition on input line 519.
 
 
-Package xcolor Warning: Incompatible color definition on input line 509.
+Package xcolor Warning: Incompatible color definition on input line 520.
 
 
-Package xcolor Warning: Incompatible color definition on input line 509.
+Package xcolor Warning: Incompatible color definition on input line 520.
 
 
-Package xcolor Warning: Incompatible color definition on input line 509.
+Package xcolor Warning: Incompatible color definition on input line 520.
 
 
-Package xcolor Warning: Incompatible color definition on input line 509.
-
-
-Package xcolor Warning: Incompatible color definition on input line 509.
-
-
-Package xcolor Warning: Incompatible color definition on input line 509.
-
-
-Package xcolor Warning: Incompatible color definition on input line 509.
-
-
-Package xcolor Warning: Incompatible color definition on input line 510.
-
-
-Package xcolor Warning: Incompatible color definition on input line 510.
-
-
-Package xcolor Warning: Incompatible color definition on input line 510.
-
-
-Package xcolor Warning: Incompatible color definition on input line 510.
-
-
-Package xcolor Warning: Incompatible color definition on input line 510.
-
-
-Package xcolor Warning: Incompatible color definition on input line 510.
-
-
-Package xcolor Warning: Incompatible color definition on input line 510.
-
-
-Package xcolor Warning: Incompatible color definition on input line 510.
-
-
-Package xcolor Warning: Incompatible color definition on input line 510.
-
-
-Package xcolor Warning: Incompatible color definition on input line 510.
-
-
-Package xcolor Warning: Incompatible color definition on input line 510.
-
-
-Package xcolor Warning: Incompatible color definition on input line 510.
-
-
-Package xcolor Warning: Incompatible color definition on input line 511.
-
-
-Package xcolor Warning: Incompatible color definition on input line 511.
-
-
-Package xcolor Warning: Incompatible color definition on input line 511.
-
-
-Package xcolor Warning: Incompatible color definition on input line 511.
-
-
-Package xcolor Warning: Incompatible color definition on input line 511.
-
-
-Package xcolor Warning: Incompatible color definition on input line 511.
-
-
-Package xcolor Warning: Incompatible color definition on input line 511.
-
-
-Package xcolor Warning: Incompatible color definition on input line 511.
-
-
-Package xcolor Warning: Incompatible color definition on input line 511.
-
-
-Package xcolor Warning: Incompatible color definition on input line 511.
-
-
-Package xcolor Warning: Incompatible color definition on input line 511.
-
-
-Package xcolor Warning: Incompatible color definition on input line 511.
-
-
-Package xcolor Warning: Incompatible color definition on input line 511.
-
-
-Package xcolor Warning: Incompatible color definition on input line 511.
-
-
-Package xcolor Warning: Incompatible color definition on input line 512.
-
-
-Package xcolor Warning: Incompatible color definition on input line 512.
-
-
-Package xcolor Warning: Incompatible color definition on input line 512.
-
-
-Package xcolor Warning: Incompatible color definition on input line 512.
-
-
-Package xcolor Warning: Incompatible color definition on input line 512.
-
-
-Package xcolor Warning: Incompatible color definition on input line 512.
-
-
-Package xcolor Warning: Incompatible color definition on input line 512.
-
-
-Package xcolor Warning: Incompatible color definition on input line 512.
-
-
-Package xcolor Warning: Incompatible color definition on input line 512.
-
-
-Package xcolor Warning: Incompatible color definition on input line 512.
-
-
-Package xcolor Warning: Incompatible color definition on input line 512.
-
-
-Package xcolor Warning: Incompatible color definition on input line 512.
-
-
-Package xcolor Warning: Incompatible color definition on input line 512.
-
-
-Package xcolor Warning: Incompatible color definition on input line 512.
-
-
-Package xcolor Warning: Incompatible color definition on input line 512.
-
-
-Package xcolor Warning: Incompatible color definition on input line 512.
-
-
-Package xcolor Warning: Incompatible color definition on input line 512.
-
-
-Package xcolor Warning: Incompatible color definition on input line 512.
-
-
-Package xcolor Warning: Incompatible color definition on input line 512.
-
-
-Package xcolor Warning: Incompatible color definition on input line 512.
-
-
-Package xcolor Warning: Incompatible color definition on input line 512.
-
-
-Package xcolor Warning: Incompatible color definition on input line 512.
-
-
-Package xcolor Warning: Incompatible color definition on input line 523.
-
-
-Package xcolor Warning: Incompatible color definition on input line 523.
-
-
-Package xcolor Warning: Incompatible color definition on input line 523.
-
-
-Package xcolor Warning: Incompatible color definition on input line 525.
-
-
-Package xcolor Warning: Incompatible color definition on input line 526.
-
-
-Package xcolor Warning: Incompatible color definition on input line 526.
-
-
-Package xcolor Warning: Incompatible color definition on input line 526.
+Package xcolor Warning: Incompatible color definition on input line 533.
 
 
 Package xcolor Warning: Incompatible color definition on input line 539.
 
 
-Package xcolor Warning: Incompatible color definition on input line 545.
+Package xcolor Warning: Incompatible color definition on input line 539.
 
 
-Package xcolor Warning: Incompatible color definition on input line 545.
+Package xcolor Warning: Incompatible color definition on input line 539.
 
 
-Package xcolor Warning: Incompatible color definition on input line 545.
+Package xcolor Warning: Incompatible color definition on input line 543.
 
 
-Package xcolor Warning: Incompatible color definition on input line 549.
+Package xcolor Warning: Incompatible color definition on input line 543.
 
 
-Package xcolor Warning: Incompatible color definition on input line 549.
+Package xcolor Warning: Incompatible color definition on input line 543.
 
 
-Package xcolor Warning: Incompatible color definition on input line 549.
+Package xcolor Warning: Incompatible color definition on input line 547.
 
 
-Package xcolor Warning: Incompatible color definition on input line 553.
+Package xcolor Warning: Incompatible color definition on input line 551.
 
 
-Package xcolor Warning: Incompatible color definition on input line 557.
+Package xcolor Warning: Incompatible color definition on input line 551.
 
 
-Package xcolor Warning: Incompatible color definition on input line 557.
+Package xcolor Warning: Incompatible color definition on input line 551.
 
 
-Package xcolor Warning: Incompatible color definition on input line 557.
+Package xcolor Warning: Incompatible color definition on input line 551.
 
 
-Package xcolor Warning: Incompatible color definition on input line 557.
+Package xcolor Warning: Incompatible color definition on input line 551.
 
 
-Package xcolor Warning: Incompatible color definition on input line 557.
+Package xcolor Warning: Incompatible color definition on input line 551.
 
 
-Package xcolor Warning: Incompatible color definition on input line 557.
+Package xcolor Warning: Incompatible color definition on input line 551.
 
 
-Package xcolor Warning: Incompatible color definition on input line 557.
+Package xcolor Warning: Incompatible color definition on input line 551.
 
 
-Package xcolor Warning: Incompatible color definition on input line 557.
+Package xcolor Warning: Incompatible color definition on input line 551.
 
 
-Package xcolor Warning: Incompatible color definition on input line 557.
+Package xcolor Warning: Incompatible color definition on input line 551.
 
 
-Package xcolor Warning: Incompatible color definition on input line 557.
-
-
-Overfull \hbox (15.0pt too wide) in paragraph at lines 518--570
+Overfull \hbox (15.0pt too wide) in paragraph at lines 512--564
 []$[]$ 
  []
 
@@ -1521,12 +1521,12 @@ Overfull \vbox (18.09145pt too high) has occurred while \output is active []
 
 
 [24]
-Underfull \hbox (badness 10000) in paragraph at lines 618--623
+Underfull \hbox (badness 10000) in paragraph at lines 612--617
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 618--623
+Underfull \hbox (badness 10000) in paragraph at lines 612--617
 
  []
 
@@ -1534,169 +1534,169 @@ Underfull \hbox (badness 10000) in paragraph at lines 618--623
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [25]
-<prophunt.png, id=177, 987.69pt x 1527.7075pt>
+<prophunt.png, id=177, 985.6825pt x 1527.7075pt>
 File: prophunt.png Graphic file (type png)
 <use prophunt.png>
-Package pdftex.def Info: prophunt.png  used on input line 626.
-(pdftex.def)             Requested size: 426.79134pt x 660.11833pt.
+Package pdftex.def Info: prophunt.png  used on input line 620.
+(pdftex.def)             Requested size: 426.79134pt x 661.49368pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [26]
-Overfull \vbox (76.07455pt too high) has occurred while \output is active []
+Overfull \vbox (77.4499pt too high) has occurred while \output is active []
 
 
 [27 <./prophunt.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 635--637
+Underfull \hbox (badness 10000) in paragraph at lines 629--631
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 635--637
+Underfull \hbox (badness 10000) in paragraph at lines 629--631
 
  []
 
 
-Package xcolor Warning: Incompatible color definition on input line 640.
+Package xcolor Warning: Incompatible color definition on input line 634.
 
 
-Package xcolor Warning: Incompatible color definition on input line 640.
+Package xcolor Warning: Incompatible color definition on input line 634.
 
 
-Package xcolor Warning: Incompatible color definition on input line 640.
+Package xcolor Warning: Incompatible color definition on input line 634.
 
 
-Package xcolor Warning: Incompatible color definition on input line 640.
+Package xcolor Warning: Incompatible color definition on input line 634.
 
 
-Package xcolor Warning: Incompatible color definition on input line 640.
+Package xcolor Warning: Incompatible color definition on input line 634.
 
 
-Package xcolor Warning: Incompatible color definition on input line 640.
+Package xcolor Warning: Incompatible color definition on input line 634.
 
 
-Package xcolor Warning: Incompatible color definition on input line 640.
+Package xcolor Warning: Incompatible color definition on input line 634.
 
 
-Package xcolor Warning: Incompatible color definition on input line 640.
+Package xcolor Warning: Incompatible color definition on input line 634.
 
 
-Package xcolor Warning: Incompatible color definition on input line 640.
+Package xcolor Warning: Incompatible color definition on input line 634.
 
 
-Package xcolor Warning: Incompatible color definition on input line 640.
+Package xcolor Warning: Incompatible color definition on input line 634.
 
 
-Package xcolor Warning: Incompatible color definition on input line 641.
+Package xcolor Warning: Incompatible color definition on input line 635.
 
 
-Package xcolor Warning: Incompatible color definition on input line 641.
+Package xcolor Warning: Incompatible color definition on input line 635.
 
 
-Package xcolor Warning: Incompatible color definition on input line 641.
+Package xcolor Warning: Incompatible color definition on input line 635.
 
 
-Package xcolor Warning: Incompatible color definition on input line 641.
+Package xcolor Warning: Incompatible color definition on input line 635.
 
 
-Package xcolor Warning: Incompatible color definition on input line 641.
+Package xcolor Warning: Incompatible color definition on input line 635.
 
 
-Package xcolor Warning: Incompatible color definition on input line 641.
+Package xcolor Warning: Incompatible color definition on input line 635.
 
 
-Package xcolor Warning: Incompatible color definition on input line 641.
+Package xcolor Warning: Incompatible color definition on input line 635.
 
 
-Package xcolor Warning: Incompatible color definition on input line 641.
+Package xcolor Warning: Incompatible color definition on input line 635.
 
 
-Package xcolor Warning: Incompatible color definition on input line 641.
+Package xcolor Warning: Incompatible color definition on input line 635.
 
 
-Package xcolor Warning: Incompatible color definition on input line 641.
+Package xcolor Warning: Incompatible color definition on input line 635.
 
 
-Package xcolor Warning: Incompatible color definition on input line 641.
+Package xcolor Warning: Incompatible color definition on input line 635.
 
 
-Package xcolor Warning: Incompatible color definition on input line 641.
+Package xcolor Warning: Incompatible color definition on input line 635.
 
 
-Package xcolor Warning: Incompatible color definition on input line 641.
+Package xcolor Warning: Incompatible color definition on input line 635.
 
 
-Package xcolor Warning: Incompatible color definition on input line 641.
+Package xcolor Warning: Incompatible color definition on input line 635.
 
 
-Package xcolor Warning: Incompatible color definition on input line 641.
+Package xcolor Warning: Incompatible color definition on input line 635.
 
 
-Package xcolor Warning: Incompatible color definition on input line 641.
+Package xcolor Warning: Incompatible color definition on input line 635.
 
 
-Package xcolor Warning: Incompatible color definition on input line 642.
+Package xcolor Warning: Incompatible color definition on input line 636.
 
 
-Package xcolor Warning: Incompatible color definition on input line 642.
+Package xcolor Warning: Incompatible color definition on input line 636.
 
 
-Package xcolor Warning: Incompatible color definition on input line 642.
+Package xcolor Warning: Incompatible color definition on input line 636.
 
 
-Package xcolor Warning: Incompatible color definition on input line 642.
+Package xcolor Warning: Incompatible color definition on input line 636.
 
 
-Package xcolor Warning: Incompatible color definition on input line 642.
+Package xcolor Warning: Incompatible color definition on input line 636.
 
 
-Package xcolor Warning: Incompatible color definition on input line 642.
+Package xcolor Warning: Incompatible color definition on input line 636.
 
 
-Package xcolor Warning: Incompatible color definition on input line 642.
+Package xcolor Warning: Incompatible color definition on input line 636.
 
 
-Package xcolor Warning: Incompatible color definition on input line 642.
+Package xcolor Warning: Incompatible color definition on input line 636.
 
 
-Package xcolor Warning: Incompatible color definition on input line 642.
+Package xcolor Warning: Incompatible color definition on input line 636.
 
 
-Package xcolor Warning: Incompatible color definition on input line 642.
+Package xcolor Warning: Incompatible color definition on input line 636.
 
 
-Package xcolor Warning: Incompatible color definition on input line 642.
+Package xcolor Warning: Incompatible color definition on input line 636.
 
 
-Package xcolor Warning: Incompatible color definition on input line 642.
+Package xcolor Warning: Incompatible color definition on input line 636.
 
 
-Package xcolor Warning: Incompatible color definition on input line 642.
+Package xcolor Warning: Incompatible color definition on input line 636.
 
 
-Package xcolor Warning: Incompatible color definition on input line 642.
+Package xcolor Warning: Incompatible color definition on input line 636.
 
 
-Package xcolor Warning: Incompatible color definition on input line 642.
+Package xcolor Warning: Incompatible color definition on input line 636.
 
 
-Package xcolor Warning: Incompatible color definition on input line 642.
+Package xcolor Warning: Incompatible color definition on input line 636.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 645--648
+Underfull \hbox (badness 10000) in paragraph at lines 639--642
 
  []
 
 <callgraph.png, id=185, 1286.8075pt x 1748.5325pt>
 File: callgraph.png Graphic file (type png)
 <use callgraph.png>
-Package pdftex.def Info: callgraph.png  used on input line 651.
+Package pdftex.def Info: callgraph.png  used on input line 645.
 (pdftex.def)             Requested size: 426.79134pt x 579.92567pt.
 
 Underfull \vbox (badness 2698) has occurred while \output is active []
 
  [28]
-Underfull \hbox (badness 10000) in paragraph at lines 656--659
+Underfull \hbox (badness 10000) in paragraph at lines 650--653
 
  []
 
@@ -1704,17 +1704,17 @@ Underfull \hbox (badness 10000) in paragraph at lines 656--659
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [29 <./callgraph.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 666--671
+Underfull \hbox (badness 10000) in paragraph at lines 660--665
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 666--671
+Underfull \hbox (badness 10000) in paragraph at lines 660--665
 
  []
 
 [30]
-Underfull \hbox (badness 10000) in paragraph at lines 684--687
+Underfull \hbox (badness 10000) in paragraph at lines 678--681
 
  []
 
@@ -1723,7 +1723,7 @@ Chapter 4.
 <ResultsGeneral.png, id=203, 1551.7975pt x 1371.1225pt>
 File: ResultsGeneral.png Graphic file (type png)
 <use ResultsGeneral.png>
-Package pdftex.def Info: ResultsGeneral.png  used on input line 698.
+Package pdftex.def Info: ResultsGeneral.png  used on input line 692.
 (pdftex.def)             Requested size: 426.79134pt x 377.09123pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
@@ -1735,7 +1735,7 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 Underfull \vbox (badness 4144) has occurred while \output is active []
 
  [34 <./ResultsGeneral.png>]
-Overfull \hbox (1.59424pt too wide) in paragraph at lines 739--740
+Overfull \hbox (1.59424pt too wide) in paragraph at lines 733--734
 \T1/ppl/m/n/10 Figure 4.2[] shows the den-sity dis-tri-bu-tion of all bench-mar
 ks found in \T1/ppl/b/n/10 Bench-mark_Variabilities.csv
  []
@@ -1744,19 +1744,19 @@ ks found in \T1/ppl/b/n/10 Bench-mark_Variabilities.csv
 File: resultsvis/density_controlled1.png Graphic file (type png)
 <use resultsvis/density_controlled1.png>
 Package pdftex.def Info: resultsvis/density_controlled1.png  used on input line
- 743.
+ 737.
 (pdftex.def)             Requested size: 426.79134pt x 218.50252pt.
 [35 <./resultsvis/density_controlled1.png>]
 <resultsvis/log1.png, id=217, 1445.4pt x 740.0147pt>
 File: resultsvis/log1.png Graphic file (type png)
 <use resultsvis/log1.png>
-Package pdftex.def Info: resultsvis/log1.png  used on input line 752.
+Package pdftex.def Info: resultsvis/log1.png  used on input line 746.
 (pdftex.def)             Requested size: 426.79134pt x 218.50569pt.
 <resultsvis/density_controlled2.png, id=218, 1387.584pt x 710.4141pt>
 File: resultsvis/density_controlled2.png Graphic file (type png)
 <use resultsvis/density_controlled2.png>
 Package pdftex.def Info: resultsvis/density_controlled2.png  used on input line
- 761.
+ 755.
 (pdftex.def)             Requested size: 426.79134pt x 218.50252pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
@@ -1765,7 +1765,7 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 <resultsvis/log2.png, id=223, 1445.4pt x 740.0147pt>
 File: resultsvis/log2.png Graphic file (type png)
 <use resultsvis/log2.png>
-Package pdftex.def Info: resultsvis/log2.png  used on input line 770.
+Package pdftex.def Info: resultsvis/log2.png  used on input line 764.
 (pdftex.def)             Requested size: 426.79134pt x 218.50569pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
@@ -1773,30 +1773,30 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
  [37 <./resultsvis/density_controlled2.png> <./resultsvis/log2.png>]
 
 LaTeX Warning: Reference `table:unstable' on page 38 undefined on input line 81
-9.
+3.
 
 
-Overfull \hbox (58.38431pt too wide) in alignment at lines 822--827
+Overfull \hbox (58.38431pt too wide) in alignment at lines 816--821
  [] [] [] 
  []
 
 
-Overfull \hbox (58.38431pt too wide) in alignment at lines 827--829
+Overfull \hbox (58.38431pt too wide) in alignment at lines 821--823
  [] [] [] 
  []
 
 
-Overfull \hbox (58.38431pt too wide) in alignment at lines 829--832
+Overfull \hbox (58.38431pt too wide) in alignment at lines 823--826
  [] [] [] 
  []
 
 
-Overfull \hbox (58.38431pt too wide) in alignment at lines 832--834
+Overfull \hbox (58.38431pt too wide) in alignment at lines 826--828
  [] [] [] 
  []
 
 
-Overfull \hbox (58.38431pt too wide) in alignment at lines 834--855
+Overfull \hbox (58.38431pt too wide) in alignment at lines 828--849
  [] [] [] 
  []
 
@@ -1804,59 +1804,59 @@ Overfull \hbox (58.38431pt too wide) in alignment at lines 834--855
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [38]
-Overfull \hbox (1.15451pt too wide) in paragraph at lines 871--874
+Overfull \hbox (1.15451pt too wide) in paragraph at lines 865--868
 \T1/ppl/m/n/10 able to down-load 223 of the projects suc-cess-fully. From the r
 e-main-ing 5 projects, 3 (\T1/ppl/b/n/10 tendermint/go-
  []
 
 
-Overfull \hbox (0.14471pt too wide) in paragraph at lines 871--874
+Overfull \hbox (0.14471pt too wide) in paragraph at lines 865--868
 \T1/ppl/b/n/10 merkle\T1/ppl/m/n/10 , \T1/ppl/b/n/10 pp2p/paranoid\T1/ppl/m/n/1
 0 , \T1/ppl/b/n/10 el-e-me/ban-shee\T1/ppl/m/n/10 ) are not found, ei-ther be-c
 ause they ter-mi-nated the project
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 871--874
+Underfull \hbox (badness 10000) in paragraph at lines 865--868
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 871--874
+Underfull \hbox (badness 10000) in paragraph at lines 865--868
 
  []
 
 [39]
-Underfull \hbox (badness 10000) in paragraph at lines 877--878
+Underfull \hbox (badness 10000) in paragraph at lines 871--872
 
  []
 
 <parsedfunctions.png, id=235, 1387.584pt x 710.4141pt>
 File: parsedfunctions.png Graphic file (type png)
 <use parsedfunctions.png>
-Package pdftex.def Info: parsedfunctions.png  used on input line 882.
+Package pdftex.def Info: parsedfunctions.png  used on input line 876.
 (pdftex.def)             Requested size: 426.79134pt x 218.50252pt.
 <parsedbenchmarks.png, id=236, 1387.584pt x 710.4141pt>
 File: parsedbenchmarks.png Graphic file (type png)
 <use parsedbenchmarks.png>
-Package pdftex.def Info: parsedbenchmarks.png  used on input line 889.
+Package pdftex.def Info: parsedbenchmarks.png  used on input line 883.
 (pdftex.def)             Requested size: 426.79134pt x 218.50252pt.
 
 Underfull \vbox (badness 7944) has occurred while \output is active []
 
  [40 <./parsedfunctions.png>]
-Overfull \hbox (6.46335pt too wide) in paragraph at lines 922--925
+Overfull \hbox (6.46335pt too wide) in paragraph at lines 916--919
 \T1/ppl/m/n/10 stance of the project (See in A.1[]). In the next step, I com-pa
 re the bench-marks from Pro-phunt_Output
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 922--925
+Underfull \hbox (badness 10000) in paragraph at lines 916--919
 
  []
 
 [41 <./parsedbenchmarks.png>]
-Overfull \hbox (16.24596pt too wide) in paragraph at lines 927--927
+Overfull \hbox (16.24596pt too wide) in paragraph at lines 921--921
 []\T1/phv/b/n/17.28 Correlation be-tween vari-abil-i-ties and source code
  []
 
@@ -1864,36 +1864,86 @@ Overfull \hbox (16.24596pt too wide) in paragraph at lines 927--927
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [42]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [43]
-[44]
-Chapter 5.
-
-Underfull \hbox (badness 10000) in paragraph at lines 1021--1023
+Underfull \hbox (badness 10000) in paragraph at lines 969--972
 
  []
 
-[45
+<gosregression.png, id=249, 1387.584pt x 710.4141pt>
+File: gosregression.png Graphic file (type png)
+<use gosregression.png>
+Package pdftex.def Info: gosregression.png  used on input line 975.
+(pdftex.def)             Requested size: 426.79134pt x 218.50252pt.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [43]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [44 <./gosregression.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 1027--1030
+
+ []
+
+<syncregression.png, id=257, 1387.584pt x 710.4141pt>
+File: syncregression.png Graphic file (type png)
+<use syncregression.png>
+Package pdftex.def Info: syncregression.png  used on input line 1033.
+(pdftex.def)             Requested size: 426.79134pt x 218.50252pt.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [45]
+Underfull \hbox (badness 10000) in paragraph at lines 1038--1041
+
+ []
+
+[46 <./syncregression.png>]
+Chapter 5.
+
+Underfull \hbox (badness 10000) in paragraph at lines 1060--1063
+
+ []
+
+[47
 
 
-] [46
+]
+Underfull \hbox (badness 10000) in paragraph at lines 1068--1073
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1068--1073
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1076--1081
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1076--1081
+
+ []
+
+[48] [49] [50
 
 
 ]
 Chapter 6.
-[47] [48
+[51] [52
 
 
 ]
 Appendix A.
-[49] [50] [51]
+[53] [54] [55]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [52]
-[53] [54
+ [56]
+[57] [58
 
-] ("Bachelor Thesis - Mikael.bbl" [55
+] ("Bachelor Thesis - Mikael.bbl" [59
 
 
 ]
@@ -1902,7 +1952,7 @@ Underfull \hbox (badness 6559) in paragraph at lines 86--89
 .net/projects/code-
  []
 
-[56]
+[60]
 Overfull \hbox (19.893pt too wide) in paragraph at lines 173--176
 []\T1/ppl/m/n/10 statistics  math-e-mat-i-cal statis-tics func-tions.  https:/
 /docs.python.org/3/library/statistics.html,
@@ -1920,16 +1970,16 @@ Overfull \hbox (73.76329pt too wide) in paragraph at lines 228--233
 erence/generated/scipy.stats.spearmanr.html,
  []
 
-) [57] ("Bachelor Thesis - Mikael.aux")
+) [61] ("Bachelor Thesis - Mikael.aux")
 
 LaTeX Warning: There were undefined references.
 
  ) 
 Here is how much of TeX's memory you used:
- 7731 strings out of 492897
- 117847 string characters out of 3123287
- 485197 words of memory out of 3000000
- 11465 multiletter control sequences out of 15000+200000
+ 7747 strings out of 492897
+ 118176 string characters out of 3123287
+ 485263 words of memory out of 3000000
+ 11479 multiletter control sequences out of 15000+200000
  61574 words of font info for 68 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  41i,19n,46p,2281b,1735s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -1949,9 +1999,9 @@ ts/type1/urw/helvetic/uhvr8a.pfb><C:/Users/Mikael/AppData/Local/Programs/MiKTeX
  2.9/fonts/type1/urw/palatino/uplb8a.pfb><C:/Users/Mikael/AppData/Local/Program
 s/MiKTeX 2.9/fonts/type1/urw/palatino/uplr8a.pfb><C:/Users/Mikael/AppData/Local
 /Programs/MiKTeX 2.9/fonts/type1/urw/palatino/uplri8a.pfb>
-Output written on "Bachelor Thesis - Mikael.pdf" (71 pages, 1393835 bytes).
+Output written on "Bachelor Thesis - Mikael.pdf" (75 pages, 1490200 bytes).
 PDF statistics:
- 340 PDF objects out of 1000 (max. 8388607)
+ 358 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 91 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 101 words of extra memory for PDF output out of 10000 (max. 10000000)
 
