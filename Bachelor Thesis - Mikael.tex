@@ -10,12 +10,13 @@
 \usepackage{longtable}
 \usepackage[inline]{enumitem}
 \usepackage{booktabs}
-
+\usepackage{inconsolata}
+\usepackage{tabu}
 
 
 \thesisType{Bachelor Thesis}
 \date{\today}
-\title{A Correlation Analysis Involving Benchmark Stability and Source Code Features}
+\title{A Correlation Study Between Source Code Features and Benchmark Stability}
 
 \author{Mikael Basmaci}
 \home{Istanbul} % Geburtsort
@@ -34,12 +35,12 @@
 \frontmatter
 
 \begin{acknowledgements}
-	Here comes the acknowledgements.
+	I hereby would like thank my supervisor, Christoph Laaber, for assisting me throughout the project time, providing me with the dataset and tools that make the analysis possible, and for the whole supervision in general.
 \end{acknowledgements}
 
 \begin{abstract}
 		
-Software microbenchmarks are used in Software Performance Engineering (SPE) to assess the performance of code fragments of a software system. Because they give non-deterministic results upon execution, there exists a certain variability in the results of microbenchmarks. Since the variability is an indicator of stability, the more variable the results, the less stable a microbenchmark is said to be. Studies show that the variability of microbenchmarks depend on different factors such as the hardware or platform the benchmarks are run on, or even the programming language itself. One of the factors that may affect the variability, hence the stability of a microbenchmark can be the source code features of the benchmark and therefore the correlation between stability and source code features of benchmarks needs to be studied. In this thesis, I analyze variabilities of 4589 microbenchmarks written in Go to find out about their stability, collect source code features of benchmarks from 223 open source software projects by parsing and doing a callgraph analysis, and finally do a correlation analysis based on the stability and source code features of benchmarks. Results show that 98.17\% of the benchmarks have a variation below 10\% as calculated by the relative confidence interval width with 99 percent confidence interval. Moreover, 87.70\% of these benchmarks have a variability below 1\%, meaning that most benchmarks are very stable. From the 4716 benchmarks, whose source code features are collected by parsing and analyzing their callgraphs, 4330 match with the benchmarks from the variability analysis. The results of correlation analysis show that 14 out of 59 collected source code features have a correlation coefficient value higher than 0.25, where the usage of sync library is the most correlating feature with a value of 0.35690. This is followed by the usage of go keyword, which has the value 0.28593. Generally, concurrency and control flow related features correlate with stability with a higher value than 0.22, while sync, sync/atomic and math/rand libraries correlate even more with a value above 0.25. An interesting finding reveals that pointers and defer statements are also relevant to the stability.
+Software microbenchmarks are used in Software Performance Engineering (SPE) to assess the performance of code fragments of a software system. Because they give non-deterministic results upon execution, there exists a certain variability in the results of microbenchmarks. Since the variability is an indicator of stability, the more variable the results, the less stable a microbenchmark is said to be. Studies show that the variability of microbenchmarks depend on different factors such as the hardware or platform the benchmarks are run on, the source code under the benchmark, or even the programming language itself. One of the factors that may affect the variability, hence the stability of a microbenchmark can be the source code features of the benchmark and the code it calls. Therefore, studying the correlation between stability and source code features of benchmarks may provide an insight to this aspect. In this thesis, I analyze variabilities of 4589 microbenchmarks from 223 open-source projects written in Go to find out about their stability, collect source code features of benchmarks by Abstract Syntax Tree (AST) parsing and callgraph analysis, and finally perform a correlation analysis based on the stability and source code features of benchmarks. Results show that 98.17\% of the benchmarks have a variation below 10\% as calculated by the 99th percent relative confidence interval width. Moreover, 87.70\% of these benchmarks have a variability below 1\%, meaning that most benchmarks are very stable. The results of correlation analysis show that 14 out of 59 collected source code features have a correlation coefficient value higher than 0.25, where the usage of sync library is the most correlating feature with a value of 0.36. This is followed by the usage of go keyword, which has the value 0.29. Generally, concurrency and control flow related features correlate with stability with a higher value than 0.22, while sync, sync/atomic and math/rand libraries correlate even more with a value above 0.25. An interesting finding reveals that pointers and defer statements are also relevant to the stability. The findings from this study can be used by developers or tool designers to 
 
 
 \end{abstract}
@@ -72,7 +73,7 @@ There are different kinds of performance testing belonging to measurement-based 
 \\
 There exist another type of performance testing, which is with the so called software microbenchmarks. These are adopted as performance evaluation strategy for rather small and library-like projects\cite{laaber2019software} and can test modular functions of a software system and measure their performance\cite{costa2019}. With early adoption of these tests, developers can find out about performance regressions whilst developing, and find solutions before they become bigger performance issues, which one would first realize at the time of analyzing results of bigger performance tests such as stress or load tests. A challenge with testing using microbenchmarks is the non-deterministicity of the results, which means a certain variability exist for the results of an executed benchmark\cite{Laaber:2018:EOS:3196398.3196407}. A benchmark is said to be stable or not stable depending on the variability of its results. Having a stable benchmark is important because being stable means having less varying results across multiple executions, and the less variable the benchmark's results, the more accurate the benchmark is able to report about performance counters. This also indicates that developers can rely on the results of a stable benchmark with less questioning about their validity. There are multiple factors that affect the variability of a benchmark such as the platform where the benchmarks are executed, the hardware that executes them, or the programming language of the benchmark itself \cite{laaber2018performance}. One of the factors that might be affecting the variability of benchmarks could be the source code related features of a benchmark and it is therefore needed to study the correlation between source code features and the stability of a benchmark.\\
 \\
-In this thesis, I am studying the stability of benchmarks from 230 open source software projects written in Go. For this, I firstly analyze the variability of 4802 benchmarks across all projects from a given dataset which has benchmark results of the projects. Secondly, I extract source code features of these benchmarks by parsing their source code and doing a callgraph analysis. The source code features extracted in this thesis fall into two categories: (i) Language related source code features, which include syntactic aspects of the programming language such as loops, collections and similar, and (ii) standard library related features, with which indications about the usage of hardware and network related aspects such as I/O, http calls, and similar can be made. Thirdly, I do an analysis using the variability results of benchmarks and their source code features to assess the correlation between the stability of benchmarks and their source code features.\\
+In this thesis, I am studying the stability of benchmarks from 233 open source software projects written in Go. For this, I firstly analyze the variability of 4589 benchmarks across all projects from a given dataset which has benchmark results of the projects. Secondly, I extract source code features of these benchmarks by parsing their source code and doing a callgraph analysis. The source code features extracted in this thesis fall into two categories: (i) Language related source code features, which include syntactic aspects of the programming language such as loops, collections and similar, and (ii) standard library related features, with which indications about the usage of hardware and network related aspects such as I/O, http calls, and similar are approximated. Thirdly, I perform an analysis using the variability results of benchmarks and their source code features to assess the correlation between the stability of benchmarks and their source code features.\\
 \\
 To this end, I answer the following research questions: 
 
@@ -80,15 +81,15 @@ To this end, I answer the following research questions:
 	\item \textbf{RQ1: How stable are microbenchmark results of Go projects?}
 \end{itemize}
 
-\noindent My hypothesis for the the first research question is: I expect the benchmarks to have different percentages of variability values, having a normalized distribution between 1\% to 100\%. To answer my first research question, I get all the projects benchmarks, calculate their variability with different measurement metrics such as Coefficient of Variation (CV) and Relative Confidence Interval Width (RCIW), and report the variabilities of benchmarks for 228 valid projects, having in total valid 4589 benchmarks. Unlike my hypothesis, most of the benchmarks are very stable, in fact, 98.17\% of all benchmarks have a RCIW99 value below 10\%. From the rest of benchmarks, only 0.4\% (19/4589) are rather unstable, having a RCIW99 value above 60\%.\\
+\noindent My hypothesis for the the first research question is: I expect many of the benchmarks to small percentages of variability values, since Go benchmarks are reported to be largely very reliable \cite{Laaber:2018:EOS:3196398.3196407}. To answer my first research question, I get all the projects benchmarks, calculate their variability with different measurement metrics such as Coefficient of Variation (CV) and Relative Confidence Interval Width (RCIW), and report the variabilities of benchmarks for 228 valid projects, having in total 4589 valid benchmarks. Unlike my hypothesis, most of the benchmarks are very stable, in fact, 98.17\% of all benchmarks have a RCIW99 value below 10\%. From the rest of benchmarks, only 0.4\% (19/4589) are rather unstable, having a RCIW99 value above 60\%.\\
 \\
 \begin{itemize}
 	\item \textbf{RQ2: Which source code features contribute to the stability of benchmark results and how?}
 \end{itemize}
 
-\noindent My hypothesis for the second research question is: I expect to see significant effects of body related features and Go's standard library usages to the stability of benchmark results. In particular, I suppose that cyclomatic complexity, file IO, http calls and loops have a significant impact on the variability. For the second research question, I download all the projects from Github. Then I run my parser program Prophunt which collects the source code features from all the functions and make a callgraph analysis for the benchmarks to collect all the visited functions' features, resulting into features of the benchmark. Finally, I use Spearman's rank-order correlation to find out about the correlation between extracted source code features and the stability of a benchmark. Results show that across all features, 11 language related and 3 library related features correlate with the stability of a benchmark having a correlation coefficient higher than 0.25 and a strong significance. Among all features, "sync" as a library feature has the highest correlation with a coefficient value of 0.35690, followed by a language feature "gos", which has the value 0,28593.\\
+\noindent It is reported that the source of variability of a benchmark sometimes originates from the benchmark itself \cite{laaber2019software}. To that end, my hypothesis for the second research question is: I expect to see significant effects of body related features and Go's standard library usages to the stability of benchmark results. In particular, I suppose that cyclomatic complexity, file IO, http calls and loops have a significant impact on the variability. Cyclomatic complexity and loops are directly related to the execution time of code, hence, depending on the control flow graph of the benchmark and visited nodes within the graph, a benchmark's execution time may alter. Http calls' performance relies on the performance of the network, that's why usage of them may also be a cause of variability, depending on how fast the network responds at each execution of benchmarks. Similarly, file IO's performance relies on the performance of underlying hardware, which can cause a benchmark to give different results for the same code under test. For the second research question, I download all the projects from Github. Then I run my parser program Prophunt, which collects the source code features from all functions in a project. Consequently, I make a callgraph analysis for the project, by which I find all the reachable functions from a benchmark to sum up feature values of the reachable functions, resulting into the features of the benchmark itself. Finally, I use Spearman's rank-order correlation to find out about the correlation between extracted source code features and the stability of a benchmark. Results show that across all features, 11 language related and 3 library related features correlate with the stability of a benchmark having a correlation coefficient higher than 0.25 and a strong significance. Among all features, "sync" as a library feature has the highest correlation with a coefficient value of 0.35690, followed by a language feature "gos", which has the value 0,28593. All in all, concurrency and control flow related features have a correlation with a value above 0.22, while the usage of libraries sync, sync/atomic and math/rand correlate slightly more with values higher than 0.25. Also, pointers and defer statements depict a correlation with the stability.\\
 \\
-Rest of this thesis is structured as follows: I give an introduction to related topics and background about this thesis in the \ref{Background and Related Work}. Chapter. In the \ref{Methodology}. Chapter, I explain the three steps I take to do the analytic part of this thesis and elaborate on the threads to the validity of the methodology. I present the results of these steps in the \ref{Results}. Chapter. Next comes the \ref{Discussion}. Chapter where I discuss about the methodology and the results of this thesis and present some ideas for the future work. I conclude with the \ref{Conclusion}. Chapter.
+Rest of this thesis is structured as follows: I give an introduction to related topics and background about this thesis in Chapter \ref{Background and Related Work}. In Chapter \ref{Methodology}, I explain the three steps I take to do the analytic part of this thesis and elaborate on the threads to the validity of the methodology. I present the results of these steps in Chapter \ref{Results}. Next comes Chapter \ref{Discussion}, where I discuss about the methodology and the results of this thesis and present some ideas for the future work. I conclude with Chapter \ref{Conclusion}.
 
 \chapter{Background and Related Work}
 \label{Background and Related Work}
@@ -101,13 +102,13 @@ In this subsection, I give a detailed background information about software micr
 
 Different kinds of benchmarks are found in the literature. While sometimes benchmarks refer to a standardization of a measure, other benchmarks assess the performance of the underlying system. For example, there are different benchmark programs to measure the performance of hardware such as Central Processing Unit(CPU), to be able to compare their performance with others of its kind. Another example can be the benchmark function of a game, which gives the average Frames Per Second (FPS) score of the game run on a hardware.\\
 \\
-Software developers can analyze the performance of parts of their software with so called software microbenchmarks, which are found either as microbenchmarks or performance unit tests in the literature\cite{costa2019}. These two terms differ in the way they test the underlying code for performance: While microbenchmarks report performance counters (e.g., execution time, throughput, latency etc.) for the different iterations of a trial, performance unit tests act like unit tests in functional testing, reporting if a pre set performance criteria has been reached at the runtime of the test \cite{costa2019}. Some studies such as \cite{Stefan:2017:UTP:3030207.3030226}\cite{Horky:2015:UPU:2668930.2688051} investigate the usage of performance unit tests, while sometimes other studies such as \cite{Laaber:2018:EOS:3196398.3196407}\cite{rodriguez2016automatic} work with microbenchmarks. In this thesis, I work with microbenchmarks and in the rest of this thesis I use the term performance test interchangeable with testing with microbenchmarks.\\
+Software developers can analyze the performance of parts of their software with so called software microbenchmarks, which are found either as microbenchmarks or performance unit tests in the literature\cite{costa2019}. These two terms differ in the way they test the underlying code for performance: While microbenchmarks report performance counters (e.g., execution time, throughput, latency etc.) for the different iterations of a trial, performance unit tests act like unit tests in functional testing, reporting if a pre set performance criteria has been reached at the runtime of the test \cite{costa2019}. Some studies such as \cite{Stefan:2017:UTP:3030207.3030226}\cite{Horky:2015:UPU:2668930.2688051} investigate the usage of performance unit tests, while other studies such as \cite{Laaber:2018:EOS:3196398.3196407}\cite{rodriguez2016automatic} work with microbenchmarks. In this thesis, I work with microbenchmarks and in the rest of this thesis I use the term performance test interchangeable with testing with microbenchmarks.\\
 \\
 Microbenchmarks usually test for only a small fraction of the software, such as one or multiple functions, to assess their performance. A microbenchmark can for instance test the performance of a newly introduced data structure, an implemented algorithm, or even the concurrency performance of functions\cite{costa2019}. As in functional testing, microbenchmarking also comes with testing frameworks that allow developers to create function pools, which are often also called microbenchmark suites (in contrast to unit test suites in functional testing). As an example, for Java there exist Java Microbenchmarking Harness (JMH), which is similar to JUnit, but is implemented to help developers with the creation of microbenchmarks\cite{JMH}.\\
 \\
-Go comes with a built-in package for testing and benchmarking, which makes it easier for developers to unit test their code while still developing, or measure the performance of their functions\cite{gobench}. To create a benchmark function, the only thing one has to write is a function beginning with the name \textbf{"Benchmark"} and give a parameter \textbf{*testing.B}. These functions are defined in files ending with the \textbf{\_test.go} suffix, and the collection of all the benchmarks within a project build its microbenchmarking suite. Listing \ref{BenchmarkSrc} shows the example benchmark \textit{BenchmarkHash} from project \textbf{ironsmile/nedomi} \cite{ironsmile/nedomi}.
+Go comes with a built-in package for testing and benchmarking, which makes it easier for developers to unit test their code while still developing, or measure the performance of their functions\cite{gobench}. To create a benchmark function, the only thing one has to write is a function beginning with the name \textbf{"Benchmark"} and give a parameter \texttt{\textbf{*testing.B}}. These functions are defined in files ending with the \textbf{\_test.go} suffix, and the collection of all the benchmarks within a project build its microbenchmarking suite. Listing \ref{BenchmarkSrc} shows the example benchmark \textit{BenchmarkHash} from project \textbf{ironsmile/nedomi} \cite{ironsmile/nedomi}.
 
-\begin{lstlisting}[caption=An example benchmark from \cite{ironsmile/nedomi}., label={BenchmarkSrc}, language=Go, frame=single, breaklines=false]
+\begin{lstlisting}[caption=An example benchmark from ironsmile/nedomi \cite{ironsmile/nedomi}., label={BenchmarkSrc}, language=Go, frame=single, breaklines=false]
 func BenchmarkHash(b *testing.B) {
 	var m = buildMapHash(id, count)
 	for i := 0; b.N > i; i++ {
@@ -124,54 +125,13 @@ func BenchmarkHash(b *testing.B) {
 }
 \end{lstlisting}
 
-\noindent A benchmark in Go can be executed by using the built-in command "go test" followed by a flag "-bench", and the benchmark invokes the target code b.N times \cite{gobench}. The default execution time of a benchmark is 1 second and the result of the benchmark is the average execution time of the target code across all runs. In this thesis, a full run of a benchmark is defined as iteration and the number of runs for a benchmark can be configured with a command-line flag "-count". The results of a benchmark refer to the collection of results from all iterations.\\
+\noindent A benchmark in Go can be executed by using the built-in command "go test" followed by a flag "-bench", and the benchmark invokes the target code \texttt{b.N} times \cite{gobench}, trying to execute the underlying code as many times as possible. The default execution time of a benchmark is 1 second and the result of the benchmark is the average execution time of the target code across all runs. In this thesis, a full run of a benchmark is defined as iteration and the number of runs for a benchmark can be configured with a command-line flag "-count". The results of a benchmark refer to the collection of results from all iterations.\\
 \\
-Go developers can choose to run a benchmark for a limited time to see how many iterations can happen in this pre defined time, or also choose to run the benchmark for a specific amount of iterations to see how long it takes the functions within the benchmark to result in average. Such configurations are especially useful for when determining whether a new introduced feature in the system causes performance regressions. Furthermore, these regressions can be detected early whilst still being in the development stage of the software, and according changes to the code can be scheduled before the changes go to production, which ensures the stability for the performance in the evolution of the software.
-
-
-\subsection{Microbenchmark variability}
-\label{Microbenchmark variability}
-
-Unless otherwise configured, when a microbenchmark is run, it executes the underlying code for a certain time period (e.g., 1s) over and over for each benchmark iteration and returns a collection of average execution times for each benchmark iteration\cite{laaber2019software}. Execution times of a benchmark in Go are expressed in nanoseconds \cite{laaber2019software} \cite{costa2019}. In this thesis, the term microbenchmark variability refers to the variability of a microbenchmark's resulting collection of execution times. It is basically computed by measuring how far the single execution times fall from the average execution time. In this manner, if the executions times are in the close neighborhood of the average value, the benchmark is considered as stable and it's predicted that another execution would take same or similar amount of nanoseconds as the average value. If, however, the points are distributed on a broader scale, it means that the benchmark is rather unstable, i.e., it cannot be predicted how long another execution of the benchmark will take.\\
-\\
-There are 2 main metrics that I use to calculate the variability of a microbenchmark in this thesis. The first one is called \textbf{coefficient of variation (CV)}, which is also known as the relative standard deviation\cite{laaber2019software}. "CV is a statistical measure for dispersion among a population of values" \cite{laaber2019software}, and in this thesis I use CV on the performance counters (i.e. average execution times in nanoseconds) of a microbenchmark's benchmark iterations to calculate the variation of a microbenchmark. CV is a measurement that is used to determine the variability in pervious studies as well \cite{laaber2019software} \cite{Leitner:2016:PCS:2926746.2885497}. Since CV expects the values to be on the same relative scale (ratio), it is not a statistically sound metric for performance data, because the the execution times of iterations do not form a normal distribution. Additionally, I calculate the \textbf{relative confidence interval width (RCIW)} with 95 and 99 percent confidence intervals of each microbenchmark and refer to them as RCIW95 and RCIW99 respectively. "The RCIW describes the estimated spread of the population's CV, as computed by statistical simulation"\cite{laaber2019software}.\\
-\\
-Regarding calculations of these metrics: CV is calculated by dividing the standard deviation of a dataset by the mean of the dataset. For RCIW, another methodology is followed, which is explained as bootstrapping with hierarchical random resampling with replacement and is also used in Laaber et al.'s paper \cite{laaber2019software}\cite{davison_hinkley_1997}\cite{hierach_data_2010} . The reason to follow this methodology resides in the non-normalized performance measurements \cite{laaber2019software}. Bootstrapping with randomly resampling refers to randomly sampling data points from a dataset, and in this thesis I use this technique with 10000 bootstraps on the execution times of each microbenchmark to generate a collection of normalized mean values out of them, which I can then use to create the 95 and 99 percent relative confidence intervals.
-
-\begin{figure}[H]
-	\centering
-	\begin{subfigure}{.5\textwidth}
-		\centering
-		\includegraphics[width=\linewidth]{10percentvariance}
-		\caption{Execution results of a microbenchmark with a RCIW99 of 10.06\%.}
-		\label{fig:10percentvariance}
-	\end{subfigure}%
-	\begin{subfigure}{.5\textwidth}
-		\centering
-		\includegraphics[width=\linewidth]{53percentvariance}
-		\caption{Execution results of a microbenchmark with a RCIW99 of 53.41\%.}
-		\label{fig:53percentvariance}
-	\end{subfigure}
-	\caption{Example for a low and high variance microbenchmark.}
-	\label{fig:variances}
-\end{figure}
-
-\noindent To illustrate a low and high variable microbenchmark: Figure \ref{fig:10percentvariance} shows the execution times of the benchmark \textit{BenchmarkSerializeStruct} from \textbf{hprose/hprose-golang} project\cite{hprose/hprose-golang}. As the box plot shows, the points are all within the whiskers and close to the mean. Also, the distribution of the points vary from 525 to 762 nanoseconds and it has a 99 percent confidence interval width (RCIW99) of 10.06\%. In Figure \ref{fig:53percentvariance}, the benchmark \textit{BenchmarkEncoder} from \textbf{segmentio/objconv} project \cite{segmentio/objconv} is shown with its execution times. This benchmark's average execution times vary from 16.8 nanoseconds to 658 nanoseconds. This time, RCIW99 is 53.41\%. The  score in RCIW99 is an estimator for the variability, hence, the higher this score, the higher variability the benchmark has.\\
-\\
-The variability of a benchmark may depend on many factors such as the execution platform, the hardware the benchmarks are executed on, or, even the programming language of the microbenchmark itself\cite{laaber2018performance}. For example, the same benchmark can deliver different average values on different CPUs, as one CPU may perform much more operations in a second than the other one. Similarly, the same benchmark can have a different average for the execution time in a personal computer than the average in a cloud-based machine, or in different cloud-based machines compared to each other \cite{laaber2019software}. Some other factors include the concurrency, I/O latencies, virtualization etc \cite{laaber2019software}. \\
-\\
-Variability is a crucial factor of a benchmark, because it has an impact on the stability and reliability of it's results \cite{Laaber:2018:EOS:3196398.3196407}. It is important to have stable and reliable benchmarks, because then the developers can rely on the results of the microbenchmarks when they test parts of the software and find the regression causes with a higher trust. Therefore, it is essential to predict the stability of microbenchmarks. There has been studies trying to predict the variability of performance tests in public Infrastructure-as-a-Service (IaaS) clouds by comparing aspects such as hardware heterogeneity, multi-tenancy and control over optimizations \cite{Leitner:2016:PCS:2926746.2885497}, or by comparing the outcomes of forks, trials and iterations in terms of variability \cite{laaber2019software}. One way to predict the variability might be through analyzing source code features of the software. This can on one hand help the developers identify the cause of slowdowns in a newer version for example, on the other hand help them understand which source code feature affects the results in which way.\\
-\\
-Executing system-wide performance tests (e.g., stress tests, load tests etc.) of a software is usually a long, time consuming process that can take up to days to finish\cite{Laaber:2018:EOS:3196398.3196407}. If a developer can rely on the microbenchmarks of the software, this could help finding regression causing functions, but, it is still unknown whether microbenchmarks could replace system-wide performance tests in terms of finding performance regressions. When testing the software for performance via microbenchmarks, the aim of the developer is to have the highest possible coverage  with the minimal effort. For this, the minimal benchmark suite is needed, which should cover all or the most of the functionalities in the software. As the size of the software grows, the microbenchmark suite grows as well, and it gets harder to keep track of the tested and not tested functions. To this manner, the importance of predicting variability causes dives in. To keep the size of the benchmark suite minimal while having a good coverage, developers might not need testing all the functionalities. That's why, it's a good idea to predict which parts of the source code should be tested by predicting the variability of the benchmarks based on source code. With this, developers can be supported to write better benchmarks by for example being alerted to which new functions should have priorization in testing for performance.\\
-\\
-In this thesis, my aim is to find whether there is a correlation between the source code and the variability of a benchmark. For this, I analyze source code features of microbenchmarks written in Go and use them as dependent variables of a statistical equation,  where the independent variable is the variability of the benchmark in RCIW99. The results can be used to understand the correlation between source code and variability, as well as be used to predict the variability of a benchmark for further applications.\\
-
-\subsection{Go}
-
-Go is a statically typed, compiled programming language, designed at Google and was released in November 2009 \cite{go}. Some of its innovational features include built-in data structures for advanced concurrent programming, Goroutines as lightweight processes and built-in performance benchmarking/testing libraries. While still being quite a new language among other languages, Go is the forth most active programming language in Github, and third-most highly paid language globally, according to Stack Overflow Developer Survey 2019\cite{stackoverflowdev}. Furthermore, it is effectively used in the industry and has a growing community.\\
+Go developers can choose to run a benchmark for a limited time to see how many iterations can happen in this pre defined time, or also choose to run the benchmark for a specific amount of iterations to see how long it takes the functions within the benchmark to result in average. Such configurations are especially useful for when determining whether a new introduced feature in the system causes performance regressions. Furthermore, these regressions can be detected early whilst still being in the development stage of the software, and according changes to the code can be scheduled before the changes go to production, which ensures the stability for the performance in the evolution of the software.\\
 \\
 An example run of a microbenchmark suite from \textbf{tidwall/buntdb} \cite{tidwall/buntdb} can be seen in Listing \ref{testbench}. The first column is the name of the benchmark, the second column is the amount of executions and the third column is the execution time per execution \cite{gobench}.
-\begin{lstlisting}[caption=Example microbenchmark suite execution from \cite{tidwall/buntdb}., label={testbench}, frame=single, breaklines=false]
+\clearpage
+\begin{lstlisting}[caption=Example microbenchmark suite execution from tidwall/buntdb \cite{tidwall/buntdb}., label={testbench}, frame=single, breaklines=false]
 mikael@mikael-VirtualBox:~/Desktop/BenchmarkProjects/tidwall/buntdb/src-
 /github.com/tidwall/buntdb$ go test -bench=.
 goos: linux
@@ -207,6 +167,59 @@ ok  	github.com/tidwall/buntdb	71.590s
 \end{lstlisting}
 
 
+\subsection{Microbenchmark variability}
+\label{Microbenchmark variability}
+
+Unless otherwise configured, when a microbenchmark is run, it executes the underlying code for a certain time period (e.g., 1s) over and over for each benchmark iteration and returns a collection of average execution times for each benchmark iteration\cite{laaber2019software}. Execution times of a benchmark in Go are expressed in nanoseconds \cite{laaber2019software} \cite{costa2019}. In this thesis, the term microbenchmark variability refers to the variability of a microbenchmark's resulting collection of execution times. It is basically computed by measuring how far the single execution times fall from the average execution time. In this manner, if the executions times are in the close neighborhood of the average value, the benchmark is considered as stable and it's predicted that another execution would take same or similar amount of nanoseconds as the average value. If, however, the points are distributed on a broader scale, it means that the benchmark is rather unstable, i.e., it cannot be predicted how long another execution of the benchmark will take.\\
+\\
+There are 2 main metrics that I use to calculate the variability of a microbenchmark in this thesis. The first one is called \textbf{coefficient of variation (CV)}, which is also known as the relative standard deviation\cite{laaber2019software}. "CV is a statistical measure for dispersion among a population of values" \cite{laaber2019software}, and in this thesis I use CV on the performance counters (i.e. average execution times in nanoseconds) of a microbenchmark's benchmark iterations to calculate the variation of a microbenchmark. CV is a measurement that is used to determine the variability in pervious studies as well \cite{laaber2019software} \cite{Leitner:2016:PCS:2926746.2885497}. Since CV expects the values to be on the same relative scale (ratio), it is not a statistically sound metric for performance data, because the the execution times of iterations do not form a normal distribution. Additionally, I calculate the \textbf{relative confidence interval width (RCIW)} with 95 and 99 percent confidence intervals of each microbenchmark and refer to them as RCIW95 and RCIW99 respectively. "The RCIW describes the estimated spread of the population's CV, as computed by statistical simulation"\cite{laaber2019software}.\\
+\\
+Regarding calculations of these metrics: CV is calculated by dividing the standard deviation of a dataset by the mean of the dataset. For RCIW, another methodology is followed, which is explained as bootstrapping with hierarchical random resampling with replacement and is also used in Laaber et al.'s paper \cite{laaber2019software}\cite{davison_hinkley_1997}\cite{hierach_data_2010} . The reason to follow this methodology resides in the non-normalized performance measurements \cite{laaber2019software}. Bootstrapping with randomly resampling refers to randomly sampling data points from a dataset, and in this thesis I use this technique with 10000 bootstraps on the execution times of each microbenchmark to generate a collection of normalized mean values out of them, which I can then use to create the 95 and 99 percent relative confidence intervals.
+
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}{.5\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{10percentvariance}
+		\caption{Execution results of a microbenchmark with a RCIW99 of 10.06\%.}
+		\label{fig:10percentvariance}
+	\end{subfigure}%
+	\begin{subfigure}{.5\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{53percentvariance}
+		\caption{Execution results of a microbenchmark with a RCIW99 of 53.41\%.}
+		\label{fig:53percentvariance}
+	\end{subfigure}
+	\caption{Example for a low and high variance microbenchmark.}
+	\label{fig:variances}
+\end{figure}
+
+\noindent To illustrate a low and high variable microbenchmark: Figure \ref{fig:10percentvariance} shows the execution times of the benchmark \textit{BenchmarkSerializeStruct} from \textbf{hprose/hprose-golang} project\cite{hprose/hprose-golang}. As the box plot shows, the points are all within the whiskers and close to the mean. Also, the distribution of the points vary from 525 to 762 nanoseconds and it has a 99 percent relative confidence interval width (RCIW99) of 10.06\%. In Figure \ref{fig:53percentvariance}, the benchmark \textit{BenchmarkEncoder} from \textbf{segmentio/objconv} project \cite{segmentio/objconv} is shown with its execution times. This benchmark's average execution times vary from 16.8 nanoseconds to 658 nanoseconds. This time, RCIW99 is 53.41\%. The  score in RCIW99 is an estimator for the variability, hence, the higher this score, the higher variability the benchmark has.\\
+\\
+The variability of a benchmark may depend on many factors such as the execution platform, the hardware the benchmarks are executed on, or, even the programming language of the microbenchmark itself\cite{laaber2018performance}. For example, the same benchmark can deliver different average values on different CPUs, as one CPU may perform much more operations in a second than the other one. Similarly, the same benchmark can have a different average for the execution time in a personal computer than the average in a cloud-based machine, or in different cloud-based machines compared to each other \cite{laaber2019software}. Some other factors include the concurrency, I/O latencies, virtualization etc \cite{laaber2019software}. \\
+\\
+Variability is a crucial factor of a benchmark, because it has an impact on the stability and reliability of it's results \cite{Laaber:2018:EOS:3196398.3196407}. It is important to have stable and reliable benchmarks, because then the developers can rely on the results of the microbenchmarks when they test parts of the software and find the regression causes with a higher trust. Therefore, it is essential to predict the stability of microbenchmarks. There has been studies trying to predict the variability of performance tests in public Infrastructure-as-a-Service (IaaS) clouds by comparing aspects such as hardware heterogeneity, multi-tenancy and control over optimizations \cite{Leitner:2016:PCS:2926746.2885497}, or by comparing the outcomes of forks, trials and iterations in terms of variability \cite{laaber2019software}. One way to predict the variability might be through analyzing source code features of the software. This can on one hand help the developers identify the cause of slowdowns in a newer version for example, on the other hand help them understand which source code feature affects the results in which way.\\
+\\
+Executing system-wide performance tests (e.g., stress tests, load tests etc.) of a software is usually a long, time consuming process that can take up to days to finish\cite{Laaber:2018:EOS:3196398.3196407}. If a developer can rely on the microbenchmarks of the software, this could help finding regression causing functions, but, it is still unknown whether microbenchmarks could replace system-wide performance tests in terms of finding performance regressions. When testing the software for performance via microbenchmarks, the aim of the developer is to have the highest possible coverage  with the minimal effort. For this, the minimal benchmark suite is needed, which should cover all or the most of the functionalities in the software. As the size of the software grows, the microbenchmark suite grows as well, and it gets harder to keep track of the tested and not tested functions. To this manner, the importance of predicting variability causes dives in. To keep the size of the benchmark suite minimal while having a good coverage, developers might not need testing all the functionalities. That's why, it's a good idea to predict which parts of the source code should be tested by predicting the variability of the benchmarks based on source code. With this, developers can be supported to write better benchmarks by for example being alerted to which new functions should have priorization in testing for performance.\\
+\\
+In this thesis, my aim is to find whether there is a correlation between the source code and the variability of a benchmark. For this, I analyze source code features of microbenchmarks written in Go and use them as dependent variables of a statistical equation,  where the independent variable is the variability of the benchmark in RCIW99. The results can be used to understand the correlation between source code and variability, as well as be used to predict the variability of a benchmark for further applications.\\
+
+\subsection{Go}
+
+Go is a statically typed, compiled programming language, designed at Google and was released in November 2009 \cite{go}. Some of its innovational features include built-in data structures for advanced concurrent programming, Goroutines as lightweight processes and built-in performance benchmarking/testing libraries. While still being quite a new language among other languages, Go is the forth most active programming language in Github, and third-most highly paid language globally, according to Stack Overflow Developer Survey 2019\cite{stackoverflowdev}. Furthermore, it is effectively used in the industry and has a growing community.\\
+\\
+\paragraph{Functions} Go offers a very flexible way of defining functions, namely, one can decide to set or omit the parameters and return values of functions. A function in Go is structured as:\\
+\begin{lstlisting}
+	func (receiver) Name(parameter1, parameter2) returnval1
+\end{lstlisting}
+
+\noindent Functions in Go can be called by using the name of the imported package, followed by the name of the function, as in \texttt{io.WriteString}. This way, Go evaluates the function in the resolving package and calls it in the current environment. Another type of functions that are found in Go language are the methods, which take receivers. Receivers are by definition types that are declared in packages. Methods enable object-oriented style of programming in Go by calling the specifically declared function for the type.
+
+\paragraph{Concurrency} Go has built-in support for concurrent programming, which is meant for both CPU parallelism and asynchrony of processes. With the keyword \textbf{"go"}, developers can create Goroutines, which are lightweight processes that can do some tasks while the main processes is running. While Go is great for separated code execution, it's also important to have access to inter-process communication. For this manner, Go implements the \textbf{channel} data structure, to which one can send and from which one can retrieve data values. The usage of channels are by default synchronized, which means that the developers do not need to program the mutual exclusion of processes additionally when they rely on channels. However, there might be a need to use asynchronous programming. For this, Go also provides great support with the \texttt{Mutex.Lock} and \texttt{Mutex.Unlock} methods from the \textbf{Sync} package. Developers can use these methods at the start and end of the functions to ensure that only one process can reach to certain values at a time.\\
+\\
+The usage of these concepts brings complexity to programs written in Go while keeping the code simple, however, with complexity, the need for testing for performance increases as well, because a complex structure may cause performance regressions under some circumstances. At the same time, these concepts can be a part of the source code features that come up in a benchmark or in the functions a benchmark calls.
+
+\clearpage
 
 
 \section{Related Work}
@@ -217,8 +230,11 @@ To the best of my knowledge, there exist no study analyzing stability of softwar
 \\
 Laaber et al. report about the variability of microbenchmark results in various cloud environments \cite{laaber2019software}. For their study, they use 19 microbenchmarks from 4 open source projects, 2 of them being written with Java and the other 2 with Go. To analyze the stability of these benchmarks, they pick 3 well known Infrastructure as a Service (IaaS) providers and 1 bare-metal instance from IBM. From the 4.5 million unique microbenchmarking data points that they obtain from the executions in these environments, they show that the variation of benchmarks' CVs range from 0.03\% to over 100 \%. It is stated that the bare-metal instance's results are very stable, nearly followed by Amazon's Amazon Web Services (AWS) cloud. Google's Google Compute Engine (GCE) and Microsoft's Azure on the other hand do not retrieve reliable results. As a second research topic, they cast about the slowdown detectability of benchmarks and report that while low number of instances and trials cause high false-positive rates in detecting slowdowns, an increase of instances and trials affects slowdown detection rates positively. In a second paper by Laaber and Leitner \cite{Laaber:2018:EOS:3196398.3196407}, the research topic is the quality of the microbenchmark suite, which is investigated by studying 10 different OSS projects. In this study they analyze 5 Go and 5 Java projects' benchmarks suites and describe the size of benchmark suites, having 16 to 983 individual benchmarks and total execution times ranging from 11 minutes to 8.75 hours. To compare the stability of microbenchmarks, they use GCE and a self-managed bare-metal server. Their \textit{maxSpread} analysis shows that Go's benchmarks are very stable, mostly having a \textit{maxSpread} below 0.05 in bare-metal. Moreover, Java's benchmarks have higher variations. These conclusions indicate that not all benchmarks can be trusted in terms of discovering slowdowns. Laaber and Leitner also introduce an API benchmarking score (ABS), with which they measure the slowdown detectability of benchmark suites. For the 20 often-used methods in study subjects, they show that the benchmark suites have ABS scores ranging from 10 to 100 percent.\\
 \\
-Alcocer and Bergel \cite{Alcocer:2015:TDP:2816707.2816718} study the performance evolution of 19 projects from Pharo ecosystem by investigating the variation of benchmarks across 1439 versions. They selectively choose 49 benchmarks and 
-run these across different versions of projects to find performance differences. After finding these, they dig into the source code that underlies the benchmarks to find patterns that are the causes of these performance variations. Their results show that every third project exhibits performance variations across different versions. Causes of performance variations can be grouped into 9 patterns, and, the biggest factors that play a role on the variation are loops and collections.\\
+In my study, I follow a very similar approach to what these studies do in terms of analyzing the variabilities of benchmarks. In particular, I use CV and RCIW as variability metrics as they come up in Laaber et al.'s paper \cite{laaber2019software}. Unlike the sources of variability that are investigated separately in Laaber et al.'s study \cite{laaber2019software}, my study focuses on only the inherent variability of the benchmarks and does not consider iterations or trials. Furthermore, I do a large scale study including 4589 benchmarks from 223 Go projects. Nevertheless, like in both studies, in my study the benchmarks also mostly have a low variability.\\
+\\
+Alcocer and Bergel \cite{Alcocer:2015:TDP:2816707.2816718} study the performance evolution of 19 projects from Pharo ecosystem by investigating the variation of benchmarks across 1439 versions. They selectively choose 49 benchmarks and run these across different versions of projects to find performance differences. After finding these, they dig into the source code that underlies the benchmarks to find patterns that are the causes of these performance variations. Their results show that every third project exhibits performance variations across different versions. Causes of performance variations can be grouped into 9 patterns, and, the biggest factors that play a role on the variation are loops and collections.\\
+\\
+My study is comparable to Alcocer and Bergel's study \cite{Alcocer:2015:TDP:2816707.2816718} as I also extract source code features of benchmarks, however, I do not consider different versions of a project but analyze benchmarks from one single commit version. A noticeable common point of our studies is that loops affect the variability, although in my study it is not the most correlating feature.\\
 \\
 Costa et al. present 5 bad practices existing in Java Microbenchmarking Harness and show how these affect the benchmark results \cite{costa2019}. They base their study on a tool developed by them, \textit{SpotJMHBugs}, which does static analysis to find out about previously defined bad practices in JMH. Out of 123 OSS Java projects, 35 projects show at least an example of a bad practice in their benchmark suites. After fixing 105 benchmarks from 6 projects, they show the significant change in results, indicating that bad practices in JMH can affect the results of benchmarks cardinally. Therefore, they provide suggestions to developers for better design of benchmark suite frameworks.\\
 \\
@@ -268,7 +284,7 @@ where $\sigma _{M}$ is the standard deviation and $\mu _{M}$ is the mean of the 
 For the RCIW part, I use a tool by Christoph Laaber, called "pa-tool" \cite{patool}. This tool works in the following way: For a given benchmark with all its execution times, it randomly samples a subset of the execution times and saves the mean of this new subset. This process is repeated for a considerable amount of time, e.g., 10000 times (number of bootstrap simulations), and returns the normally distributed set of mean execution times. This is because the distribution of the bootstrap means is normal due to the central limit theorem. Having the normal distribution is a requirement to take the confidence interval of the set. The tool finally gives a confidence interval of the new collection of means with a default significance level of 0.05. Listing \ref{lst:patool} illustrates an example output of pa-tool, showing the confidence interval of each benchmark in project ironsmile/nedomi after bootstrapping 10000 times with the 0.01 significance level \cite{ironsmile/nedomi}.
 \begin{minipage}{\linewidth}
 
-\begin{lstlisting}[caption=Example pa-tool results of \cite{ironsmile/nedomi}., label={lst:patool}, frame=single, breaklines=true, basicstyle=\small]
+\begin{lstlisting}[caption=Example pa-tool results of ironsmile/nedomi \cite{ironsmile/nedomi}., label={lst:patool}, frame=single, breaklines=true, basicstyle=\small]
 C:\Users\Mikael\pa>pa -bs 10000 -sig 0.01
 "C:\Users\Mikael\go-calculation\pa_input_projects\1&ironsmile&nedomi_benchmarks.csv"
 #Execute CIs:
@@ -304,15 +320,16 @@ C:\Users\Mikael\pa>pa -bs 10000 -sig 0.01
 \end{lstlisting}
 \end{minipage}
 
+\noindent From the boundaries of the confidence interval acquired from the pa-tool, I calculate RCIW values by substracting the left boundary from the right boundary, divided by the mean of the benchmark results. For the mathematical representation, if we call the benchmark \textit{B}, collection of benchmark results \textit{M}, the normal distributed output of pa-tool $M_{n}$, and the confidence interval of $M_{n}$ \textit{CI}, then the RCIW value of a benchmark can be shown as:
+\[ RCIW(B) = ({CI_{R}} - {CI_{L}}) / \mu _{M} \]
+where $CI_{R}$ is the right, $CI_{L}$ is the left boundary of the confidence interval and $\mu _{M}$ is the mean of benchmark's execution results.\\
 
 \subsection{Benchmark Variabilities}
 \label{Benchmark Variabilities}
 
-Pa-tool requires the benchmarks of a project to be sorted in alphabetical order, along with its number of run and the execution time. After I have all the valid projects with their results file, I firstly create input CSV files for the pa-tool to function accordingly. In the next step, I iterate through input files for pa-tool and run the pa-tool for each project 2 times, once with the significance level of 0.05 and once with 0.01, both having 10000 bootstrap simulations. From the boundaries of the confidence interval acquired from the pa-tool, I calculate RCIW values by substracting the left boundary from the right boundary, divided by the mean of the benchmark results. For the mathematical representation, if we call the benchmark \textit{B}, collection of benchmark results \textit{M}, the normal distributed output of pa-tool $M_{n}$, and the confidence interval of $M_{n}$ \textit{CI}, then the RCIW value of a benchmark can be shown as:
-\[ RCIW(B) = ({CI_{R}} - {CI_{L}}) / \mu _{M} \]
-where $CI_{R}$ is the right, $CI_{L}$ is the left boundary of the confidence interval and $\mu _{M}$ is the mean of benchmark's execution results.\\
+Pa-tool requires the benchmarks of a project to be sorted in alphabetical order, along with its number of run and the execution time. After I have all the valid projects with their results file, I firstly create input CSV files for the pa-tool to function accordingly. In the next step, I iterate through input files for pa-tool and run the pa-tool for each project 2 times, once with the significance level of 0.05 and once with 0.01, both having 10000 bootstrap simulations.\\
 \\
-\noindent As a result of this calculation, I get RCIW95 for the results with 0.05 significance level of confidence interval, and RCIW99 for the results with 0.01 significance level of confidence interval. For the CV part of each benchmark, I use \textit{mean()} and \textit{stddev()} from Python's \textit{statistics} module\cite{pythonsta}.\\
+By subtracting boundaries from pa-tool output, I get RCIW95 for the results with 0.05 significance level of confidence interval, and RCIW99 for the results with 0.01 significance level of confidence interval. For the CV part of each benchmark, I use \textit{mean()} and \textit{stddev()} from Python's \textit{statistics} module\cite{pythonsta}.\\
 \\
 Within the end of calculating CV, RCIW95 and RCIW99 of each benchmark, I write all the benchmarks into the \textbf{Benchmark\_Variabilities.csv} file, which shows the name of the project, the specific benchmark, number of executions, and mean, CV, RCIW95 and RCIW99 of the benchmark respectively. Listing \ref{fig:finalcsv} shows the first lines of \textbf{Benchmark\_Variabilities.csv}.
 
@@ -337,10 +354,16 @@ Finally, I create the list of features in Table \ref{table:sourcecodeprop} to an
 \\
 For the extraction of these features, I use the methodology of parsing the Abstract Syntax Tree of a source code file. While signature features require only the inspection of function declarations within the AST, the other 3 types require analysis of the body of the function within the declaration, going into a deeper level.
 
+
+% Please add the following required packages to your document preamble:
+% \usepackage{booktabs}
+% \usepackage{multirow}
+% \usepackage{graphicx}
 \begin{table}[H]
 	\caption{List of source code features.}
 	\label{table:sourcecodeprop}
-	\resizebox{\textwidth}{!}{%
+	\large
+	\resizebox{0.88\textwidth}{!}{%
 		\begin{tabular}{@{}llr@{}}
 			\toprule
 			\textbf{Feature Type} & \textbf{Feature Name} & \textbf{Explanation} \\ \midrule
@@ -411,8 +434,6 @@ For the extraction of these features, I use the methodology of parsing the Abstr
 	}
 \end{table}
 
-
-
 \subsection{Downloading projects}
 
 To download all the valid projects that resulted with 4589 benchmarks in the first analysis, I firstly create a little CSV file which stores the name of the projects and its commit, where the execution results are from. I then write a Python script, which reads this file and downlods the projects sequentially from Github. For downloading, I use Go's \textit{get CLI flag}, as this is intended to download and install a Go project along with its dependencies. However, downloading these projects with:
@@ -448,7 +469,7 @@ After having all the projects residing in their own GOPATHs, next step is to sta
 \noindent Figure \ref{fig:fetchdeps} shows how this process runs in Go. The optional "-t" flag of \textit{go get} ensures the installation of all required test packages and the latter \textit{./...} tells \textit{go get} to fetch all dependencies for this project. This command is crucial, since without getting dependencies for test packages some of the source code files cannot be compiled correctly, which leads to not being able to parse them correctly, using Prophunt. For all the projects with their specific commits, which are compabible with Go Modules, this step suffices in terms of being ready to be parsed. However, there are projects which use other package management tools \cite{packagemanagement}. For these kind of projects, I use \textit{deps.Fetch} method and give it the path of the project, from which it automatically extracts GOPATH of the projects and uses one of the preinstalled dependency management tools to get the dependencies. As of writing this thesis, this method has support for the tools (which need to be installed before using the method) listed in Table \ref{dependencymanagementtools}.
 
 \begin{table}[H]
-\caption{List of dependency management tools supported in GoABS}
+\caption{List of dependency management tools supported in GoABS \cite{sealuzh/goabs}}
 \label{dependencymanagementtools}
 \begin{longtable}[c]{@{}ll@{}}
 	\toprule
@@ -512,9 +533,10 @@ FuncDecl struct {
 }
 \end{lstlisting}
 
+
 \noindent Signature features are trivially extracted from the \textbf{*ast.FuncDecl}, however, for all the body, standard library usage and other type of features, one needs to know what to look for inside the \textbf{Body} of the \textbf{*ast.FuncDecl}. To this end, I firstly look for Go's "A Tour of Go" documentation \cite{atourofgo} and find code examples about features of the language. While one can use these code examples in the programming environment, I aim for a GUI approach to better understand how to look for features in the bodies of functions. Fortunately, I come across a web application from yuroyoro \cite{goastviewer}, which offers a GUI to visualize a Go AST, given Go source code. Listing \ref{yuroyoro} shows an example output from the AST Viewer of a main function with a "Hello Golang" print on the stdout.
 
-\begin{minipage}{\linewidth}
+\begin{minipage}{0.95\linewidth}
 \begin{lstlisting}[caption=Sample output from yuroyoro's Ast Viewer \cite{goastviewer}., label={yuroyoro}, language=Go, frame=single, ]
 	23  .  .  1: *ast.FuncDecl {
 	24  .  .  .  Name: *ast.Ident {
@@ -690,11 +712,12 @@ The extraction of source code features of benchmarks is implemented by an AST tr
 
 \chapter{Results}
 \label{Results}
-In this section, I present the results from the 3 parts of this study. First results correspond to the variability of benchmarks and in Section \ref{Variabilities of benchmarks}, I present statistical information regarding the distribution of benchmarks' variabilities. From the given dataset of 4802 total benchmarks, 4589 valid benchmarks in total qualify to final correlation analysis. Only 1.83\% of all benchmarks have a RCIW99 value above 10\%, showing that most of the benchmarks are very stable. Second results are about the outcome of Prophunt and Callgraph Analyzer and are presented in Section \ref{Extracted source code features}. From successfully downloaded 223 projects, Prophunt parses 4926 benchmarks and their features, of which 4500 are matched with the ones from variability analysis. As a next step, Callgraph Analyzer takes Prophunt\_Output as input and returns 4837 benchmarks with cumulative source code features, meaning that 89 benchmarks from Prophunt\_Output had a nil node in Callgraph Analysis and were therefore not included. Also, matching the output of Prophunt and Callgraph Analyzer shows that there are 121 benchmarks which did not have cumulative feature values, which are therefore also removed. Finally, last results are presented in Section \ref{Correlation results}, which are based on 4330 matched benchmarks, which are found both in the results of variability and callgraph analysis. Of all correlation coefficients acquired from Spearman's rank-order correlation, "sync" has the highest correlation with benchmark stability with a value of 0.35690, followed by "gos" with 0.28593, both being strongly significant. Figure \ref{fig:results} sums up the removal of benchmarks and shows the number of benchmarks remaining to the correlation analysis.
+
+In this section, I present the results from the 3 parts of this study. First results correspond to the variability of benchmarks and in Section \ref{Variabilities of benchmarks}, I present statistical information regarding the distribution of benchmarks' variabilities. From the given dataset of 4802 total benchmarks, 4589 valid benchmarks in total qualify to final correlation analysis. Only 1.83\% of all benchmarks have a RCIW99 value above 10\%, showing that most of the benchmarks are very stable. Second results are about the outcome of Prophunt and Callgraph Analyzer and are presented in Section \ref{Extracted source code features}. From successfully downloaded 223 projects, Prophunt parses 4926 benchmarks and their features, of which 4500 are matched with the ones from variability analysis. As a next step, Callgraph Analyzer takes Prophunt\_Output as input and returns 4837 benchmarks with cumulative source code features. Matching the output of Prophunt and Callgraph Analyzer shows that there are 121 benchmarks which did not have cumulative feature values, which are therefore also removed. Finally, last results are presented in Section \ref{Correlation results}, which are based on 4330 matched benchmarks, which are found both in the results of variability and callgraph analysis. Of all correlation coefficients acquired from Spearman's rank-order correlation, "sync" has the highest correlation with benchmark stability with a value of 0.35690, followed by "gos" with 0.28593, both being strongly significant. Figure \ref{fig:results} sums up the removal of benchmarks and shows the number of benchmarks remaining to the correlation analysis.
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=\linewidth]{ResultsGeneral}
+	\includegraphics[width=0.9\linewidth]{ResultsGeneral}
 	\caption{General view of processing results.}
 	\label{fig:results}
 \end{figure}
@@ -735,34 +758,17 @@ In Section \ref{Analyzing variabilities}, I show which steps I go through to get
 
 \subsection{Variabilities on benchmark level}
 
-Figure \ref{fig:density1} shows the density distribution of all benchmarks found in \textbf{Benchmark\_Variabilities.csv} with all 3 variability metrics considered. According to this plot, most of the benchmarks are found between 0-10\%, however, the decrease of different metrics slightly differ from each other.
 
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=\linewidth]{resultsvis/density_controlled1}
-	\caption{Density of benchmarks' variabilities 1-100\%.}
-	\label{fig:density1}
-\end{figure}
-
-\noindent Figure \ref{fig:log1} shows the histogram across all benchmarks and distributions of their variabilities in 10 percent buckets, taking all 3 metrics into consideration. According to the distribution, (CV) 97.50\% (4474/4589), (RCIW95) 98.48\% (4519/4589) and (RCIW99) 98.17\% (4505/4589) of all benchmarks have a variation between 0 and 10 percent. These are quite high percentages to tell that most of the benchmarks are very stable. Note that last bucket is for all the benchmarks that have a variation equal or higher than 100.
+\noindent Figure \ref{fig:log1} shows the histogram across all benchmarks found in \textbf{Benchmark\_Variabilities} and distributions of their variabilities in 10 percent buckets, taking all 3 metrics into consideration. According to the distribution, (CV) 97.50\% (4474/4589), (RCIW95) 98.48\% (4519/4589) and (RCIW99) 98.17\% (4505/4589) of all benchmarks have a variation between 0 and 10 percent. These are quite high percentages to tell that most of the benchmarks are very stable. Note that last bucket is for all the benchmarks that have a variation equal or higher than 100.
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=\linewidth]{resultsvis/log1}
-	\caption{Distribution of benchmarks' variabilities 0-100 in 10\% buckets.}
+	\caption{Distribution of benchmarks' variabilities 0-100 in 10\% buckets in log-scaled y-axis.}
 	\label{fig:log1}
 \end{figure}
 
-\noindent This result requires further analysis of the benchmarks in the 0-10\% bucket, and I create a second density plot showing this range in Figure \ref{fig:density2}. Although this time the decrease is not as sharp as in Figure \ref{fig:density1}, most of the variabilities fall in the range 0-1\%, which can be seen with numbers in the Figure \ref{fig:log2}.
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=\linewidth]{resultsvis/density_controlled2}
-	\caption{Density of benchmarks' variabilities in 1-10\%.}
-	\label{fig:density2}
-\end{figure}
-
-\noindent Figure \ref{fig:log2} exposes the variabilities in percentage. Most of the benchmarks fall into the bucket 0-1\%, building (CV) 81.74\% (3657/4474), (RCIW95) 89.20\% (4035/4519) and (RCIW99) 87.70\% (3951/4505) of the projects that are in the 1-10\% bucket. Although not as high in percentage as in 0-10\% bucket, most of the benchmarks can still be described as very stable, having a variation between 0 and 1 \%.
+\noindent This result requires further analysis of the benchmarks in the 0-10\% bucket, and I create a second histogram showing the distribution of benchmarks' variabilities in the 0-10\% bucket. Figure \ref{fig:log2} exposes the variabilities in percentage. Most of the benchmarks fall into the bucket 0-1\%, building (CV) 81.74\% (3657/4474), (RCIW95) 89.20\% (4035/4519) and (RCIW99) 87.70\% (3951/4505) of the projects that are in the 1-10\% bucket. Although not as high in percentage as in 0-10\% bucket, most of the benchmarks can still be described as very stable, having a variation between 0 and 1 \%.
 
 \begin{figure}[H]
 	\centering
@@ -773,7 +779,7 @@ Figure \ref{fig:density1} shows the density distribution of all benchmarks found
 
 \subsection{Variabilities on project level}
 
-Since I eliminate 2 projects because they have 1 execution for each of their benchmarks, following statistical data is based on a total of 228 projects. Table \ref{table:table1}'s header shows \textbf{Percentages} as buckets for the benchmarks' RCIW99 values. Following two rows show how many distinct projects fall into this group (i.e., having at least one benchmark in this bucket), and how many of the total projects this makes in percentage. As one can see, 225 out of 228 projects have benchmarks that have at least one benchmark that has a RCIW99 value between 0-1\%. Analyzing the 0-1\% bucket further shows that there are in total 283 benchmarks from 68 projects which have a RCIW99 value of 0.0\%. This makes 6.16\% of total benchmarks. A RCIW99 value of 0.0\% means that there is no variation in the results of the benchmark, which can be confirmed by looking at the iteration values of these benchmarks. The number of iterations for these benchmarks varies from 4 to 1519 with an average of 97 iterations, and the average execution time in ns varies from 0.48 ns to 2930.0 ns, having an average of 140 ns. Generally, the benchmarks that have 0.0\% of RCIW99 are short running benchmarks.
+Since I eliminate 2 projects because they have 1 execution for each of their benchmarks, following statistical data is based on a total of 228 projects. In the rest of the analysis, I focus on RCIW99 values of variability, because CV is not a valid measure for performance data and RCIW99 is more significant than RCIW95. For the Table \ref{table:table1}'s header shows \textbf{Percentages} as buckets for the benchmarks' RCIW99 values. Following two rows show how many distinct projects fall into this group (i.e., having at least one benchmark in this bucket), and how many of the total projects this makes in percentage. As one can see, 225 out of 228 projects have benchmarks that have at least one benchmark that has a RCIW99 value between 0-1\%. Analyzing the 0-1\% bucket further shows that there are in total 283 benchmarks from 68 projects which have a RCIW99 value of 0.0\%. This makes 6.16\% of total benchmarks. A RCIW99 value of 0.0\% means that there is no variation in the results of the benchmark, which can be confirmed by looking at the iteration values of these benchmarks. The number of iterations for these benchmarks varies from 4 to 1519 with an average of 97 iterations and a standard deviation of 167, and the average execution time in ns varies from 0.48 ns to 2930.0 ns, having an average of 140 ns and a standard deviation of 332 ns. Generally, the benchmarks that have 0.0\% of RCIW99 are short running benchmarks.
 
 \begin{table}[H]
 	\centering
@@ -815,12 +821,12 @@ Since I eliminate 2 projects because they have 1 execution for each of their ben
 	\end{tabular}
 \end{table}
 
-\noindent If we call the benchmarks which have a RCIW99 value above 60\% unstable benchmarks, then there are in total 19 benchmarks from 6 projects which are unstable. Table \ref{table:unstable} shows in detail the RCIW99 values of benchmarks, their projects, and the commit they are from.
+\noindent If we call the benchmarks which have a RCIW99 value above 60\% unstable benchmarks, then there are in total 19 benchmarks from 6 projects which are unstable. Table \ref{table:unstable} shows in detail the RCIW99 values of benchmarks and which projects they are from.
 
 \begin{table}[H]
-\begin{longtable}[c]{@{}lll@{}}
+\begin{longtable}[c]{@{}llr@{}}
 	\caption{Unstable benchmarks}
-	\label{unstable}\\
+	\label{table:unstable}\\
 	\toprule
 	Project Name & Benchmark & RCIW99 \\* \midrule
 	\endfirsthead
@@ -832,25 +838,25 @@ Since I eliminate 2 projects because they have 1 execution for each of their ben
 	%
 	\endlastfoot
 	%
-	tendermint/go-merkle & /benchmarks/bench\_test.go/BenchmarkLevelDBBatchSizes & 101.90618356378155 \\
-	tendermint/go-merkle & /benchmarks/bench\_test.go/BenchmarkMedium & 97.90949382723956 \\
-	tendermint/go-merkle & /benchmarks/bench\_test.go/BenchmarkRandomBytes & 99.07987400530504 \\
-	tendermint/go-merkle & /benchmarks/bench\_test.go/BenchmarkSmall & 96.8579891360519 \\
-	tendermint/merkleeyes & /benchmarks/bench\_test.go/BenchmarkLevelDBBatchSizes & 98.59817524979992 \\
-	tendermint/merkleeyes & /benchmarks/bench\_test.go/BenchmarkMedium & 93.97081845239374 \\
-	tendermint/merkleeyes & /benchmarks/bench\_test.go/BenchmarkMemKeySizes & 63.065558656556966 \\
-	tendermint/merkleeyes & /benchmarks/bench\_test.go/BenchmarkRandomBytes & 111.31606792006772 \\
-	tendermint/merkleeyes & /benchmarks/bench\_test.go/BenchmarkSmall & 96.49370081581276 \\
-	xtaci/kcp-go & sess\_test.go/BenchmarkSinkSpeed1M & 79.15061748312237 \\
-	xtaci/kcp-go & sess\_test.go/BenchmarkSinkSpeed256K & 170.19650415760373 \\
-	xtaci/kcp-go & sess\_test.go/BenchmarkSinkSpeed4K & 90.76953191237926 \\
-	xtaci/kcp-go & sess\_test.go/BenchmarkSinkSpeed64K & 133.5089191240669 \\
-	uber/tchannel-go & relay\_benchmark\_test.go/BenchmarkRelayNoLatencies & 196.25602170651797 \\
-	micro/go-micro & /broker/http\_broker\_test.go/BenchmarkPub128 & 140.02193180903242 \\
-	micro/go-micro & /transport/http/http\_test.go/BenchmarkTransport1 & 121.92430559307232 \\
-	segmentio/objconv & /cbor/cbor\_test.go/BenchmarkCodec & 204.0738989031456 \\
-	segmentio/objconv & /json/json\_test.go/BenchmarkCodec & 188.40021466179115 \\
-	segmentio/objconv & /objutil/int\_test.go/BenchmarkParseUintHex & 64.18111561234029 \\* \bottomrule
+	tendermint/go-merkle & /benchmarks/bench\_test.go/BenchmarkLevelDBBatchSizes & 101.91 \\
+	tendermint/go-merkle & /benchmarks/bench\_test.go/BenchmarkMedium & 97.91 \\
+	tendermint/go-merkle & /benchmarks/bench\_test.go/BenchmarkRandomBytes & 99.08 \\
+	tendermint/go-merkle & /benchmarks/bench\_test.go/BenchmarkSmall & 96.86 \\
+	tendermint/merkleeyes & /benchmarks/bench\_test.go/BenchmarkLevelDBBatchSizes & 98.60 \\
+	tendermint/merkleeyes & /benchmarks/bench\_test.go/BenchmarkMedium & 93.97 \\
+	tendermint/merkleeyes & /benchmarks/bench\_test.go/BenchmarkMemKeySizes & 63.07 \\
+	tendermint/merkleeyes & /benchmarks/bench\_test.go/BenchmarkRandomBytes & 111.32 \\
+	tendermint/merkleeyes & /benchmarks/bench\_test.go/BenchmarkSmall & 96.49 \\
+	xtaci/kcp-go & sess\_test.go/BenchmarkSinkSpeed1M & 79.15 \\
+	xtaci/kcp-go & sess\_test.go/BenchmarkSinkSpeed256K & 170.20 \\
+	xtaci/kcp-go & sess\_test.go/BenchmarkSinkSpeed4K & 90.77 \\
+	xtaci/kcp-go & sess\_test.go/BenchmarkSinkSpeed64K & 133.51 \\
+	uber/tchannel-go & relay\_benchmark\_test.go/BenchmarkRelayNoLatencies & 196.26 \\
+	micro/go-micro & /broker/http\_broker\_test.go/BenchmarkPub128 & 140.02 \\
+	micro/go-micro & /transport/http/http\_test.go/BenchmarkTransport1 & 121.92 \\
+	segmentio/objconv & /cbor/cbor\_test.go/BenchmarkCodec & 204.07 \\
+	segmentio/objconv & /json/json\_test.go/BenchmarkCodec & 188.40 \\
+	segmentio/objconv & /objutil/int\_test.go/BenchmarkParseUintHex & 64.18 \\* \bottomrule
 \end{longtable}
 \end{table}
 
@@ -892,7 +898,7 @@ Prophunt returns in total 223 CSV files with a size of 35.2 MB. In total, Prophu
 
 
 \begin{table}
-\begin{longtable}[c]{@{}lll@{}}
+\begin{longtable}[c]{@{}lrl@{}}
 	\caption{Information about projects of not matching benchmarks}
 	\label{table:infinalnotcsv1}\\
 	\toprule
@@ -1088,13 +1094,13 @@ The results of this study can also be used to predict the stability of a benchma
 \chapter{Conclusion}
 \label{Conclusion}
 
-In this thesis, I analyze the correlation between stability and source code features of software microbenchmarks written in Go.\\
+In this thesis, I analyzed the correlation between stability and source code features of software microbenchmarks written in Go.\\
 \\
-To achieve this, I firstly analyze a given dataset of benchmarks' execution results to find out about their variability, which is an indicator for the stability. As metrics of variation, I use coefficient of variation (CV) and relative confidence interval width (RCIW) with 99 and 95 percent confidence intervals. Results show that 98.17\% of 4589 benchmarks have a RCIW99 value between 1-10\%. Furthermore, 87.70\% of the benchmarks in this range have a RCIW99 value between 0-1\%. This shows that most of the benchmarks are very stable, and only 1.83\% of all benchmarks have a higher RCIW99 value than 10\%. The variabilities based on CV and RCIW95 fall similar to those of RCIW99.\\
+To achieve this, I firstly analyzed a given dataset of benchmarks' execution results to find out about their variability, which is an indicator for the stability. As metrics of variation, I used coefficient of variation (CV) and relative confidence interval width (RCIW) with 99 and 95 percent confidence levels. Results show that 98.17\% of 4589 benchmarks have a RCIW99 value between 1-10\%. Furthermore, 87.70\% of the benchmarks in this range have a RCIW99 value between 0-1\%. This shows that most of the benchmarks are very stable, and only 1.83\% of all benchmarks have a higher RCIW99 value than 10\%. The variabilities based on CV and RCIW95 fall similar to those of RCIW99.\\
 \\
-Secondly, I write a parser tool called "Prophunt" to extract language and library related source code features from Go projects and run this tool on 223 projects, of which the benchmarks in variability analysis are from. Prophunt parses 163474 functions and 4926 benchmarks. Next, I write another tool called "Callgraph Analyzer" to analyze the callgraphs of benchmarks and run this on the output of Prophunt. This tool finds all called functions from a benchmark and sums the feature values of all called functions, resulting into cumulative values of benchmark. As a result, Callgraph Analyzer successfully collects cumulative source code features of 4716 benchmarks, of which 4330 match with the benchmarks from variability analysis.\\
+Secondly, I wrote a parser tool called "Prophunt" to extract language and library related source code features from Go projects and ran this tool on 223 projects, of which the benchmarks in variability analysis are from. Prophunt parsed 163474 functions and 4926 benchmarks. Next, I wrote another tool called "Callgraph Analyzer" to analyze the callgraphs of benchmarks and ran this on the output of Prophunt. This tool found all called functions from a benchmark and summed the feature values of all called functions, resulting into cumulative values of benchmark. As a result, Callgraph Analyzer successfully collected cumulative source code features of 4716 benchmarks, of which 4330 matched with the benchmarks from variability analysis.\\
 \\
-Finally, I do a correlation analysis based on the 59 source code features and variability of 4330 benchmarks to see which source code features have a correlation with the stability of the benchmark. For this, I use Spearman's rank-order correlation and look at the coefficients of correlations. Results show that, among all features, the usage of sync package is the most correlating feature with a value of 0.35690, followed by a language feature "gos", which represents the count of go keyword, with a value of 0.28593. In total, 14 features have a coefficient value higher than 0.25 and 20 features have a coefficient value below 0.10. An interesting finding is that concurrency related features generally correlate with the stability and as expected, control flow elements are also correlated to the stability of benchmarks.\\
+Finally, I performed a correlation analysis based on the 59 source code features and variability of 4330 benchmarks to see which source code features have a correlation with the stability of the benchmark. For this, I used Spearman's rank-order correlation and looked at the coefficients of correlations. Results show that, among all features, the usage of sync package is the most correlating feature with a value of 0.35690, followed by a language feature "gos", which represents the count of go keyword, with a value of 0.28593. In total, 14 features have a coefficient value higher than 0.25 and 20 features have a coefficient value below 0.10. An interesting finding is that concurrency related features generally correlate with the stability and as expected, control flow elements are also correlated to the instability of benchmarks.\\
 \\
 Researchers and practitioners can use the approaches presented in this thesis to analyze the stability of their benchmarks. Furthermore, the results of this study can be used as a basis for future directions on the topic of microbenchmark variability.
 

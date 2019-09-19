@@ -1,25 +1,23 @@
 \babel@toc {english}{}
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {2.1}{\ignorespaces Example for a low and high variance microbenchmark.\relax }}{7}% 
+\contentsline {figure}{\numberline {2.1}{\ignorespaces Example for a low and high variance microbenchmark.\relax }}{8}% 
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {3.1}{\ignorespaces 3 main steps of the methodology.\relax }}{13}% 
-\contentsline {figure}{\numberline {3.2}{\ignorespaces Example results file from \cite {ironsmile/nedomi}.\relax }}{15}% 
-\contentsline {figure}{\numberline {3.3}{\ignorespaces First lines from the Benchmark\_Variabilities.csv file involving variability values for \cite {ironsmile/nedomi}.\relax }}{17}% 
-\contentsline {figure}{\numberline {3.4}{\ignorespaces Process of downloading projects from Github.\relax }}{20}% 
-\contentsline {figure}{\numberline {3.5}{\ignorespaces Process of fetching dependencies for each project.\relax }}{21}% 
-\contentsline {figure}{\numberline {3.6}{\ignorespaces Workwise of Prophunt iterating through downloaded projects.\relax }}{27}% 
-\contentsline {figure}{\numberline {3.7}{\ignorespaces Workwise of Callgraph Analyzer iteration through all parsed projects.\relax }}{29}% 
+\contentsline {figure}{\numberline {3.1}{\ignorespaces 3 main steps of the methodology.\relax }}{15}% 
+\contentsline {figure}{\numberline {3.2}{\ignorespaces Example results file from \cite {ironsmile/nedomi}.\relax }}{17}% 
+\contentsline {figure}{\numberline {3.3}{\ignorespaces First lines from the Benchmark\_Variabilities.csv file involving variability values for \cite {ironsmile/nedomi}.\relax }}{19}% 
+\contentsline {figure}{\numberline {3.4}{\ignorespaces Process of downloading projects from Github.\relax }}{22}% 
+\contentsline {figure}{\numberline {3.5}{\ignorespaces Process of fetching dependencies for each project.\relax }}{23}% 
+\contentsline {figure}{\numberline {3.6}{\ignorespaces Workwise of Prophunt iterating through downloaded projects.\relax }}{29}% 
+\contentsline {figure}{\numberline {3.7}{\ignorespaces Workwise of Callgraph Analyzer iteration through all parsed projects.\relax }}{31}% 
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {4.1}{\ignorespaces General view of processing results.\relax }}{34}% 
-\contentsline {figure}{\numberline {4.2}{\ignorespaces Density of benchmarks' variabilities 1-100\%.\relax }}{35}% 
-\contentsline {figure}{\numberline {4.3}{\ignorespaces Distribution of benchmarks' variabilities 0-100 in 10\% buckets.\relax }}{36}% 
-\contentsline {figure}{\numberline {4.4}{\ignorespaces Density of benchmarks' variabilities in 1-10\%.\relax }}{37}% 
-\contentsline {figure}{\numberline {4.5}{\ignorespaces Distribution of benchmarks' variabilities 0-10 in 1\% buckets.\relax }}{37}% 
-\contentsline {figure}{\numberline {4.6}{\ignorespaces Number of parsed functions per project.\relax }}{40}% 
-\contentsline {figure}{\numberline {4.7}{\ignorespaces Number of parsed benchmarks per project.\relax }}{41}% 
-\contentsline {figure}{\numberline {4.8}{\ignorespaces "Gos" and rciw99 values plotted with a linear regression model.\relax }}{44}% 
-\contentsline {figure}{\numberline {4.9}{\ignorespaces "sync" and rciw99 values plotted with a linear regression model.\relax }}{46}% 
+\contentsline {figure}{\numberline {4.1}{\ignorespaces General view of processing results.\relax }}{36}% 
+\contentsline {figure}{\numberline {4.2}{\ignorespaces Distribution of benchmarks' variabilities 0-100 in 10\% buckets in log-scaled y-axis.\relax }}{38}% 
+\contentsline {figure}{\numberline {4.3}{\ignorespaces Distribution of benchmarks' variabilities 0-10 in 1\% buckets.\relax }}{38}% 
+\contentsline {figure}{\numberline {4.4}{\ignorespaces Number of parsed functions per project.\relax }}{42}% 
+\contentsline {figure}{\numberline {4.5}{\ignorespaces Number of parsed benchmarks per project.\relax }}{42}% 
+\contentsline {figure}{\numberline {4.6}{\ignorespaces "Gos" and rciw99 values plotted with a linear regression model.\relax }}{45}% 
+\contentsline {figure}{\numberline {4.7}{\ignorespaces "sync" and rciw99 values plotted with a linear regression model.\relax }}{47}% 
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
