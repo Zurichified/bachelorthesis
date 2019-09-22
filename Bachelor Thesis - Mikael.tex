@@ -81,7 +81,7 @@ To this end, I answer the following research questions:
 	\item \textbf{RQ1: How stable are microbenchmark results of Go projects?}
 \end{itemize}
 
-\noindent My hypothesis for the the first research question is: I expect many of the benchmarks to small percentages of variability values, since Go benchmarks are reported to be largely very reliable \cite{Laaber:2018:EOS:3196398.3196407}. To answer my first research question, I get all the projects benchmarks, calculate their variability with different measurement metrics such as Coefficient of Variation (CV) and Relative Confidence Interval Width (RCIW), and report the variabilities of benchmarks for 228 valid projects, having in total 4589 valid benchmarks. Unlike my hypothesis, most of the benchmarks are very stable, in fact, 98.17\% of all benchmarks have a RCIW99 value below 10\%. From the rest of benchmarks, only 0.4\% (19/4589) are rather unstable, having a RCIW99 value above 60\%.\\
+\noindent My hypothesis for the the first research question is: I expect many of the benchmarks to have small percentages of variability values, since Go benchmarks are reported to be largely very reliable \cite{Laaber:2018:EOS:3196398.3196407}. To answer my first research question, I get all the projects benchmarks, calculate their variability with different measurement metrics such as Coefficient of Variation (CV) and Relative Confidence Interval Width (RCIW), and report the variabilities of benchmarks for 228 valid projects, having in total 4589 valid benchmarks. Unlike my hypothesis, most of the benchmarks are very stable, in fact, 98.17\% of all benchmarks have a RCIW99 value below 10\%. From the rest of benchmarks, only 0.4\% (19/4589) are rather unstable, having a RCIW99 value above 60\%.\\
 \\
 \begin{itemize}
 	\item \textbf{RQ2: Which source code features contribute to the stability of benchmark results and how?}
@@ -102,7 +102,7 @@ In this subsection, I give a detailed background information about software micr
 
 Different kinds of benchmarks are found in the literature. While sometimes benchmarks refer to a standardization of a measure, other benchmarks assess the performance of the underlying system. For example, there are different benchmark programs to measure the performance of hardware such as Central Processing Unit(CPU), to be able to compare their performance with others of its kind. Another example can be the benchmark function of a game, which gives the average Frames Per Second (FPS) score of the game run on a hardware.\\
 \\
-Software developers can analyze the performance of parts of their software with so called software microbenchmarks, which are found either as microbenchmarks or performance unit tests in the literature\cite{costa2019}. These two terms differ in the way they test the underlying code for performance: While microbenchmarks report performance counters (e.g., execution time, throughput, latency etc.) for the different iterations of a trial, performance unit tests act like unit tests in functional testing, reporting if a pre set performance criteria has been reached at the runtime of the test \cite{costa2019}. Some studies such as \cite{Stefan:2017:UTP:3030207.3030226}\cite{Horky:2015:UPU:2668930.2688051} investigate the usage of performance unit tests, while other studies such as \cite{Laaber:2018:EOS:3196398.3196407}\cite{rodriguez2016automatic} work with microbenchmarks. In this thesis, I work with microbenchmarks and in the rest of this thesis I use the term performance test interchangeable with testing with microbenchmarks.\\
+Software developers can analyze the performance of parts of their software with so called software microbenchmarks, which are found either as microbenchmarks or performance unit tests in the literature\cite{costa2019}. These two terms differ in the way they test the underlying code for performance: While microbenchmarks report performance counters (e.g., execution time, throughput, latency etc.) for the different iterations of a trial, performance unit tests act like unit tests in functional testing, reporting if a pre set performance criteria has been reached at the runtime of the test \cite{costa2019}, as in performance assertions. Some studies such as \cite{Stefan:2017:UTP:3030207.3030226}\cite{Horky:2015:UPU:2668930.2688051} investigate the usage of performance unit tests, while other studies such as \cite{Laaber:2018:EOS:3196398.3196407}\cite{rodriguez2016automatic} work with microbenchmarks. In this thesis, I work with microbenchmarks and in the rest of this thesis I use the term performance test interchangeable with testing with microbenchmarks.\\
 \\
 Microbenchmarks usually test for only a small fraction of the software, such as one or multiple functions, to assess their performance. A microbenchmark can for instance test the performance of a newly introduced data structure, an implemented algorithm, or even the concurrency performance of functions\cite{costa2019}. As in functional testing, microbenchmarking also comes with testing frameworks that allow developers to create function pools, which are often also called microbenchmark suites (in contrast to unit test suites in functional testing). As an example, for Java there exist Java Microbenchmarking Harness (JMH), which is similar to JUnit, but is implemented to help developers with the creation of microbenchmarks\cite{JMH}.\\
 \\
@@ -262,12 +262,15 @@ In this section, I present the methodologies I followed to get to the results. A
 
 First part of this thesis involves doing a quantitative analysis by analyzing the given data set (This part refers to the 1. box in Figure \ref{fig:Methodology}). From this data set, I firstly extract the valid projects, i. e. choose the projects that have a positive number of individual benchmark results. Secondly, I calculate CV, RCIW95 and RCIW99 for each of benchmarks found in the dataset. For RCIW95 and RCIW99, I use a helper tool, called "pa tool" \cite{patool}, which helps me use the bootstrapping technique with randomly sampling, described in Section \ref{Microbenchmark variability}. The outcome of this part is explained in detail in Section \ref{Variabilities of benchmarks}.
 
+
 \subsection{Dataset}
 
 The dataset to analyze the variations from was given me from my supervisor Christoph Laaber. This dataset with a size of 43.8 MB contains \textbf{go-results.csv}, \textbf{go-results-2.csv} and 4 folders \textbf{cumulus-1 to cumulus-4}. In the \textbf{go-results-2.csv}, I find which project's result is on which relative path (which are in cumulus folders) and has how many individual results. \textbf{go-results.csv} differs from this file in having no commit of the projects. That's why, I start by analyzing \textbf{go-results-2.csv} in particular. In this file, I look for the column named "c1\_results": if the value in this column is above 0 (i.e., it is not -1), it means that there are results for that specific project on the special commit, which is found in the column "c1\_commit". From a total of 481 entries in this file, I get 230 projects which have individual results and filter them out. In the next step, I map the relative filepath of the project's result file to the name and commit of the project by querying the \textbf{go-projects.csv} file, which is to be found in every cumulus folder. In the end, I have all the valid projects with their results file.\\
 \\
 Results file of a projects looks like in Figure \ref{fig:exampleresults}. In this file, the middle part in the first column specifies the number of run, the second column specifies the benchmark including the relative path and file where the benchmark is located in, the forth column reports the execution time in nanoseconds, the fifth and sixth column are related to memory performance, bytes/operation and allocations/operation respectively.
  
+\clearpage
+
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=\linewidth]{exampleresults}
@@ -355,10 +358,6 @@ Finally, I create the list of features in Table \ref{table:sourcecodeprop} to an
 For the extraction of these features, I use the methodology of parsing the Abstract Syntax Tree of a source code file. While signature features require only the inspection of function declarations within the AST, the other 3 types require analysis of the body of the function within the declaration, going into a deeper level.
 
 
-% Please add the following required packages to your document preamble:
-% \usepackage{booktabs}
-% \usepackage{multirow}
-% \usepackage{graphicx}
 \begin{table}[H]
 	\caption{List of source code features.}
 	\label{table:sourcecodeprop}
@@ -715,6 +714,8 @@ The extraction of source code features of benchmarks is implemented by an AST tr
 
 In this section, I present the results from the 3 parts of this study. First results correspond to the variability of benchmarks and in Section \ref{Variabilities of benchmarks}, I present statistical information regarding the distribution of benchmarks' variabilities. From the given dataset of 4802 total benchmarks, 4589 valid benchmarks in total qualify to final correlation analysis. Only 1.83\% of all benchmarks have a RCIW99 value above 10\%, showing that most of the benchmarks are very stable. Second results are about the outcome of Prophunt and Callgraph Analyzer and are presented in Section \ref{Extracted source code features}. From successfully downloaded 223 projects, Prophunt parses 4926 benchmarks and their features, of which 4500 are matched with the ones from variability analysis. As a next step, Callgraph Analyzer takes Prophunt\_Output as input and returns 4837 benchmarks with cumulative source code features. Matching the output of Prophunt and Callgraph Analyzer shows that there are 121 benchmarks which did not have cumulative feature values, which are therefore also removed. Finally, last results are presented in Section \ref{Correlation results}, which are based on 4330 matched benchmarks, which are found both in the results of variability and callgraph analysis. Of all correlation coefficients acquired from Spearman's rank-order correlation, "sync" has the highest correlation with benchmark stability with a value of 0.35690, followed by "gos" with 0.28593, both being strongly significant. Figure \ref{fig:results} sums up the removal of benchmarks and shows the number of benchmarks remaining to the correlation analysis.
 
+\clearpage
+
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.9\linewidth]{ResultsGeneral}
@@ -757,9 +758,11 @@ In Section \ref{Analyzing variabilities}, I show which steps I go through to get
 \noindent For a general view of data, I create a histograms and density plots of benchmarks' variabilities using Matplotlib library \cite{Matplotlib} and Seaborn library\cite{Seaborn}, which are libraries for Python used often for visualizing data. For looking at the results on a project basis, I create tables for projects and report how many of projects fall into which bucket in terms of distribution of variabilities.
 
 \subsection{Variabilities on benchmark level}
-
+	
 
 \noindent Figure \ref{fig:log1} shows the histogram across all benchmarks found in \textbf{Benchmark\_Variabilities} and distributions of their variabilities in 10 percent buckets, taking all 3 metrics into consideration. According to the distribution, (CV) 97.50\% (4474/4589), (RCIW95) 98.48\% (4519/4589) and (RCIW99) 98.17\% (4505/4589) of all benchmarks have a variation between 0 and 10 percent. These are quite high percentages to tell that most of the benchmarks are very stable. Note that last bucket is for all the benchmarks that have a variation equal or higher than 100.
+
+\clearpage
 
 \begin{figure}[H]
 	\centering
@@ -773,59 +776,66 @@ In Section \ref{Analyzing variabilities}, I show which steps I go through to get
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=\linewidth]{resultsvis/log2}
-	\caption{Distribution of benchmarks' variabilities 0-10 in 1\% buckets.}
+	\caption{Distribution of benchmarks' variabilities 0-10 in 1\% buckets in log-scaled y-axis.}
 	\label{fig:log2}
 \end{figure}
 
 \subsection{Variabilities on project level}
 
-Since I eliminate 2 projects because they have 1 execution for each of their benchmarks, following statistical data is based on a total of 228 projects. In the rest of the analysis, I focus on RCIW99 values of variability, because CV is not a valid measure for performance data and RCIW99 is more significant than RCIW95. For the Table \ref{table:table1}'s header shows \textbf{Percentages} as buckets for the benchmarks' RCIW99 values. Following two rows show how many distinct projects fall into this group (i.e., having at least one benchmark in this bucket), and how many of the total projects this makes in percentage. As one can see, 225 out of 228 projects have benchmarks that have at least one benchmark that has a RCIW99 value between 0-1\%. Analyzing the 0-1\% bucket further shows that there are in total 283 benchmarks from 68 projects which have a RCIW99 value of 0.0\%. This makes 6.16\% of total benchmarks. A RCIW99 value of 0.0\% means that there is no variation in the results of the benchmark, which can be confirmed by looking at the iteration values of these benchmarks. The number of iterations for these benchmarks varies from 4 to 1519 with an average of 97 iterations and a standard deviation of 167, and the average execution time in ns varies from 0.48 ns to 2930.0 ns, having an average of 140 ns and a standard deviation of 332 ns. Generally, the benchmarks that have 0.0\% of RCIW99 are short running benchmarks.
+Since I eliminate 2 projects because they have 1 execution for each of their benchmarks, following statistical data is based on a total of 228 projects. In the rest of the analysis, I focus on RCIW99 values of variability, because CV is not a valid measure for performance data and RCIW99 is more significant than RCIW95. Table \ref{table:table1}'s header shows \textbf{Percentages} as buckets for the benchmarks' RCIW99 values. Following two rows show how many distinct projects fall into this group (i.e., having at least one benchmark in this bucket), and how many of the total projects this makes in percentage. As one can see, 225 out of 228 projects have benchmarks that have at least one benchmark that has a RCIW99 value between 0-1\%. Analyzing the 0-1\% bucket further shows that there are in total 283 benchmarks from 68 projects which have a RCIW99 value of 0.0\%. This makes 6.16\% of total benchmarks. A RCIW99 value of 0.0\% means that there is no variation in the results of the benchmark, which can be confirmed by looking at the iteration values of these benchmarks. The number of iterations for these benchmarks varies from 4 to 1519 with an average of 97 iterations and a standard deviation of 167, and the average execution time in ns varies from 0.48 ns to 2930.0 ns, having an average of 140 ns and a standard deviation of 332 ns. Generally, the benchmarks that have 0.0\% of RCIW99 are short running benchmarks.
+
 
 \begin{table}[H]
 	\centering
-	\caption{Number of distinct projects, whose benchmarks’ RCIW99 lay between 1-10\% in 1\% buckets and between 10-100\% in 10\% buckets}
+	\caption{Number of distinct projects, whose benchmarks’ RCIW99 lay between 1-10\% in 1\% buckets and between 10-100\% in 10\% buckets.}
 	\label{table:table1}
-	\resizebox{\textwidth}{!}{
-	\begin{tabular}{lllllllllll}
-		\hline
-		\rowcolor[HTML]{FFFC9E} 
-		\multicolumn{1}{|l|}{\cellcolor[HTML]{FFFC9E}Percentages} & \multicolumn{1}{l|}{\cellcolor[HTML]{FFFC9E}0-1\%}   & \multicolumn{1}{l|}{\cellcolor[HTML]{FFFC9E}1-2\%}   & \multicolumn{1}{l|}{\cellcolor[HTML]{FFFC9E}2-3\%}   & \multicolumn{1}{l|}{\cellcolor[HTML]{FFFC9E}3-4\%}   & \multicolumn{1}{l|}{\cellcolor[HTML]{FFFC9E}4-5\%}   & \multicolumn{1}{l|}{\cellcolor[HTML]{FFFC9E}5-6\%}   & \multicolumn{1}{l|}{\cellcolor[HTML]{FFFC9E}6-7\%}   & \multicolumn{1}{l|}{\cellcolor[HTML]{FFFC9E}7-8\%}   & \multicolumn{1}{l|}{\cellcolor[HTML]{FFFC9E}8-9\%}    & \multicolumn{1}{l|}{\cellcolor[HTML]{FFFC9E}9-10\%}              \\ \hline
-		\multicolumn{1}{|l|}{\#projects}                          & \multicolumn{1}{l|}{225}                             & \multicolumn{1}{l|}{75}                              & \multicolumn{1}{l|}{48}                              & \multicolumn{1}{l|}{30}                              & \multicolumn{1}{l|}{17}                              & \multicolumn{1}{l|}{15}                              & \multicolumn{1}{l|}{8}                               & \multicolumn{1}{l|}{6}                               & \multicolumn{1}{l|}{4}                                & \multicolumn{1}{l|}{5}                                           \\ \hline
-		\multicolumn{1}{|l|}{\#projects \%}                       & \multicolumn{1}{l|}{99\%}                            & \multicolumn{1}{l|}{33\%}                            & \multicolumn{1}{l|}{21\%}                            & \multicolumn{1}{l|}{13\%}                            & \multicolumn{1}{l|}{7\%}                             & \multicolumn{1}{l|}{7\%}                             & \multicolumn{1}{l|}{4\%}                             & \multicolumn{1}{l|}{3\%}                             & \multicolumn{1}{l|}{2\%}                              & \multicolumn{1}{l|}{2\%}                                         \\ \hline
-		&                                                      &                                                      &                                                      &                                                      &                                                      &                                                      &                                                      &                                                      &                                                       &                                                                  \\ \hline
-		\rowcolor[HTML]{FFFC9E} 
-		\multicolumn{1}{|l|}{\cellcolor[HTML]{FFFC9E}Percentages} & \multicolumn{1}{l|}{\cellcolor[HTML]{FFFC9E}10-20\%} & \multicolumn{1}{l|}{\cellcolor[HTML]{FFFC9E}20-30\%} & \multicolumn{1}{l|}{\cellcolor[HTML]{FFFC9E}30-40\%} & \multicolumn{1}{l|}{\cellcolor[HTML]{FFFC9E}40-50\%} & \multicolumn{1}{l|}{\cellcolor[HTML]{FFFC9E}50-60\%} & \multicolumn{1}{l|}{\cellcolor[HTML]{FFFC9E}60-70\%} & \multicolumn{1}{l|}{\cellcolor[HTML]{FFFC9E}70-80\%} & \multicolumn{1}{l|}{\cellcolor[HTML]{FFFC9E}80-90\%} & \multicolumn{1}{l|}{\cellcolor[HTML]{FFFC9E}90-100\%} & \multicolumn{1}{l|}{\cellcolor[HTML]{FFFC9E}\textgreater{}100\%} \\ \hline
-		\multicolumn{1}{|l|}{\#projects}                          & \multicolumn{1}{l|}{18}                              & \multicolumn{1}{l|}{9}                               & \multicolumn{1}{l|}{6}                               & \multicolumn{1}{l|}{4}                               & \multicolumn{1}{l|}{4}                               & \multicolumn{1}{l|}{2}                               & \multicolumn{1}{l|}{1}                               & \multicolumn{1}{l|}{0}                               & \multicolumn{1}{l|}{3}                                & \multicolumn{1}{l|}{6}                                           \\ \hline
-		\multicolumn{1}{|l|}{\#projects \%}                       & \multicolumn{1}{l|}{8\%}                             & \multicolumn{1}{l|}{4\%}                             & \multicolumn{1}{l|}{3\%}                             & \multicolumn{1}{l|}{2\%}                             & \multicolumn{1}{l|}{2\%}                             & \multicolumn{1}{l|}{1\%}                             & \multicolumn{1}{l|}{0\%}                             & \multicolumn{1}{l|}{0\%}                             & \multicolumn{1}{l|}{1\%}                              & \multicolumn{1}{l|}{3\%}                                         \\ \hline
-	\end{tabular}
+	\fontsize{10}{12}
+	\resizebox{\textwidth}{!}{%
+		\begin{tabular}{@{}lllllllllll@{}}
+			\toprule
+			Percentages & 0-1\% & 1-2\% & 2-3\% & 3-4\% & 4-5\% & 5-6\% & 6-7\% & 7-8\% & 8-9\% & 9-10\% \\ \midrule
+			\#projects & 225 & 75 & 48 & 30 & 17 & 15 & 8 & 6 & 4 & 5 \\
+			\#projects \% & 99\% & 33\% & 21\% & 13\% & 7\% & 7\% & 4\% & 3\% & 2\% & 2\% \\
+			&  &  &  &  &  &  &  &  &  &  \\
+			\toprule
+			Percentages & 10-20\% & 20-30\% & 30-40\% & 40-50\% & 50-60\% & 60-70\% & 70-80\% & 80-90\% & 90-100\% & \textgreater{}100\% \\
+			\midrule
+			\#projects & 18 & 9 & 6 & 4 & 4 & 2 & 1 & 0 & 3 & 6 \\
+			\#projects \% & 8\% & 4\% & 3\% & 2\% & 2\% & 1\% & 0\% & 0\% & 1\% & 3\% \\ \bottomrule
+		\end{tabular}%
 	}
 \end{table}
 
-\noindent Table \ref{table:table2} similarly shows the number of projects and their percentages across all projects, whose benchmarks have an RCIW99 score of more than the one provided in the \textbf{Percentage} header. One thing that attracts attention is that in the first row there are 227 projects which have at least one benchmark that has a RCIW99 score bigger than 0. This is because one of the projects, \textbf{qjpcu/sesh} \cite{qjpcu/sesh}, only has 2 benchmarks, of which both have 0.0 as RCIW99 score.
+
+
+\noindent Table \ref{table:table2} similarly shows the number of projects and their percentages across all projects, whose benchmarks have an RCIW99 score of more than the one provided in the \textbf{Percentage} header. One thing that attracts attention is that in the first column there are 227 projects which have at least one benchmark that has a RCIW99 score bigger than 0. This is because one of the projects, \textbf{qjpcu/sesh} \cite{qjpcu/sesh}, only has 2 benchmarks, of which both have 0.0 as RCIW99 score.
 
 \begin{table}[H]
 	\centering
-	\caption{Number of distinct projects, whose benchmarks’ RCIW99 lay more than the percent value}
+	\caption{Number of distinct projects, whose benchmarks’ RCIW99 lay more than the percent value.}
 	\label{table:table2}
-	\begin{tabular}{lllllllllll}
-		\hline
-		\rowcolor[HTML]{FFCCC9} 
-		\multicolumn{1}{|l|}{\cellcolor[HTML]{FFCCC9}Percentage} & \multicolumn{1}{l|}{\cellcolor[HTML]{FFCCC9}0\%}  & \multicolumn{1}{l|}{\cellcolor[HTML]{FFCCC9}1\%}  & \multicolumn{1}{l|}{\cellcolor[HTML]{FFCCC9}2\%}  & \multicolumn{1}{l|}{\cellcolor[HTML]{FFCCC9}3\%}  & \multicolumn{1}{l|}{\cellcolor[HTML]{FFCCC9}4\%}  & \multicolumn{1}{l|}{\cellcolor[HTML]{FFCCC9}5\%}  & \multicolumn{1}{l|}{\cellcolor[HTML]{FFCCC9}6\%}  & \multicolumn{1}{l|}{\cellcolor[HTML]{FFCCC9}7\%}  & \multicolumn{1}{l|}{\cellcolor[HTML]{FFCCC9}8\%}  & \multicolumn{1}{l|}{\cellcolor[HTML]{FFCCC9}9\%}   \\ \hline
-		\multicolumn{1}{|l|}{\#projects}                         & \multicolumn{1}{l|}{227}                          & \multicolumn{1}{l|}{98}                           & \multicolumn{1}{l|}{75}                           & \multicolumn{1}{l|}{58}                           & \multicolumn{1}{l|}{47}                           & \multicolumn{1}{l|}{53}                           & \multicolumn{1}{l|}{39}                           & \multicolumn{1}{l|}{35}                           & \multicolumn{1}{l|}{32}                           & \multicolumn{1}{l|}{31}                            \\ \hline
-		\multicolumn{1}{|l|}{\#projects \%}                      & \multicolumn{1}{l|}{100\%}                        & \multicolumn{1}{l|}{43\%}                         & \multicolumn{1}{l|}{33\%}                         & \multicolumn{1}{l|}{25\%}                         & \multicolumn{1}{l|}{21\%}                         & \multicolumn{1}{l|}{23\%}                         & \multicolumn{1}{l|}{17\%}                         & \multicolumn{1}{l|}{15\%}                         & \multicolumn{1}{l|}{14\%}                         & \multicolumn{1}{l|}{14\%}                          \\ \hline
-		&                                                   &                                                   &                                                   &                                                   &                                                   &                                                   &                                                   &                                                   &                                                   &                                                    \\ \hline
-		\rowcolor[HTML]{FFCCC9} 
-		\multicolumn{1}{|l|}{\cellcolor[HTML]{FFCCC9}Percentage} & \multicolumn{1}{l|}{\cellcolor[HTML]{FFCCC9}10\%} & \multicolumn{1}{l|}{\cellcolor[HTML]{FFCCC9}20\%} & \multicolumn{1}{l|}{\cellcolor[HTML]{FFCCC9}30\%} & \multicolumn{1}{l|}{\cellcolor[HTML]{FFCCC9}40\%} & \multicolumn{1}{l|}{\cellcolor[HTML]{FFCCC9}50\%} & \multicolumn{1}{l|}{\cellcolor[HTML]{FFCCC9}60\%} & \multicolumn{1}{l|}{\cellcolor[HTML]{FFCCC9}70\%} & \multicolumn{1}{l|}{\cellcolor[HTML]{FFCCC9}80\%} & \multicolumn{1}{l|}{\cellcolor[HTML]{FFCCC9}90\%} & \multicolumn{1}{l|}{\cellcolor[HTML]{FFCCC9}100\%} \\ \hline
-		\multicolumn{1}{|l|}{\#projects}                         & \multicolumn{1}{l|}{28}                           & \multicolumn{1}{l|}{18}                           & \multicolumn{1}{l|}{13}                           & \multicolumn{1}{l|}{10}                           & \multicolumn{1}{l|}{8}                            & \multicolumn{1}{l|}{6}                            & \multicolumn{1}{l|}{6}                            & \multicolumn{1}{l|}{6}                            & \multicolumn{1}{l|}{6}                            & \multicolumn{1}{l|}{6}                             \\ \hline
-		\multicolumn{1}{|l|}{\#projects \%}                      & \multicolumn{1}{l|}{12\%}                         & \multicolumn{1}{l|}{8\%}                          & \multicolumn{1}{l|}{6\%}                          & \multicolumn{1}{l|}{4\%}                          & \multicolumn{1}{l|}{4\%}                          & \multicolumn{1}{l|}{3\%}                          & \multicolumn{1}{l|}{3\%}                          & \multicolumn{1}{l|}{3\%}                          & \multicolumn{1}{l|}{3\%}                          & \multicolumn{1}{l|}{3\%}                           \\ \hline
-	\end{tabular}
+	\tiny
+	\resizebox{\textwidth}{!}{%
+		\begin{tabular}{@{}lllllllllll@{}}
+			\toprule
+			Percentage & 0\% & 1\% & 2\% & 3\% & 4\% & 5\% & 6\% & 7\% & 8\% & 9\% \\ \midrule
+			\#projects & 227 & 98 & 75 & 58 & 47 & 53 & 39 & 35 & 32 & 31 \\
+			\#projects \% & 100\% & 43\% & 33\% & 25\% & 21\% & 23\% & 17\% & 15\% & 14\% & 14\% \\
+			&  &  &  &  &  &  &  &  &  &  \\
+			\toprule
+			Percentage & 10\% & 20\% & 30\% & 40\% & 50\% & 60\% & 70\% & 80\% & 90\% & 100\% \\
+			\midrule
+			\#projects & 28 & 18 & 13 & 10 & 8 & 6 & 6 & 6 & 6 & 6 \\
+			\#projects \% & 12\% & 8\% & 6\% & 4\% & 4\% & 3\% & 3\% & 3\% & 3\% & 3\% \\ \bottomrule
+		\end{tabular}%
+	}
 \end{table}
 
-\noindent If we call the benchmarks which have a RCIW99 value above 60\% unstable benchmarks, then there are in total 19 benchmarks from 6 projects which are unstable. Table \ref{table:unstable} shows in detail the RCIW99 values of benchmarks and which projects they are from.
+\noindent A notable finding is that starting with 60\% of RCIW99 in Table \ref{table:table2}, the number of projects, whose benchmarks have variabilities more than the given percentage, do not decrease. Further inspection shows that these 6 projects are always the same 6 projects from 60\% to over 100\%. Table \ref{table:unstable} depicts these projects and their benchmarks with their RCIW99 values.
 
 \begin{table}[H]
 \begin{longtable}[c]{@{}llr@{}}
-	\caption{Unstable benchmarks}
+	\caption{Unstable benchmarks.}
 	\label{table:unstable}\\
 	\toprule
 	Project Name & Benchmark & RCIW99 \\* \midrule
@@ -860,17 +870,20 @@ Since I eliminate 2 projects because they have 1 execution for each of their ben
 \end{longtable}
 \end{table}
 
+
 \noindent As I present the results for the first step of my methodology, I want to remind and answer the following research question:
 
 \begin{itemize}
 	\item \textbf{RQ1: How variable are microbenchmark results of Go projects?}
 \end{itemize}
 
-\noindent Unlike my hypothesis, there is no normalized distribution of RCIW99 values of benchmarks. Most of the benchmarks fall to the bucket 1-10\% (98.17\%), from which again most them fall to 0-1\% (87.70\%). Based on the dataset that I analyze with 230 projects, it is clear that most of them are very stable, and 6.16\% (283 in total) of benchmarks don't even vary, i.e., for each execution they have the same amount of nanoseconds as execution time. On the other side, 19 benchmarks from 6 projects are rather unstable with a RCIW99 above 60\%, which makes only 0.4\% of all the benchmarks. The possible reasons for the stability of benchmarks, as well as why there is such a distribution is furthermore discussed in the \ref{Discussion}. Section.
+\noindent Similar to my hypothesis, benchmarks generally have a low variation. Most of the benchmarks fall to the bucket 1-10\% (98.17\%), from which again most them fall to 0-1\% (87.70\%). Based on the dataset that I analyze with 230 projects, it is clear that most of them are very stable, and 6.16\% (283 in total) of benchmarks don't even vary, i.e., for each execution they have the same amount of nanoseconds as execution time. On the other side, 19 benchmarks from 6 projects manifest a RCIW99 above 60\%, which makes only 0.4\% of all the benchmarks. The possible reasons for the stability of benchmarks, as well as why there is such a distribution is furthermore discussed in Section \ref{Discussion}.
 
 
 \section{Extracted source code features}
 \label{Extracted source code features}
+
+In this section, I explain how many projects are downloaded, how many functions are parsed, as well as how many benchmarks result from the final callgraph analysis.
 
 \subsection{Downloaded Projects}
 Using all the 228 projects and their commits from the first results, my Python downloader script is able to download 223 of the projects successfully. From the remaining 5 projects, 3 (\textbf{tendermint/go-merkle}, \textbf{pp2p/paranoid}, \textbf{eleme/banshee}) are not found, either because they terminated the project on Github, or because they moved the project to another repository within or out of Github. 1 project (\textbf{stratumn/sdk} \cite{stratumn/sdk}) changed its repo and its redirection from Github results in a non-Go-project. 1 project (\textbf{eaburns/T}) changed the repo to a new name (\textbf{eaburns/T\_old}) \cite{eaburns/T_old}, however, it's commit from the initial dataset does not match any commits in the new repo.\\
@@ -879,48 +892,48 @@ As described in Section \ref{Prophunt} and \ref{Callgraph Analyzer}, parsing wit
 
 \subsection{Prophunt Output}
 
-Prophunt returns in total 223 CSV files with a size of 35.2 MB. In total, Prophunt parses 163474 functions across all 223 projects. This makes an average of 733 functions per project, and Figure \ref{fig:parsed} illustrates the number of parsed functions per project on a log scaled y-axis. From this many functions, there are 4926 parsed benchmarks, which in average equals to 22 benchmarks per project. The frequency of parsed benchmarks per project is illustrated in Figure \ref{fig:parsedb}. This is more than the total number of benchmarks found in the Benchmark\_Variabilities.csv (4589) and means that the parser was able to find 337 more benchmarks than in the given dataset. However, when matching them with the benchmarks from Benchmark\_Variabilities.csv, there are in total 4500 matching benchmarks. That is explainable with the missing benchmarks from unsuccessfull downloads and some compilation problems in 2 projects albeit all dependency fetching efforts. In Table \ref{table:infinalnotcsv1} is the projects of benchmarks (89) that are present in Benchmark\_Variabilities.csv, yet could not be parsed with Prophunt (See in \ref{infinalbutnotincsv1}):\\
+Prophunt returns in total 223 CSV files with a size of 35.2 MB. In total, Prophunt parses 163474 functions across all 223 projects. This makes an average of 733 functions per project and a standard deviation of 2945, and Figure \ref{fig:parsed} illustrates the number of parsed functions per project. From this many functions, there are 4926 parsed benchmarks, which on average equals to 22 benchmarks per project with a standard deviation of 28. The frequency of parsed benchmarks per project is illustrated in Figure \ref{fig:parsedb}. This is more than the total number of benchmarks found in the Benchmark\_Variabilities.csv (4589) and means that the parser was able to find 337 more benchmarks than in the given dataset. However, when matching them with the benchmarks from Benchmark\_Variabilities.csv, there are in total 4500 matching benchmarks. That is explainable with the missing benchmarks from unsuccessful downloads and some compilation problems in 2 projects albeit all dependency fetching efforts. In Table \ref{table:infinalnotcsv1} is the projects of benchmarks (89) that are present in Benchmark\_Variabilities.csv, yet could not be parsed with Prophunt (See in \ref{infinalbutnotincsv1}):\\
+
+
+\begin{table}[H]
+	\begin{longtable}[c]{@{}lrl@{}}
+		\caption{Information about projects of not matching benchmarks}
+		\label{table:infinalnotcsv1}\\
+		\toprule
+		Project Name & Benchmark Count & Reason of not match \\* \midrule
+		\endfirsthead
+		%
+		\endhead
+		%
+		\bottomrule
+		\endfoot
+		%
+		\endlastfoot
+		%
+		tendermint/go-merkle & 6 & Not found \\
+		pp2p/paranoid & 14 & Not found \\
+		eleme/banshee & 19 & Not found \\
+		micro/go-micro & 10 & Not compiling \\
+		coredns/coredns & 1 & Not compiling \\
+		stratumn/sdk & 2 & Changed repo \\
+		eaburns/T & 37 & Changed repo \\* \bottomrule
+	\end{longtable}
+\end{table}
 
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=\textwidth]{parsedfunctions}
-	\caption{Number of parsed functions per project.}
+	\caption{Number of parsed functions per project in log-scaled y-axis. Red line indicates the average function count.}
 	\label{fig:parsed}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=\textwidth]{parsedbenchmarks}
-	\caption{Number of parsed benchmarks per project.}
+	\caption{Number of parsed benchmarks per project in log-scaled y-axis. Red line indicates the average benchmark count.}
 	\label{fig:parsedb}
 \end{figure}
-
-
-\begin{table}
-\begin{longtable}[c]{@{}lrl@{}}
-	\caption{Information about projects of not matching benchmarks}
-	\label{table:infinalnotcsv1}\\
-	\toprule
-	Project Name & Benchmark Count & Reason of not match \\* \midrule
-	\endfirsthead
-	%
-	\endhead
-	%
-	\bottomrule
-	\endfoot
-	%
-	\endlastfoot
-	%
-	tendermint/go-merkle & 6 & Not found \\
-	pp2p/paranoid & 14 & Not found \\
-	eleme/banshee & 19 & Not found \\
-	micro/go-micro & 10 & Not compiling \\
-	coredns/coredns & 1 & Not compiling \\
-	stratumn/sdk & 2 & Changed repo \\
-	eaburns/T & 37 & Changed repo \\* \bottomrule
-\end{longtable}
-\end{table}
 
 
 \subsection{Callgraph Analyzer Output}
@@ -932,12 +945,12 @@ Finally, I match the benchmarks from Benchmark\_Variabilities.csv with the valid
 \section{Correlation between variabilities and source code features}
 \label{Correlation results}
 
-Section \ref{Variabilities of benchmarks} and \ref{Extracted source code features} were preliminary steps to build the final dataset of benchmarks, which includes the variability metrics RCIW99, RCIW95, CV, as well as the 59 source code feature values for each of the 4330 benchmarks. As stated in Section \ref{Correlation analysis}, the correlation analysis made on this thesis relies on Spearman's rank-order correlation coefficients. For better focus on different types of features, I present the results in Subsections \ref{Language related features} and \ref{Standard library related features}. Because "parameters" has 1 and "net/http/httptrace" has 0 as value across all benchmarks, there is no correlation found between them and the stability, hence, they are removed from the analysis.
+Section \ref{Variabilities of benchmarks} and \ref{Extracted source code features} are preliminary steps to build the final dataset of benchmarks, which includes the variability metrics RCIW99, RCIW95, CV, as well as the 59 source code feature values for each of the 4330 benchmarks. As one can see in Figure \ref{fig:log1}, the distribution of variabilities is not normalized, hence, for the correlation analysis I choose Spearman's rank-order correlation coefficient, because unlike other correlation coefficients such as Pearson, Spearman's correlation does not assume that the distribution of variables is normalized. Additionally, because "parameters" has 1 and "net/http/httptrace" has 0 as value across all benchmarks, there is no correlation found between them and the stability, thus, they are removed from the analysis. For better focus on different types of features, I present the results in Subsections \ref{Language related features} and \ref{Standard library related features}. 
 
 \subsection{Language related features}
 \label{Language related features}
 
-There are in total 27 language related features including "cyclomaticcomplexity" that are the part of this analysis. Table \ref{table:languagefeatures} shows the correlation values of these features with the according variability metric (a concatenating * means a p-value lower than 0.05, and ** means a p-value lower than 0.01).
+There are in total 27 language related features including "cyclomaticcomplexity" \cite{shepperd1988critique} that are the part of this analysis. Table \ref{table:languagefeatures} shows the correlation values of these features with the according variability metric (a concatenating * means a p-value lower than 0.05, and ** means a p-value lower than 0.01).
 
 \begin{table}[H]
 	\centering
@@ -977,23 +990,23 @@ There are in total 27 language related features including "cyclomaticcomplexity"
 	\end{tabular}
 \end{table}
 
-\noindent Taking RCIW99 correlations into consideration, the most correlating 3 features are "gos", "returns" and "pointers" all with a correlation coefficient higher than 0.28 and with a very high significance. On the other side, "concrranges", "recovers" and "switchcases" are the least correlating features. 11 of these features have a correlation coefficient higher than 0.25. A positive correlation means that with the increase of this feature in the benchmark, its variability also increases, hence its stability decreases. In my hypothesis for RQ2, I expected to see a significant effect of loops and cyclomatic complexity on the benchmark stability. Evaluating these results, this expectation holds, however, "cyclomaticcomplexity" has a higher correlation coefficient (0.25656) than "loops" (0.23889). Still, among all language features, these do not make up the highest correlation values.\\
+\noindent Taking RCIW99 correlations into consideration, the most correlating 3 features are "gos", "returns" and "pointers", all with a correlation coefficient higher than 0.28 and with a very high significance. On the other side, "concrranges", "recovers" and "switchcases" are the least correlating features. 11 of these features have a correlation coefficient higher than 0.25. A positive correlation means that with the increase of this feature in the source code executed by the benchmark, the benchmark's variability also increases, hence, its stability decreases. In my hypothesis for RQ2, I expected to see a significant effect of loops and cyclomatic complexity on the benchmark stability. Evaluating these results, this expectation holds, however, "cyclomaticcomplexity" has a higher correlation coefficient (0.25656) than "loops" (0.23889). Still, among all language features, these do not make up the highest correlation values.\\
 \\
-An interesting observation is that all concurrency related features except for "concrranges" have a value above 0.22, which shows that these features have rather a negative effect on the stability of a benchmark.
+An interesting observation is that all concurrency related features ("channels", "sends", "receives", "closes", "gos", "concrranges", "selects", "selectcases") except for "concrranges" have a value above 0.22, which shows that these features have rather a negative effect on the stability of a benchmark. Similarly, signature related features such as "pkgfiles", "fileloc", "loc" and "returns" also reveal noteworthy correlations. The more files and lines of code found in the package of the benchmark and its reachable functions, the more variable benchmarks get. Same applies for the lines of code that are in the benchmark and its reachable functions. These correlations are explainable with the CPU having to process more instructions as the lines of code grows. Besides signature related properties, "pointers" and "defers" as body related features point to a notable correlation as well. Regarding pointers, dereferencing pointers and sharing data via pointers come with computational costs, and the more pointers come up in the source code features of a benchmark, the more data shared via pointers will be stored in the heap. Since heap data can only be freed by the garbage collector, the correlation may have to do with the performance of garbage collector, or the memory allocation/freeing mechanisms of the underlying OS. Using defer statements on the other hand is also not free and a lookup in the disassembled code shows that function calls made with defer statement causes at least 2 extra function calls in assembly level. The more defer statements in the benchmark, the larger the list of defer statements gets, which I suspect might be causing the higher variability of the benchmark. Defer statement has got several performance improvements in the history of Go \cite{go18} (the overhead of deferred function calls reduced by the half), \cite{go113} (performance of most uses of defer improved by 30\%) and since there are projects in the dataset, whose commits are going back to several years (Go 1.7 and earlier), it might be that the version of Go is responsible for the correlation with defers.
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=\textwidth]{gosregression}
-	\caption{"Gos" and rciw99 values plotted with a linear regression model.}
+	\caption{"Gos" and rciw99 values plotted with a linear regression model in log-scaled y-axis.}
 	\label{fig:gosregression}
 \end{figure}
 
-\noindent Figure \ref{fig:gosregression} shows the linear relationship between "gos" and RCIW99 values across all 4330 benchmarks. The count of Go keyword in these benchmarks vary from 0 to 34, but most of the benchmarks have 0 to 5 "gos", as the figure indicates.
+\noindent Figure \ref{fig:gosregression} shows the linear relationship between "gos" and RCIW99 values across all 4330 benchmarks. The count of Go keyword in these benchmarks vary from 0 to 33, but most of the benchmarks have 0 to 5 "gos", as the figure indicates.
 
 \subsection{Standard library related features}
 \label{Standard library related features}
 
-The number of standard library related features I used are 30 and Table \ref{table:standardlibraries} shows the correlation coefficients of these features and the variability metrics (a concatenating * means a p-value lower than 0.05, and ** means a p-value lower than 0.01). 
+The number of standard library related features used in the correlation analysis is 30 and Table \ref{table:standardlibraries} shows the correlation coefficients of these features and the variability metrics (a concatenating * means a p-value lower than 0.05, and ** means a p-value lower than 0.01). 
 
 \begin{table}[H]
 	\centering
@@ -1035,14 +1048,17 @@ The number of standard library related features I used are 30 and Table \ref{tab
 	\end{tabular}
 \end{table}
 
-\noindent Based on the table and RCIW99 correlations, the most correlating library usage with the stability is "sync" with 0.35690, which is higher than the coefficient values of all features together. It is followed by "math/rand" and "sync/atomic" respectively. Unlike with Table \ref{table:languagefeatures}, in this table there are only the 3 features that have a higher correlation than 0.25. Moreover, there are even negative correlations, although they are very close to 0. Also note that 9 of 30 features do not have any * concatenating, which means these correlation values are not significant.\\
+\noindent Based on the table and RCIW99 correlations, the most correlating library usage with the stability is "sync" with 0.35690, which is also the most correlating feature across all anaylzed features. It is followed by "math/rand" (0.26986) and "sync/atomic" (0.25871) respectively. Unlike with Table \ref{table:languagefeatures}, in this table there are only the 3 features that have a higher correlation than 0.25. Moreover, there are even negative correlations, although they are very close to 0. Also note that 9 of 30 features do not have any * concatenating, which means these correlation values are not significant.\\
 \\
-Another expectation from my hypothesis for RQ2 was that file IO and https calls would have an impact on the stability of a benchmark. To start with, file IO, by looking at "io" (0.20088) and "io/util" (0.17902) as corresponding libraries, seems to have rather a small correlation with the RCIW99 variation, meaning that there is somewhat an impact to the stability. Http call, on the other hand, can be derived from the usage of "net/http" (0.15577), "net/http/httptest" (0.02879) and "net/http/httputil" (0.02795). Because the latter two are not significant, and because "net/http" has a value of 0.15577, it is rather to say that http calls are a weakly to not correlated with the benchmark stability. In contrast to http related libraries, "net" has a higher correlation with significance, showing that network IO related things affect the stability more.
+Another expectation from my hypothesis for RQ2 was that file IO and https calls would have an impact on the stability of a benchmark due to the performance of the underlying hardware (file IO) or the performance of the network. To start with, file IO, by looking at "io" (0.20088) and "io/ioutil" (0.17902) as corresponding libraries, seems to have rather a small correlation with the RCIW99 variation, meaning that there is somewhat an impact to the stability. Http call, on the other hand, can be derived from the usage of "net/http" (0.15577), "net/http/httptest" (0.02879) and "net/http/httputil" (0.02795). Because the latter two are not significant, and because "net/http" has a value of 0.15577, it is rather to say that http calls are weakly to not correlated with the benchmark stability, unlike expected in my hypothesis. In contrast to http related libraries, "net" has a higher correlation with significance, showing that network IO related things affect the stability more.\\
+\\
+Regarding the correlation with sync and sync/atomic: These are the libraries that have mechanisms for syncing and scheduling processes in Go and these mechanisms operate in language level instead of OS level. Therefore, the  correlation of these libraries with the instability of benchmark can arise from Go's implementations. Apart from sync libraries, the correlation of math/rand library is also outstanding. This correlation may be related to the methods defined in this library requiring extra CPU cycles to generate pseudo-random numbers.
+
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=\textwidth]{syncregression}
-	\caption{"sync" and rciw99 values plotted with a linear regression model.}
+	\caption{"sync" and rciw99 values plotted with a linear regression model in log-scaled y-axis.}
 	\label{fig:syncregression}
 \end{figure}
 
@@ -1054,16 +1070,105 @@ All in all, I want to repeat my second research question and answer it with the 
 	\item \textbf{RQ2: Which source code features contribute to the stability of benchmark results and how?}
 \end{itemize}
 
-\noindent Across all features that I analyze, 11 language related and 3 library related features correlate with the variability of a benchmark with a coefficient value higher than 0.25 and a strong significance. This indicates that these features contribute to the stability of a benchmark negatively, since an increase in their numbers also increases the variability of the benhcmark. Among all features, "sync" has the highest correlation with a coefficient value of 0.35690, followed by a language feature "gos", whose value is 0.28593.
+\noindent Across all features that I analyze, 11 language related and 3 library related features correlate with the variability of a benchmark with a coefficient value higher than 0.25 and a strong significance. This indicates that these features contribute to the stability of a benchmark negatively, since an increase in their numbers also increases the variability of the benhcmark. Among all features, "sync" has the highest correlation with a coefficient value of 0.35690, followed by a language feature "gos", whose value is 0.28593.\\
+\\
+A noticeable fact in these results is that the correlations are fairly low in general. Note that the extracted source code features of a benchmark are based on a static callgraph analysis, which means that the execution traces of benchmarks are not taken into account. A dynamic callgraph analysis would allow for tracking the execution traces of a benchmark and as a result, one would better inspect which nodes in the control flow graph of a benchmark are visited. Consequently, this would allow for more accurate extraction of source code features, which would be interesting to look at for the future directions.\\
+\\
+The results so far show the correlations based on the cumulative source code features of a benchmark, which means feature values consist of the sum of benchmark's and its reachable functions' feature values. For a comparison, I repeat the same analysis using only the features of the benchmarks without considering the reachable functions from the benchmarks. The results are depicted in Table \ref{table:comparison}.
+
+\begin{table}[H]
+	\caption{Correlations analyzed using source code features from Prophunt Output.}
+	\label{table:comparison}
+\begin{tabular}{ll}
+\resizebox{0.52\textwidth}{!}{%
+	\begin{tabular}{llll}
+		Feature Name & rciw99 & rciw95 & cv \\
+		\toprule
+		pkgfiles & \cellcolor[HTML]{99CCFF}0.11012** & \cellcolor[HTML]{99CCFF}0.11197** & \cellcolor[HTML]{3366FF}0.05742** \\
+		fileloc & \cellcolor[HTML]{3366FF}0.04035** & \cellcolor[HTML]{3366FF}0.05191** & \cellcolor[HTML]{333399}\color{white}-0.04041** \\
+		namelength & \cellcolor[HTML]{99CCFF}0.10297** & \cellcolor[HTML]{99CCFF}0.10871** & \cellcolor[HTML]{3366FF}0.05374** \\
+		returns & \cellcolor[HTML]{333399}\color{white}0.00000 & \cellcolor[HTML]{333399}\color{white}0.00000 & \cellcolor[HTML]{333399}\color{white}0.00000 \\
+		loc & \cellcolor[HTML]{333399}\color{white}-0.08238** & \cellcolor[HTML]{333399}\color{white}-0.08828** & \cellcolor[HTML]{333399}\color{white}-0.02195 \\
+		funccalls & \cellcolor[HTML]{333399}\color{white}-0.02776 & \cellcolor[HTML]{333399}\color{white}-0.03134* & \cellcolor[HTML]{333399}\color{white}0.00863 \\
+		loops & \cellcolor[HTML]{333399}\color{white}-0.12540** & \cellcolor[HTML]{333399}\color{white}-0.12974** & \cellcolor[HTML]{333399}\color{white}-0.07682** \\
+		nestedloops & \cellcolor[HTML]{333399}\color{white}-0.01958 & \cellcolor[HTML]{333399}\color{white}-0.01780 & \cellcolor[HTML]{333399}\color{white}-0.00504 \\
+		channels & \cellcolor[HTML]{333399}\color{white}-0.00625 & \cellcolor[HTML]{333399}\color{white}-0.00983 & \cellcolor[HTML]{3366FF}0.02506 \\
+		sends & \cellcolor[HTML]{333399}\color{white}-0.03424* & \cellcolor[HTML]{333399}\color{white}-0.03679* & \cellcolor[HTML]{333399}\color{white}-0.00908 \\
+		receives & \cellcolor[HTML]{333399}\color{white}-0.03067* & \cellcolor[HTML]{333399}\color{white}-0.03367* & \cellcolor[HTML]{333399}\color{white}0.00146 \\
+		closes & \cellcolor[HTML]{333399}\color{white}0.00816 & \cellcolor[HTML]{333399}\color{white}0.00464 & \cellcolor[HTML]{3366FF}0.04448** \\
+		gos & \cellcolor[HTML]{3366FF}0.03725* & \cellcolor[HTML]{3366FF}0.03384* & \cellcolor[HTML]{3366FF}0.05859** \\
+		concrranges & \cellcolor[HTML]{333399}\color{white}0.00000 & \cellcolor[HTML]{333399}\color{white}0.00000 & \cellcolor[HTML]{333399}\color{white}0.00000 \\
+		selects & \cellcolor[HTML]{333399}\color{white}-0.00971 & \cellcolor[HTML]{333399}\color{white}-0.01043 & \cellcolor[HTML]{333399}\color{white}0.01115 \\
+		selectcases & \cellcolor[HTML]{333399}\color{white}-0.00974 & \cellcolor[HTML]{333399}\color{white}-0.01046 & \cellcolor[HTML]{333399}\color{white}0.01112 \\
+		variables & \cellcolor[HTML]{333399}\color{white}-0.16944** & \cellcolor[HTML]{333399}\color{white}-0.17341** & \cellcolor[HTML]{333399}\color{white}-0.11699** \\
+		pointers & \cellcolor[HTML]{333399}\color{white}-0.00616 & \cellcolor[HTML]{333399}\color{white}-0.00997 & \cellcolor[HTML]{333399}\color{white}0.01252 \\
+		slices & \cellcolor[HTML]{333399}\color{white}-0.09739** & \cellcolor[HTML]{333399}\color{white}-0.09746** & \cellcolor[HTML]{333399}\color{white}-0.08867** \\
+		maps & \cellcolor[HTML]{333399}\color{white}-0.04350** & \cellcolor[HTML]{333399}\color{white}-0.04723** & \cellcolor[HTML]{333399}\color{white}-0.01780 \\
+		ifelses & \cellcolor[HTML]{333399}\color{white}-0.07513** & \cellcolor[HTML]{333399}\color{white}-0.07924** & \cellcolor[HTML]{333399}\color{white}-0.01399 \\
+		switches & \cellcolor[HTML]{333399}\color{white}0.00126 & \cellcolor[HTML]{333399}\color{white}0.00103 & \cellcolor[HTML]{333399}\color{white}-0.00010 \\
+		switchcases & \cellcolor[HTML]{333399}\color{white}0.00126 & \cellcolor[HTML]{333399}\color{white}0.00103 & \cellcolor[HTML]{333399}\color{white}-0.00010 \\
+		panics & \cellcolor[HTML]{3366FF}0.01972 & \cellcolor[HTML]{333399}\color{white}0.01730 & \cellcolor[HTML]{3366FF}0.02056 \\
+		recovers & \cellcolor[HTML]{333399}\color{white}0.00000 & \cellcolor[HTML]{333399}\color{white}0.00000 & \cellcolor[HTML]{333399}\color{white}0.00000 \\
+		defers & \cellcolor[HTML]{3366FF}0.06999** & \cellcolor[HTML]{3366FF}0.06274** & \cellcolor[HTML]{99CCFF}0.11278** \\
+		cyclomaticcomplexity & \cellcolor[HTML]{333399}\color{white}-0.13129** & \cellcolor[HTML]{333399}\color{white}-0.13613** & \cellcolor[HTML]{333399}\color{white}-0.06775** \\
+		\bottomrule
+	\end{tabular}
+}
+	&
+\resizebox{0.42\textwidth}{!}{%
+	\begin{tabular}{@{}llll@{}}
+		Feature Name & rciw99 & rciw95 & cv \\
+		\toprule
+		bufio & \cellcolor[HTML]{333399}\color{white}-0.00821 & \cellcolor[HTML]{333399}\color{white}-0.00811 & \cellcolor[HTML]{333399}\color{white}0.00693 \\
+		bytes & \cellcolor[HTML]{333399}\color{white}-0.01819 & \cellcolor[HTML]{333399}\color{white}-0.01675 & \cellcolor[HTML]{333399}\color{white}0.00143 \\
+		crypto & \cellcolor[HTML]{333399}\color{white}-0.08598** & \cellcolor[HTML]{333399}\color{white}-0.08755** & \cellcolor[HTML]{333399}\color{white}-0.09682** \\
+		database/sql & \cellcolor[HTML]{333399}\color{white}-0.00142 & \cellcolor[HTML]{333399}\color{white}-0.00163 & \cellcolor[HTML]{333399}\color{white}-0.00613 \\
+		encoding & \cellcolor[HTML]{333399}\color{white}-0.04291** & \cellcolor[HTML]{333399}\color{white}-0.04359** & \cellcolor[HTML]{333399}\color{white}-0.03434* \\
+		encoding/binary & \cellcolor[HTML]{333399}\color{white}-0.00500 & \cellcolor[HTML]{333399}\color{white}-0.00703 & \cellcolor[HTML]{333399}\color{white}0.00065 \\
+		encoding/csv & \cellcolor[HTML]{333399}\color{white}0.00000 & \cellcolor[HTML]{333399}\color{white}0.00000 & \cellcolor[HTML]{333399}\color{white}0.00000 \\
+		encoding/json & \cellcolor[HTML]{333399}\color{white}-0.04770** & \cellcolor[HTML]{333399}\color{white}-0.04717** & \cellcolor[HTML]{333399}\color{white}-0.04095** \\
+		encoding/xml & \cellcolor[HTML]{333399}\color{white}0.00000 & \cellcolor[HTML]{333399}\color{white}0.00000 & \cellcolor[HTML]{333399}\color{white}0.00000 \\
+		io & \cellcolor[HTML]{333399}\color{white}-0.05632** & \cellcolor[HTML]{333399}\color{white}-0.05885** & \cellcolor[HTML]{333399}\color{white}-0.02208 \\
+		io/ioutil & \cellcolor[HTML]{333399}\color{white}-0.04248** & \cellcolor[HTML]{333399}\color{white}-0.04603** & \cellcolor[HTML]{333399}\color{white}-0.01104 \\
+		math & \cellcolor[HTML]{333399}\color{white}-0.01591 & \cellcolor[HTML]{333399}\color{white}-0.01448 & \cellcolor[HTML]{333399}\color{white}-0.02878 \\
+		math/rand & \cellcolor[HTML]{333399}\color{white}0.00324 & \cellcolor[HTML]{333399}\color{white}0.00145 & \cellcolor[HTML]{333399}\color{white}-0.00236 \\
+		mime & \cellcolor[HTML]{333399}\color{white}0.00000 & \cellcolor[HTML]{333399}\color{white}0.00000 & \cellcolor[HTML]{333399}\color{white}0.00000 \\
+		net & \cellcolor[HTML]{3366FF}0.02582 & \cellcolor[HTML]{3366FF}0.02055 & \cellcolor[HTML]{3366FF}0.06135** \\
+		net/http & \cellcolor[HTML]{3366FF}0.03032* & \cellcolor[HTML]{3366FF}0.02613 & \cellcolor[HTML]{3366FF}0.06388** \\
+		net/http/httptest & \cellcolor[HTML]{333399}\color{white}0.00654 & \cellcolor[HTML]{333399}\color{white}0.00285 & \cellcolor[HTML]{3366FF}0.03144* \\
+		net/http/httputil & \cellcolor[HTML]{333399}\color{white}0.00000 & \cellcolor[HTML]{333399}\color{white}0.00000 & \cellcolor[HTML]{333399}\color{white}0.00000 \\
+		net/rpc & \cellcolor[HTML]{3366FF}0.02525 & \cellcolor[HTML]{3366FF}0.02145 & \cellcolor[HTML]{3366FF}0.02969* \\
+		net/rpc/jsonrpc & \cellcolor[HTML]{333399}\color{white}0.01810 & \cellcolor[HTML]{333399}\color{white}0.01735 & \cellcolor[HTML]{333399}\color{white}0.01682 \\
+		net/smtp & \cellcolor[HTML]{333399}\color{white}0.00000 & \cellcolor[HTML]{333399}\color{white}0.00000 & \cellcolor[HTML]{333399}\color{white}0.00000 \\
+		net/textproto & \cellcolor[HTML]{333399}\color{white}0.00000 & \cellcolor[HTML]{333399}\color{white}0.00000 & \cellcolor[HTML]{333399}\color{white}0.00000 \\
+		os & \cellcolor[HTML]{333399}\color{white}0.00509 & \cellcolor[HTML]{333399}\color{white}0.00043 & \cellcolor[HTML]{3366FF}0.04499** \\
+		os/exec & \cellcolor[HTML]{333399}\color{white}-0.01068 & \cellcolor[HTML]{333399}\color{white}-0.01123 & \cellcolor[HTML]{333399}\color{white}-0.00894 \\
+		os/signal & \cellcolor[HTML]{333399}\color{white}0.00000 & \cellcolor[HTML]{333399}\color{white}0.00000 & \cellcolor[HTML]{333399}\color{white}0.00000 \\
+		sort & \cellcolor[HTML]{333399}\color{white}0.01083 & \cellcolor[HTML]{333399}\color{white}0.00743 & \cellcolor[HTML]{3366FF}0.02556 \\
+		strconv & \cellcolor[HTML]{3366FF}0.03328* & \cellcolor[HTML]{3366FF}0.03448* & \cellcolor[HTML]{3366FF}0.03859** \\
+		sync & \cellcolor[HTML]{3366FF}0.02661 & \cellcolor[HTML]{3366FF}0.02726 & \cellcolor[HTML]{3366FF}0.02867 \\
+		sync/atomic & \cellcolor[HTML]{3366FF}0.04551** & \cellcolor[HTML]{3366FF}0.04709** & \cellcolor[HTML]{3366FF}0.04148** \\
+		syscall & \cellcolor[HTML]{333399}\color{white}0.00000 & \cellcolor[HTML]{333399}\color{white}0.00000 & \cellcolor[HTML]{333399}\color{white}0.00000 \\
+		\bottomrule
+	\end{tabular}
+}
+	
+\end{tabular}
+
+\end{table}
+
+\noindent As one can see, the coefficients of the correlation analysis based on only source code features of the benchmark itself are very low in contrast to the previous correlation analysis. Moreover, 11 of the features do not even correlate, having 0.00 as the coefficient. These results show that even the correlations with cumulative source code features are not very high, the callgraph analysis of benchmarks is still needed, since there is a significant difference in the results of the analyses.
 
 \chapter{Discussion}
 \label{Discussion}
-In this section, I discuss the results that I obtained and how relevant these are.
+
 
 \section{Benchmark Stability}
 \label{benchstabilitydiscuss}
 
-The results in Section \ref{Variabilities of benchmarks} shows that 98.17\% of the benchmarks' RCIW99 values fall into the 0-10\% bucket, and further investigation shows that 87.70\% of these fall into 0-1\% bucket. While these percentages indicate that most of the benchmarks are stable, it is not clear why there is such a distribution. Just by analyzing given dataset and without looking at outer factors, we can say that benchmarks written in Go are likely to be stable according to the variability analysis made in this thesis. Although there are slight differences between distributions of benchmarks' variabilities across different metrics, the distributions of benchmarks' variabilities are close to each other.
+The results in Section \ref{Variabilities of benchmarks} shows that 98.17\% of the benchmarks' RCIW99 values fall into the 0-10\% bucket, and further investigation shows that 87.70\% of these fall into 0-1\% bucket. While these percentages indicate that most of the benchmarks are stable, it is not clear why there is such a distribution. Just by analyzing given dataset and without looking at outer factors, we can say that benchmarks written in Go are likely to be stable according to the variability analysis made in this thesis. Although there are slight differences between distributions of benchmarks' variabilities across different metrics, the distributions of benchmarks' variabilities are close to each other.\\
+\\
+It could be that the benchmarks are not executed in a stable environment, for instance clouds, which have been reported to be unstable especially for IO 
 
 \section{Chosen features}
 \label{chosenfeatures}
@@ -1110,7 +1215,7 @@ Researchers and practitioners can use the approaches presented in this thesis to
 \chapter{First Append}
 \section{Not matching benchmarks}
 \label{infinalbutnotincsv1}
-Following benchmarks were in final.csv, yet not in CSV1 folder:
+Following benchmarks were in final.csv, yet not in Prophunt\_Output:
 \begin{lstlisting}[basicstyle=\tiny]
 	tendermint/go-merkle /benchmarks/bench_test.go/BenchmarkLevelDBBatchSizes
 	tendermint/go-merkle /benchmarks/bench_test.go/BenchmarkMedium
@@ -1204,7 +1309,7 @@ Following benchmarks were in final.csv, yet not in CSV1 folder:
 \end{lstlisting}
 
 \label{incsv1butnotincsv2}
-Following benchmarks resulted as nil nodes in the \textbf{*simple.DirectedGraph}:
+Following benchmarks resulted as nil nodes in the \texttt{\textbf{*simple.DirectedGraph}}:
 \begin{lstlisting}[basicstyle=\tiny]
 	pilosa/pilosa /test/attr.go/BenchmarkAttrStore_Duplicate
 	pgpst/pgpst /internal/github.com/gin-gonic/gin/benchmarks_test.go/Benchmark404Many
@@ -1298,7 +1403,7 @@ Following benchmarks resulted as nil nodes in the \textbf{*simple.DirectedGraph}
 \end{lstlisting}
 
 \label{sameincsv1asincsv2}
-Following benchmarks had no reachable callees in the \textbf{*simple.DirectedGraph}:
+Following benchmarks had no reachable callees in the \texttt{\textbf{*simple.DirectedGraph}}:
 \begin{lstlisting}[basicstyle=\tiny]
 	gobwas/glob glob_test.go/BenchmarkAlternativesCombineHardRegexpMatch
 	gobwas/glob glob_test.go/BenchmarkAlternativesSuffixFirstRegexpMismatch

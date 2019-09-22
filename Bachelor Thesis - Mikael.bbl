@@ -5,6 +5,11 @@ ironsmile/nedomi.
 \newblock https://github.com/ironsmile/nedomi, 2019.
 \newblock [Online; accessed 2019-08-30].
 
+\bibitem{sealuzh/goabs}
+sealuzh/goabs.
+\newblock https://github.com/sealuzh/GoABS, 2019.
+\newblock [Online; accessed 2019-08-30].
+
 \bibitem{tidwall/buntdb}
 tidwall/buntdb.
 \newblock https://github.com/tidwall/buntdb, 2019.
@@ -194,11 +199,6 @@ Callgraph tool.
 \newblock golang.org/x/tools/cmd/callgraph, 2019.
 \newblock [Online; accessed 2019-08-30].
 
-\bibitem{sealuzh/goabs}
-sealuzh/goabs.
-\newblock https://github.com/sealuzh/GoABS, 2019.
-\newblock [Online; accessed 2019-08-30].
-
 \bibitem{atourofgo}
 A tour of go.
 \newblock https://tour.golang.org/list, 2019.
@@ -274,6 +274,16 @@ stratumn/sdk.
 \bibitem{eaburns/T_old}
 eaburns/t\_old.
 \newblock https://github.com/eaburns/T\_old, 2019.
+\newblock [Online; accessed 2019-08-30].
+
+\bibitem{go18}
+Go 1.8 defer improvement.
+\newblock https://golang.org/doc/go1.8\#defer, 2019.
+\newblock [Online; accessed 2019-08-30].
+
+\bibitem{go113}
+Go 1.13 version notes.
+\newblock https://golang.org/doc/go1.13, 2019.
 \newblock [Online; accessed 2019-08-30].
 
 \end{thebibliography}

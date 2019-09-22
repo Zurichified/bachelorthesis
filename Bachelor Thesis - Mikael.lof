@@ -13,11 +13,11 @@
 \addvspace {10\p@ }
 \contentsline {figure}{\numberline {4.1}{\ignorespaces General view of processing results.\relax }}{36}% 
 \contentsline {figure}{\numberline {4.2}{\ignorespaces Distribution of benchmarks' variabilities 0-100 in 10\% buckets in log-scaled y-axis.\relax }}{38}% 
-\contentsline {figure}{\numberline {4.3}{\ignorespaces Distribution of benchmarks' variabilities 0-10 in 1\% buckets.\relax }}{38}% 
-\contentsline {figure}{\numberline {4.4}{\ignorespaces Number of parsed functions per project.\relax }}{42}% 
-\contentsline {figure}{\numberline {4.5}{\ignorespaces Number of parsed benchmarks per project.\relax }}{42}% 
-\contentsline {figure}{\numberline {4.6}{\ignorespaces "Gos" and rciw99 values plotted with a linear regression model.\relax }}{45}% 
-\contentsline {figure}{\numberline {4.7}{\ignorespaces "sync" and rciw99 values plotted with a linear regression model.\relax }}{47}% 
+\contentsline {figure}{\numberline {4.3}{\ignorespaces Distribution of benchmarks' variabilities 0-10 in 1\% buckets in log-scaled y-axis.\relax }}{38}% 
+\contentsline {figure}{\numberline {4.4}{\ignorespaces Number of parsed functions per project in log-scaled y-axis. Red line indicates the average function count.\relax }}{42}% 
+\contentsline {figure}{\numberline {4.5}{\ignorespaces Number of parsed benchmarks per project in log-scaled y-axis. Red line indicates the average benchmark count.\relax }}{42}% 
+\contentsline {figure}{\numberline {4.6}{\ignorespaces "Gos" and rciw99 values plotted with a linear regression model in log-scaled y-axis.\relax }}{45}% 
+\contentsline {figure}{\numberline {4.7}{\ignorespaces "sync" and rciw99 values plotted with a linear regression model in log-scaled y-axis.\relax }}{47}% 
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
